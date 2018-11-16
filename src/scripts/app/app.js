@@ -1,0 +1,17 @@
+﻿$.mobile.defaultPageTransition = "slide";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

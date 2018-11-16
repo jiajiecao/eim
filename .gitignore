@@ -1,0 +1,15 @@
+/src/Web.config
+/src/_ReSharper.Source
+/src/*.sln
+/src/*.suo
+/.settings
+/src/.settings
+/.project
+/src/.project
+/node_modules
+/src/bower_components
+/.idea
+/src/.idea
+/src/build
+/build
+/*.log
