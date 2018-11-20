@@ -1,0 +1,523 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<title>bpms admin | EIM</title>
+<link rel="stylesheet" type="text/css" href="themes/jquery.mobile.css" />
+<link rel="stylesheet" type="text/css" href="themes/color.css" />
+<link rel="stylesheet" type="text/css" href="themes/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="themes/owl.carousel.css">
+<link rel="stylesheet" type="text/css" href="themes/owl.theme.css">
+<link rel="stylesheet" type="text/css" href="themes/owl.transitions.css">
+<link rel="stylesheet" type="text/css" href="themes/bootstrap-theme.css">
+<link rel="stylesheet" type="text/css" href="themes/jqm-demos.css">
+<link rel="stylesheet" type="text/css" href="themes/jquery.mobile.icons.css">
+<link rel="stylesheet" type="text/css" href="themes/jquery.mobile.structure.css">
+<link rel="stylesheet" type="text/css" href="themes/font-awesome5.min.css">
+<link rel="stylesheet" type="text/css" href="themes/google-icon.css">
+<link rel="stylesheet" type="text/css" href="themes/site.css" />
+<script src="scripts/libs/jquery.js"></script>
+<script src="scripts/libs/jquery.form.js"></script>
+<script src="scripts/libs/knockout.jquery.mobile.js"></script>
+<script src="scripts/libs/jquery.mobile.js"></script>
+<script src="scripts/libs/bootstrap.js"></script>
+<script src="scripts/libs/knockout.js"></script>
+<script src="scripts/libs/koExternalTemplateEngine_all.js"></script>
+<script src="scripts/libs/ko.extension.js"></script>
+<script src="scripts/libs/jquery.sparkline.js"></script>
+<script src="scripts/libs/bootstrap-collapse.js"></script>
+<script src="scripts/libs/bootstrap-transition.js"></script>
+<script src="scripts/libs/bootstrap-tab.js"></script>
+<script src="scripts/libs/prettify.js"></script>
+<script src="scripts/libs/application.js"></script>
+<script src="scripts/libs/moment/moment.js"></script>
+<script src="scripts/libs/moment/locale/zh-cn.js"></script>
+<script src="scripts/libs/bootstrap-datetimepicker.js"></script>
+<script src="scripts/libs/oex/utils.js"></script>
+<script src="scripts/libs/oex/jqm-checked.js"></script>
+<script src="scripts/libs/oex/jqm-datetime.js"></script>
+<script src="scripts/libs/oex/jqm-selected.js"></script>
+<script src="scripts/libs/oex/jqm-number.js"></script>
+<script src="scripts/libs/oex/jqm-money.js"></script>
+<script src="scripts/libs/oex/jqm-tel.js"></script>
+<script src="scripts/libs/oex/jqm-email.js"></script>
+<script src="scripts/libs/oex/jqm-switch.js"></script>
+<script src="scripts/libs/oex/jqm-auto.js"></script>
+<script src="scripts/libs/oex/jqm-id.js"></script>
+<script src="scripts/libs/oex/jqm-upload.js"></script>
+<script src="scripts/libs/oex/jqm-ctr.js"></script>
+<script src="scripts/app/config.js"></script>
+<script src="scripts/app/util.js"></script>
+<script src="scripts/app/service.js"></script>
+<script src="scripts/app/baseViewModel.js"></script>
+<script src="scripts/app/pages/employeeListViewModel.js"></script>
+<script src="scripts/app/pages/employeeDetailViewModel.js"></script>
+<script src="scripts/app/pages/employee.js"></script>
+<link rel="shortcut icon" href="favicon.ico">
+<style>
+@media screen and (min-height:768px) {
+.infoblock {
+	min-height: 548px;
+	max-height: 548px;
+}
+}
+
+@media screen and (min-height:900px) {
+.infoblock {
+	min-height: 680px;
+	max-height: 680px;
+}
+}
+
+@media screen and (min-height:1024px) {
+.infoblock {
+	min-height: 808px;
+	max-height: 808px;
+}
+}
+
+@media screen and (min-height:1366px) {
+.infoblock {
+	min-height: 1150px;
+	max-height: 1150px;
+}
+}
+
+@media screen and (min-height:1600px) {
+.infoblock {
+	min-height: 1384px;
+	max-height: 1384px;
+}
+}
+
+@media screen and (min-width:0px) {
+.row {
+	margin-left: 0px;
+	margin-right: 0px;
+	margin-top: 16px;
+	margin-bottom: 16px;
+}
+}
+
+@media screen and (min-width:667px) {
+.row {
+	margin-left: 0px;
+	margin-right: 0px;
+	margin-top: 16px;
+	margin-bottom: 16px;
+}
+}
+
+@media screen and (min-width:992px) {
+.row {
+	margin-left: 3px;
+	margin-right: 3px;
+	margin-top: 16px;
+}
+}
+ @media screen and (min-width:1200px) {
+.row {
+	margin-left: 100px;
+	margin-right: 100px;
+	margin-top: 32px;
+}
+}
+ @media screen and (min-width:1600px) {
+.row {
+ margin-left: 180px;
+ margin-right: 180px;
+ margin-top: 32px;
+}
+}
+</style>
+
+</head>
+<body>
+<div data-role="page" id="main" data-theme="a" style="background-image: url(images/bg.jpg); background-attachment:fixed; bottom: 0px">
+  <div data-role="header" data-theme="b" data-position="fixed"  style="background-color:#FFFFFF; box-shadow:0 2px 3px 0 rgba(0, 0, 0, 0.14)">
+    <div class="ui-grid-a">
+      <div class="ui-block-a">
+        <h3 style="margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom:8px; text-shadow: 0 0px; color:#cfd8dc; font-weight: 200; text-align:left"><img src="images/bpmslogoxsn1.png" height="26px" style="margin-top:-3px;"><font class="hidden-xs"> | eim02 员工</font></h3>
+      </div>
+      <div class="ui-block-b">
+        <h3 style="margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom:8px; text-shadow: 0 0px; color:#bdbdbd; text-align:right"><a href="#panelgrid" style="color: #009688"><i class="fas fa-bars"></i></a></h3>
+      </div>
+    </div>
+    <!-- /grid-a --> 
+    
+  </div>
+  <div data-role="content" style="padding: 2px 2px; margin-bottom:64px">
+    <ul class="nav nav-tabs" id="myTabs" role="tablist" style="margin-left: 2px; margin-right: 2px; margin-top: 4px; border-bottom-width: 0px;">
+      <li style="min-width: 80px;" role="presentation" class="active"><a href="#home" id="home-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true">
+        <p align="center" style="margin: 0px 0px; font-weight: 200"><i class="fa fa-2x fa-user-circle"></i></p>
+        </a></li>
+      <li style="min-width: 80px;" role="search"><a href="#search" role="tab" id="search-tab" data-toggle="tab" aria-controls="search">
+        <p align="center" style="margin: 0px 0px;"><i class="fa fa-2x fa-search"></i></p>
+        </a></li>
+    </ul>
+    <div id="myTabContent" class="tab-content">
+      <div role="tabpanel" class="tab-pane active" id="home" aria-labelledBy="home-tab">
+        <div class="col-sm-12 col-xs-12 col-md-3 col-lg-3" style="padding: 0px 0px; ">
+          <div class="ui-body ui-body-b ui-content" style="background-image: url(images/works-bg.jpg); border-width:1px; border-bottom-right-radius: 0.31em; border-bottom-left-radius:0.31em; min-height: 640px; max-height:640px; margin: 0 2px; padding: 2px 2px; overflow: auto; overflow-style:auto; ">
+            <form class="ui-filterable" style="margin: -4px 2px; margin-bottom:-3px; text-shadow: 0 0 0;">
+              <input id="rich-autocomplete-input2" data-type="search" placeholder="输入关键字筛选结果...">
+            </form>
+            <ul data-role="listview" data-theme="b" data-filter="true" data-inset="true" data-input="#rich-autocomplete-input2" style="margin: 2px 2px;">
+              <li class="ui-nodisc-icon ui-alt-icon"><a href="#" style="padding:6px 12px">
+                <h2 style=" margin-bottom:0px">姓名</h2>
+                <p style="margin-top:6px; color:#90a4ae">工号</p>
+                <span class="ui-li-count" style="color: #009688">Dept</span> </a></li>
+           <li class="ui-nodisc-icon ui-alt-icon"><a href="#" style="padding:6px 12px">
+                <h2 style=" margin-bottom:0px">姓名</h2>
+                <p style="margin-top:6px; color:#90a4ae">工号</p>
+                <span class="ui-li-count" style="color: #009688">Dept</span> </a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-sm-12 col-xs-12 col-md-9 col-lg-9" style="padding: 0px 0px; ">
+          <div class="ui-body ui-body-b ui-content" style="background-image: url(images/works-bg.jpg); border-width:1px; border-bottom-right-radius: 0.31em; border-bottom-left-radius:0.31em; min-height: 640px; max-height:640px; overflow:scroll; overflow-style:auto; margin: 0 2px; padding: 2px 2px;">
+            <div class="row" style="margin:0px 0px; padding:3px 3px">
+              <div class="col-sm-6 col-xs-12 col-md-4 col-lg-4" style="padding: 3px 3px; ">
+                <p align="left" style="padding: 0px 0px; margin-bottom:0px; font-weight: 300; font-size: large; color:#455a64"><b>姓名</b><br>
+                  工号ID </p>
+              </div>
+              <div class="col-sm-6 col-xs-12 col-md-4 col-lg-4" style="padding: 3px 3px; ">
+                <p style="margin-bottom: 8px;  margin-top: 3px; padding: 0px 0px; font-size: larger"><span style="font-weight: 300" class="label label-default">公司</span> <span style="font-weight: 300" class="label label-info">部门</span></p>
+                <p style="padding:0px 0px; margin-bottom:16px; font-size: small; padding-bottom:0px; font-weight:300; color:#90a4ae"><i class="fa fa-fw fa-plus-square"></i> <b>2018-4-4</b> 16:00 <font color="#BDBDBD">|</font> <i class="fa fa-fw fa-clock"></i> <b>2018-4-4</b> 16:00 <font color="#BDBDBD">|</font> <font><i class="fa fa-fw fa-user-circle"></i></font> 张三</p>
+              </div>
+              <div class="col-sm-6 col-xs-12 col-md-4 col-lg-4" style="padding: 3px 3px; ">
+                <p align="right" style="padding:3px 3px; margin-bottom:0px;"><a href="#popaction" data-rel="popup" data-position-to="window"  style="font-weight:300;  margin-left:20px; color:#0288d1"><i class="material-icons">content_copy</i></a><a href="#popaction" data-rel="popup" data-position-to="window"  style="font-weight:300; margin-left: 20px;   color:#0288d1"><i class="material-icons">edit</i></a><a href="#popaction" data-rel="popup" data-position-to="window"  style="font-weight:300;  margin-left:20px; color:#0288d1"><i class="material-icons">block</i></a></p>
+              </div>
+            </div>
+            <ul class="nav nav-tabs" id="tskTabs" role="tablist" style="margin-left: 2px; margin-right: 2px; margin-top: 4px; border-bottom-width: 0px;">
+              <li style="min-width: 80px;" role="presentation" class="active"><a href="#info" id="info-tab" role="tab" data-toggle="tab" aria-controls="info" aria-expanded="true">
+                <p align="center" style="margin: 0px 0px;"><i class="far fa-2x fa-id-card"></i></p>
+                </a></li>
+				
+				<li style="min-width: 80px;" role="presentation"><a href="#work" role="tab" id="work-tab" data-toggle="tab" aria-controls="work">
+                <p align="center" style="margin: 0px 0px;"><i class="fa fa-2x fa-briefcase"></i></p>
+                </a></li>
+				
+				<li style="min-width: 80px;" role="presentation"><a href="#costcenter" role="tab" id="costcenter-tab" data-toggle="tab" aria-controls="costcenter">
+                <p align="center" style="margin: 0px 0px;"><i class="fa fa-2x fa-crosshairs"></i></p>
+                </a></li>
+				
+				<li style="min-width: 80px;" role="presentation"><a href="#qualification" role="tab" id="qualification-tab" data-toggle="tab" aria-controls="qualification">
+                <p align="center" style="margin: 0px 0px;"><i class="fa fa-2x fa-file-archive"></i></p>
+                </a></li>
+				
+              <li style="min-width: 80px;" role="presentation"><a href="#history" role="tab" id="history-tab" data-toggle="tab" aria-controls="history">
+                <p align="center" style="margin: 0px 0px;"><i class="fa fa-2x fa-history"></i></p>
+                </a></li>
+            </ul>
+            <div id="myTskTabContent" class="tab-content">
+              <div role="tabpanel" class="tab-pane active" id="info" aria-labelledBy="info-tab">
+                <div class="ui-body ui-body-b ui-content" style=" border-width:1px; border-bottom-right-radius: 0.31em; border-bottom-left-radius:0.31em;  margin: 0 2px; margin-bottom:3px; padding: 6px 6px">
+                  <div class="row" style="margin:0px 0px; padding:6px 6px;">
+                    <legend style="margin-bottom: 16px;"><font size="-1" color="#bdbdbd" style="font-weight:600"><i class="fa fa-fw fa-info-circle"></i> 基本信息</font></legend>
+                    <div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
+                      <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">员工ID</font></label>
+                      <b>40181022001</b> </div>
+                    <div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
+                      <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">身份证编号</font></label>
+                      <b>40181022001</b></div>
+                    <div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
+                      <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">其他识别号</font></label>
+                      <b>W240001</b></div>
+					  
+                  </div>
+                  <div class="row" style="margin:0px 0px; padding:6px 6px;">
+					  <hr>
+                    <div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
+                      <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">姓</font></label>
+                      <b>VS0010</b> </div>
+					  <div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
+                      <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">中间名</font></label>
+                      <b>张三</b> </div>
+                    <div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
+                      <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">名</font></label>
+                      <b>张三</b> </div>
+					   <div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
+                      <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">性别</font></label>
+                      <b>男</b> </div>
+					   <div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
+                      <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">国籍</font></label>
+                      <b>中国</b> </div>
+					   <div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
+                      <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">出生年月</font></label>
+                      <b>出生年月</b> </div>
+					   <div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
+                      <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">婚姻状况</font></label>
+                      <b>未婚</b> </div>
+                  </div>
+                  <div class="row" style="margin:0px 0px; padding:6px 6px;">
+					  <hr>
+                    <div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
+                      <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">住址</font></label>
+                      <b>VS0010</b> </div>
+                    <div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
+                      <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">城市</font></label>
+                      <b>上海</b> </div>
+					   <div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
+                      <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">国家</font></label>
+                      <b>中国</b> </div>
+					   <div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
+                      <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">家庭电话</font></label>
+                      <b>110</b> </div>
+					   <div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
+                      <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">手机号码</font></label>
+                      <b>110</b> </div>
+					   <div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
+                      <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">工作邮箱</font></label>
+                      <b style="color: #03a9f4">aaa@sss.com</b> </div>
+					     <div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
+                      <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">其它邮箱</font></label>
+                      <b>aaa@sss.com</b> </div>
+                  </div>
+                  
+                </div>
+              </div>
+				
+				<div role="tabpanel" class="tab-pane" id="work" aria-labelledBy="work-tab">
+                <div class="ui-body ui-body-b ui-content" style=" border-width:1px; border-bottom-right-radius: 0.31em; border-bottom-left-radius:0.31em;  margin: 0 2px; margin-bottom:3px; padding: 6px 6px">
+                  <div class="row" style="margin:0px 0px; padding:6px 6px;">
+                    <legend style="margin-bottom: 16px;"><font size="-1" color="#bdbdbd" style="font-weight:600"><i class="fa fa-fw fa-briefcase"></i> 工作信息</font></legend>
+                    <div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
+                      <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">职位</font></label>
+                      <b>职位</b> </div>
+                    <div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
+                      <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">雇佣状态</font></label>
+                      <b>在职</b></div>
+                    <div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
+                      <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">工作类别</font></label>
+                      <b>W240001</b></div>
+					  
+					  <div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
+                      <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">雇佣开始日期</font></label>
+                      <b>2018-1-1</b></div>
+					  <div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
+                      <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">雇佣结束日期</font></label>
+                      <b>2020-1-1</b></div>
+					  <div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
+                      <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">报销级别</font></label>
+                      <b>A</b></div>
+					  <div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
+                      <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">工资卡号</font></label>
+                      <b>62220192183092174129</b></div>					  
+                  </div>
+                  <div class="row" style="margin:0px 0px; padding:6px 6px;">
+					  <hr>
+                    <div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
+                      <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">所属部门</font></label>
+                      <b>VS0010</b> </div>
+					  
+					  <div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
+                      <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">汇报给</font></label>
+                      <b>李四</b> </div>
+					  
+					  
+					  <div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
+                      <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">工作地点</font></label>
+                      <b>上海静安</b> </div>
+                    
+                  </div>
+                  
+                  <div class="row" style="margin:0px 0px; padding:6px 6px;">
+                    <legend style="margin-bottom: 16px;"><font size="-1" color="#bdbdbd" style="font-weight:600"><i class="fa fa-fw fa-sitemap"></i> 下属</font></legend>
+                    <div data-role="collapsible" data-collapsed="false" data-content-theme="a" data-collapsed-icon="carat-d" data-expanded-icon="carat-u" style="margin-top:18px;" data-iconpos="right">
+                      <h4><i class="fa fa-table"></i> 3</h4>
+                      <table data-role="table" id="movie-table-custom" class="ui-body-d ui-shadow table-stripe ui-responsive movie-list table-stroke" data-mode="reflow"  style="margin-bottom: 8px; margin-top:8px; padding: 3px 3px">
+                        <thead>
+                          <tr class="ui-bar-d">
+                            <th data-priority="2" style="text-align:center">#</th>
+                            <th>姓名</th>
+                            <th>邮箱</th>
+                            <th>汇报类型</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <th style="text-align:center">ID 001</th>
+                            <td>张三</td>
+                            <td>sss@sss.com</td>
+                            <td>直接</td>
+                          </tr>
+                          <tr>
+                            <th style="text-align:center">ID 002</th>
+                            <td>王五</td>
+                            <td>asd@asd.com</td>
+                            <td>间接</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+				<div role="tabpanel" class="tab-pane" id="costcenter" aria-labelledBy="costcenter-tab">
+                <div class="ui-body ui-body-b ui-content" style=" border-width:1px; border-bottom-right-radius: 0.31em; border-bottom-left-radius:0.31em;  margin: 0 2px; margin-bottom:3px; padding: 6px 6px">
+                  
+                  
+                  
+                  <div class="row" style="margin:0px 0px; padding:6px 6px;">
+                    <legend style="margin-bottom: 16px;"><font size="-1" color="#bdbdbd" style="font-weight:600"><i class="fa fa-fw fa-bullseye"></i> 成本中心</font></legend>
+                    <div data-role="collapsible" data-collapsed="false" data-content-theme="a" data-collapsed-icon="carat-d" data-expanded-icon="carat-u" style="margin-top:18px;" data-iconpos="right">
+                      <h4><i class="fa fa-table"></i> 3</h4>
+                      <table data-role="table" id="movie-table-custom" class="ui-body-d ui-shadow table-stripe ui-responsive movie-list table-stroke" data-mode="reflow"  style="margin-bottom: 8px; margin-top:8px; padding: 3px 3px">
+                        <thead>
+                          <tr class="ui-bar-d">
+                            <th data-priority="2" style="text-align:center">#</th>
+                            <th>成本中心编号</th>
+                            <th>成本中心名称</th>
+                            <th style="text-align: right">百分比</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <th style="text-align:center">1</th>
+                            <td>CSA0001</td>
+                            <td>XXXXXXX部门</td>
+                            <td style="font-weight: 700; color: #03a9f4; text-align: right">10%</td>
+                          </tr>
+                       <tr>
+                            <th style="text-align:center">2</th>
+                            <td>CSA0001</td>
+                            <td>XXXXXXX部门</td>
+                            <td style="font-weight: 700; color: #03a9f4; text-align: right">60%</td>
+                          </tr>
+							 <tr>
+                            <th style="text-align:center">3</th>
+                            <td>CSA0001</td>
+                            <td>XXXXXXX部门</td>
+                            <td style="font-weight: 700; color: #03a9f4; text-align: right">30%</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+				
+              <div role="tabpanel" class="tab-pane" id="history" aria-labelledBy="history-tab">
+                <div class="ui-body ui-body-b ui-content" style=" border-width:1px; border-bottom-right-radius: 0.31em; border-bottom-left-radius:0.31em; min-height: 400px; margin: 0 2px; margin-bottom:3px; padding: 6px 6px">
+                  <div class="row" style="margin:0px 0px; padding:6px 6px">
+                    <legend style="margin-bottom: 16px;" ><font size="-1" color="#bdbdbd"><i class="fa fa-fw fa-clock"></i><b> 流程历史</b></font></legend>
+                  </div>
+                  <div class="row" style="margin:0px 0px; padding:6px 6px">
+                    <ul data-role="listview" class="ui-alt-icon ui-nodisc-icon" data-theme="c" data-inset="true" data-iconpos="left" style="margin-top:0px;">
+                      <li data-icon="carat-d"><a href="#pophistory" data-rel="popup" data-position-to="window" data-transition="pop"><font color="#03a9f4"><i class="fa fa-fw fa-clock"></i></font> Task Name
+                        <p style="margin-bottom:0px; color:#9E9E9E">陈骏&nbsp;<b>2015-5-22 13:11PM</b></p>
+                        <span class="ui-li-count">创建</span></a></li>
+                      <li data-icon="carat-d"><a href="#pophistory" data-rel="popup" data-position-to="window" data-transition="pop"><font color="#03a9f4"><i class="fa fa-fw fa-play-circle"></i></font> Task Name
+                        <p style="margin-bottom:0px; color:#9E9E9E">陈骏&nbsp;<b>2015-5-22 13:11PM</b></p>
+                        <span class="ui-li-count">批准</span></a></li>
+                      <li data-icon="power"><a href="#pophistory" data-rel="popup" data-position-to="window" data-transition="pop"><font color="#03a9f4"><i class="fa fa-fw fa-bolt"></i></font> Task Name
+                        <p style="margin-bottom:0px; color:#9E9E9E">陈骏&nbsp;<b>2015-5-22 13:11PM</b></p>
+                        <span class="ui-li-count">批准</span></a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+				
+				
+            </div>
+          </div>
+        </div>
+      </div>
+      <div role="tabpanel" class="tab-pane" id="search" aria-labelledBy="search-tab">
+        <div class="ui-body ui-body-b ui-content" style=" background-image: url(images/works-bg.jpg); border-width:0px; border-top-width:1px; border-bottom-right-radius: 0.31em; border-bottom-left-radius:0.31em; margin: 0px 2px; padding: 0px 0px; padding-bottom:6px;  min-height:640px; margin-bottom:120px;">
+          <div class="row">
+            <p align="right"><a href="#" style="font-weight:300;  margin-left:20px; color:#0288d1"><i class="material-icons">refresh</i></a> <a href="#" style="font-weight:300;  margin-left:20px; color:#0288d1"><i class="material-icons">search</i></a></p>
+            <div class=" col-lg-3 col-sm-12 col-xs-12 col-md-6" style="padding:3px 3px; ">
+              <label for="amount"><font color="#9e9e9e" size="-1">组织ID</font></label>
+              <input type="text" data-clear-btn="true" name="amount" id="amount" data-inline="false" data-theme="b" style="font-weight:600; height:39px;">
+            </div>
+            <div class=" col-lg-3 col-sm-12 col-xs-12 col-md-6" style="padding:3px 3px; ">
+              <label for="amount"><font color="#9e9e9e" size="-1">组织级别</font></label>
+              <input type="text" data-clear-btn="true" name="amount" id="amount" data-inline="false" data-theme="b" style="font-weight:600; height:39px;">
+            </div>
+            <div class=" col-lg-6 col-sm-12 col-xs-12 col-md-6" style="padding:3px 3px; ">
+              <label for="amount"><font color="#9e9e9e" size="-1">组织名称</font></label>
+              <input type="text" data-clear-btn="true" name="amount" id="amount" data-inline="false" data-theme="b" style="font-weight:600; height:39px;">
+            </div>
+          </div>
+          <div class="row">
+            <legend style="padding-left: 3px;"><font size="-1" color="#000000"></font></legend>
+            <div class=" col-lg-3 col-sm-6 col-xs-12 col-md-6" style="padding:3px 3px; ">
+              <label for="amount"><font color="#9e9e9e" size="-1">负责人</font></label>
+              <input type="text" data-clear-btn="true" name="amount" id="amount" data-inline="false" data-theme="b" style="font-weight:600; height:39px;">
+            </div>
+            <div class=" col-lg-3 col-sm-6 col-xs-12 col-md-6" style="padding:3px 3px; ">
+              <label for="amount"><font color="#9e9e9e" size="-1">默认成本中心</font></label>
+              <input type="text" data-clear-btn="true" name="amount" id="amount" data-inline="false" data-theme="b" style="font-family:Arial, FontAwesome; font-weight:300; height:39px;">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div data-role="panel" id="panelgrid" data-position-fixed="true" data-position="right" data-display="overlay"  data-theme="a">
+      <div class="jqm-block-content" style="margin: -14px -14px; margin-bottom: 14px; padding: 9px 9px; padding-top: 30px; background-color: #455a64; border:none; min-height: 0px; border-radius: 0em;">
+        <p align="center" style="margin-bottom:10px;"><i class="material-icons md-56 md-light">face</i></p>
+        <div class="ui-grid-a" style="text-shadow: 0 0 0; color:#FFFFFF">
+          <div class="ui-block-a">
+            <p align="left" style="padding-left:8px;"><font size="+1" data-bind="text:user.name"></font><br>
+              <font color="#BDBDBD"><span data-bind="text:user.email"></span><br>
+              <span data-bind="text:user.userId"></span></font></p>
+          </div>
+          <div class="ui-block-b">
+            <p align="right" style="margin-top: 10px; padding-right:3px;"><a href="javascript:void(0);" data-bind="click:logout"><i class="fas fa-sign-out-alt"></i></a></p>
+          </div>
+        </div>
+      </div>
+      <ul data-role="listview" data-theme="b" class="ui-nodisc-icon ui-alt-icon">
+        <li><a href="index.html" rel="external" style=" padding-bottom: 15px; padding-top: 15px; font-weight: 400"><img src="images/clipboard.svg" class="ui-li-icon" style="top: 16px;">我的工作台</a></li>
+        <li><a href="#" rel="external" style=" padding-bottom: 15px; padding-top: 15px; font-weight: 400"><img src="images/clipboard.svg" class="ui-li-icon" style="top: 15px;">我的任务</a></li>
+        <li><a href="#" rel="external" style=" padding-bottom: 15px; padding-top: 15px; font-weight: 400"><img src="images/suppliez/tag-button-with-happy-face.svg" class="ui-li-icon" style="top: 15px;">供应商生命周期</a></li>
+        <li><a href="#" rel="external" style=" padding-bottom: 15px; padding-top: 15px; font-weight: 400"><img src="images/suppliez/direction.svg" class="ui-li-icon" style="top: 15px;">供应链执行</a></li>
+        <li><a href="#" rel="external" style=" padding-bottom: 15px; padding-top: 15px; font-weight: 400"><img src="images/analytics.svg" class="ui-li-icon" style="top: 15px;">数据中心</a></li>
+      </ul>
+      <p align="center" style="margin-top: 30px;"><img src="images/suppliez.png" height="28px"></p>
+    </div>
+  <div data-role="footer"  data-fullscreen="true" data-position="fixed" style=" border-bottom-width: 0px;">
+    <div data-role="navbar" >
+      <ul>
+        <li><a href="#" data-rel="popup" class="ui-btn-b" style="font-weight:300"><i class="fa fa-2x fa-chevron-left"></i><br>
+          上一页</a></li>
+        <li><a href="#" data-rel="popup" class="ui-btn-b" style="font-weight:300"><i class="fa fa-2x fa-chevron-right"></i><br>
+          下一页</a></li>
+        <li><a href="#" data-rel="popup"  class="ui-btn-b" style="font-weight:300"><i class="fas fa-2x fa-sync-alt"></i><br>
+          刷新</a></li>
+        <li><a href="#popmore" data-rel="popup" data-position-to="window"  class="ui-btn-b" style="font-weight:300"><i class="fa fa-2x fa-ellipsis-h"></i><br>
+          更多</a></li>
+      </ul>
+    </div>
+    <!-- /navbar -->
+    <div data-role="popup" id="popaction" data-theme="b" data-overlay-theme="a" style="border-width: 0px; border-radius: 6px  ">
+      <ul data-role="listview" class="ui-nodisc-icon ui-alt-icon" data-inset="true" style="min-width:240px; border-radius: 6px">
+        <li data-role="list-divider" style="border-width: 0px; padding-left: 12px;  background-color: #03a9f4; "><i class="fas fa-play-circle"></i></li>
+        <li><a href="#" rel="external" style=" padding-bottom: 15px; padding-top: 15px; font-weight: 400"><img src="images/suppliez/information-symbol.svg" class="ui-li-icon" style="top: 15px;">基本信息更新</a></li>
+        <li><a href="#" rel="external" style=" padding-bottom: 15px; padding-top: 15px; font-weight: 400"><img src="images/suppliez/google-hangouts-logo.svg" class="ui-li-icon" style="top: 15px;">创建询价</a></li>
+        <li><a href="#" rel="external" style=" padding-bottom: 15px; padding-top: 15px; font-weight: 400"><img src="images/suppliez/sort-arrows-couple-pointing-up-and-down.svg" class="ui-li-icon" style="top: 15px;">状态信息更新</a></li>
+      </ul>
+    </div>
+    <div data-role="popup" id="popmore" data-theme="b" data-overlay-theme="a" style="border-width: 0px; border-radius: 6px  ">
+      <ul data-role="listview"  data-inset="true" style="min-width:240px; border-radius: 6px">
+        <li data-role="list-divider" style="border-width: 0px; padding-left: 12px;  background-color: #455a64; "><i class="fas fa-tasks"></i></li>
+        <li><a href="#" rel="external" style=" padding-bottom: 15px; padding-top: 15px; font-weight: 400"><img src="images/suppliez/shopping-cart.svg" class="ui-li-icon" style="top: 15px;">供应商物料主数据</a></li>
+        <li><a href="#" rel="external" style=" padding-bottom: 15px; padding-top: 15px; font-weight: 400"><img src="images/suppliez/synchronization-arrows.svg" class="ui-li-icon" style="top: 15px;">源数据同步</a></li>
+        <li><a href="#" rel="external" style=" padding-bottom: 15px; padding-top: 15px; font-weight: 400"><img src="images/suppliez/poll-symbol-on-black-square-with-rounded-corners.svg" class="ui-li-icon" style="top: 15px;">报表</a></li>
+      </ul>
+    </div>
+  </div>
+  <!-- /footer --> 
+</div>
+<script>
+$('#myTabs a').click(function (e) {
+  e.preventDefault()
+  $(this).tab('show')
+})
+</script>
+</body>
+</html>

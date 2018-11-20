@@ -1,0 +1,189 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no">
+<title>BPMS | EIM</title>
+<link rel="stylesheet" type="text/css" href="themes/jquery.mobile.css" />
+<link rel="stylesheet" type="text/css" href="themes/color.css" />
+<link rel="stylesheet" type="text/css" href="themes/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="themes/bootstrap-theme.css">
+<link rel="stylesheet" type="text/css" href="themes/jqm-demos.css">
+<link rel="stylesheet" type="text/css" href="themes/jquery.mobile.icons.css">
+<link rel="stylesheet" type="text/css" href="themes/jquery.mobile.structure.css">
+<link rel="stylesheet" type="text/css" href="themes/font-awesome5.min.css">
+<link rel="stylesheet" type="text/css" href="themes/google-icon.css">
+<link rel="stylesheet" type="text/css" href="themes/site.css" />
+<script src="scripts/libs/jquery.js"></script>
+<script src="scripts/libs/jquery.mobile.js"></script>
+<script src="scripts/libs/bootstrap.js"></script>
+<script src="scripts/libs/jquery.sparkline.js"></script>
+<script src="scripts/libs/knockout.js"></script>
+<script src="scripts/libs/moment/moment.js"></script>
+<script src="scripts/libs/bootstrap-collapse.js"></script>
+<script src="scripts/libs/bootstrap-transition.js"></script>
+<script src="scripts/libs/bootstrap-tab.js"></script>
+<script src="scripts/libs/prettify.js"></script>
+<script src="scripts/libs/application.js"></script>
+<script src="scripts/app/config.js"></script>
+<script src="scripts/app/util.js"></script>
+<script src="scripts/app/service.js"></script>
+<script src="scripts/app/baseViewModel.js"></script>
+<script src="scripts/app/pages/index.js"></script>
+<script src="scripts/app/pages/indexViewModel.js"></script>
+<link rel="shortcut icon" href="favicon.ico">
+<style>
+@media screen and (min-width:0px) {
+.row {
+	margin-left: 0px;
+	margin-right: 0px;
+	margin-top: 0px;
+}
+}
+
+@media screen and (min-width:667px) {
+.row {
+	margin-left: 16px;
+	margin-right: 16px;
+	margin-top: 32px;
+}
+}
+
+@media screen and (min-width:992px) {
+.row {
+	margin-left: 16px;
+	margin-right: 0px;
+	margin-top: 32px;
+}
+}
+ @media screen and (min-width:1200px) {
+.row {
+	margin-left: 80px;
+	margin-right: 8px;
+	margin-top: 32px;
+}
+}
+ @media screen and (min-width:1600px) {
+.row {
+ margin-left: 156px;
+ margin-right: 72px;
+ margin-top: 32px;
+}
+}
+ @media screen and (min-width:1900px) {
+.row {
+ margin-left: 156px;
+ margin-right: 600px;
+ margin-top: 32px;
+}
+}
+</style>
+</head>
+<body>
+<div data-role="page" id="logonView" data-theme="c" style="background-image: url(images/bg/12226.jpg); background-size: cover; background-attachment:fixed; text-shadow: 0 0 0; bottom: 0px">
+  <div data-role="header" data-theme="b" data-position="fixed" style=" background-color:#FFFFFF; box-shadow:0 4px 5px 0 rgba(0, 0, 0, 0.14)">
+    <div class="ui-grid-a">
+      <div class="ui-block-a">
+        <h3 style="margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom:8px; text-shadow: 0 0px; color:#bdbdbd; text-align:left"><a href="#popupde" data-rel="popup" data-position-to="window" data-transition="fade" style="color:#009688; font-weight:100"> <img src="images/bpmslogoxsn1.png" height="26px" style="margin-top:-3px;"></a></h3>
+      </div>
+      <div class="ui-block-b">
+        <h3 style="margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom:8px; text-shadow: 0 0px; color:#bdbdbd; text-align:right"><a href="#panelgrid" style="color: #009688"><i class="fas fa-bars"></i></a></h3>
+      </div>
+    </div>
+    <!-- /grid-a --> 
+    
+  </div>
+  <div data-role="content" style="padding: 2px 2px;"> <br>
+    <div class="row">
+      <p  align="left" style=" margin-top:8px; margin-bottom:12px; margin-left: 3px; color: #4cb7ad; font-weight:400; font-size: x-large;"><img src="images/suppliez/shared-folder.svg" height="24px;" style="margin-bottom: 4px"></p>
+      <div class="col-sm-4 col-xs-6 col-md-2 col-lg-2" style="padding: 0px 0px;" data-bind="click:function(){location.href='organization.html';}">
+        <div class="jqm-block-content ui-responsive" style="margin: 2px 2px; padding: 8px 8px; border-color:#E4E4E4; min-height: 164px; box-shadow:1px 1px 3px rgba(74,74,74,0.58); "><font color="#333333" size="+1" style="font-weight:600; text-shadow: 0px 0px 3px rgba(192,192,192,0.6)">组织</font><br>
+          <font color="#90a4ae" style="font-weight:300">EIM01<br>
+          &nbsp;</font>
+          <div class="ui-grid-a" style=" margin:0px 0px; padding:0px 0px">
+            <div class="ui-block-a" style=" margin:0px 0px; padding:0px 0px">
+              <p align="left" style="margin: 0 0; color:#bdbdbd"></p>
+            </div>
+            <div class="ui-block-b" style=" margin:0px 0px; padding:0px 0px">
+              <p align="right"><font size="+2"><a href="#popupMenu" data-rel="popup" data-transition="pop"><img src="images/suppliez/city-buildings-silhouette.svg" height="64px" style="margin-top:4px; margin-right:4px"></a></font></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4 col-xs-6 col-md-2 col-lg-2" style="padding: 0px 0px;" data-bind="click:function(){location.href='employee.html';}">
+        <div class="jqm-block-content ui-responsive" style="margin: 2px 2px; padding: 8px 8px; border-color:#E4E4E4; min-height: 164px; box-shadow:1px 1px 3px rgba(74,74,74,0.58); "><font color="#333333" size="+1" style="font-weight:600; text-shadow: 0px 0px 3px rgba(192,192,192,0.6)">员工</font><br>
+          <font color="#90a4ae" style="font-weight:300">EIM02<br>
+          &nbsp;</font>
+          <div class="ui-grid-a" style=" margin:0px 0px; padding:0px 0px">
+            <div class="ui-block-a" style=" margin:0px 0px; padding:0px 0px">
+              <p align="left" style="margin: 0 0; color:#bdbdbd"></p>
+            </div>
+            <div class="ui-block-b" style=" margin:0px 0px; padding:0px 0px">
+              <p align="right"><font size="+2"><a href="#popupMenu" data-rel="popup" data-transition="pop"><img src="images/suppliez/user.svg" height="64px" style="margin-top:4px; margin-right:4px"></a></font></p>
+            </div>
+          </div>
+        </div>
+      </div>
+		 <div class="col-sm-4 col-xs-6 col-md-2 col-lg-2" style="padding: 0px 0px;"  data-bind="click:function(){location.href='center.html';}">
+        <div class="jqm-block-content ui-responsive" style="margin: 2px 2px; padding: 8px 8px; border-color:#E4E4E4; min-height: 164px; box-shadow:1px 1px 3px rgba(74,74,74,0.58); "><font color="#333333" size="+1" style="font-weight:600; text-shadow: 0px 0px 3px rgba(192,192,192,0.6)">成本中心</font><br>
+          <font color="#90a4ae" style="font-weight:300">EIM03<br>
+          &nbsp;</font>
+          <div class="ui-grid-a" style=" margin:0px 0px; padding:0px 0px">
+            <div class="ui-block-a" style=" margin:0px 0px; padding:0px 0px">
+              <p align="left" style="margin: 0 0; color:#bdbdbd"></p>
+            </div>
+            <div class="ui-block-b" style=" margin:0px 0px; padding:0px 0px">
+              <p align="right"><font size="+2"><a href="#popupMenu" data-rel="popup" data-transition="pop"><img src="images/suppliez/target.svg" height="64px" style="margin-top:4px; margin-right:4px"></a></font></p>
+            </div>
+          </div>
+        </div>
+      </div>
+		  <div class="col-sm-4 col-xs-6 col-md-2 col-lg-2" style="padding: 0px 0px;">
+        <div class="jqm-block-content ui-responsive" style="margin: 2px 2px; padding: 8px 8px; border-color:#E4E4E4; min-height: 164px; box-shadow:1px 1px 3px rgba(74,74,74,0.58); "><font color="#333333" size="+1" style="font-weight:600; text-shadow: 0px 0px 3px rgba(192,192,192,0.6)">资质证书文件</font><br>
+          <font color="#90a4ae" style="font-weight:300">EIM04<br>
+          &nbsp;</font>
+          <div class="ui-grid-a" style=" margin:0px 0px; padding:0px 0px">
+            <div class="ui-block-a" style=" margin:0px 0px; padding:0px 0px">
+              <p align="left" style="margin: 0 0; color:#bdbdbd"></p>
+            </div>
+            <div class="ui-block-b" style=" margin:0px 0px; padding:0px 0px">
+              <p align="right"><font size="+2"><a href="#popupMenu" data-rel="popup" data-transition="pop"><img src="images/suppliez/medal.svg" height="64px" style="margin-top:4px; margin-right:4px"></a></font></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+    <br>
+    <br>
+  </div>
+  <!-- /content -->
+  
+  <div data-role="panel" id="panelgrid" data-position-fixed="true" data-position="right" data-display="overlay"  data-theme="a">
+    <div class="jqm-block-content" style="margin: -14px -14px; margin-bottom: 14px; padding: 9px 9px; padding-top: 30px; background-color: #455a64; border:none; min-height: 0px; border-radius: 0em;">
+      <p align="center" style="margin-bottom:10px;"><i class="material-icons md-56 md-light">face</i></p>
+      <div class="ui-grid-a" style="text-shadow: 0 0 0; color:#FFFFFF">
+        <div class="ui-block-a">
+          <p align="left" style="padding-left:8px;"><font size="+1" data-bind="text:user.name"></font><br>
+            <font color="#BDBDBD" >
+            <span data-bind="text:user.email"></span>
+            <br>
+            <span data-bind="text:user.userId"></span>
+          </font></p>
+        </div>
+        <div class="ui-block-b">
+          <p align="right" style="margin-top: 10px; padding-right:3px;"><a href="javascript:void(0);" data-bind="click:logout"><i class="fas fa-sign-out-alt"></i></a></p>
+        </div>
+      </div>
+    </div>
+    <ul data-role="listview" data-theme="b" class="ui-nodisc-icon ui-alt-icon">
+      <li><a href="#" rel="external" style=" padding-bottom: 15px; padding-top: 15px; font-weight: 400"><img src="images/suppliez/get-directions-button.svg" class="ui-li-icon" style="top: 15px;">供应链执行</a></li>
+      <li><a href="#" rel="external" style=" padding-bottom: 15px; padding-top: 15px; font-weight: 400"><img src="images/suppliez/poll-symbol-on-black-square-with-rounded-corners.svg" class="ui-li-icon" style="top: 15px;">数据中心</a></li>
+    </ul>
+    <p align="center" style="margin-top: 30px;"><img src="images/bpmslogoxsn1.png" height="24px"></p>
+  </div>
+</div>
+<!-- /page -->
+
+</body>
+</html>
