@@ -17,6 +17,7 @@
 <link rel="stylesheet" type="text/css" href="themes/font-awesome5.min.css">
 <link rel="stylesheet" type="text/css" href="themes/google-icon.css">
 <link rel="stylesheet" type="text/css" href="themes/site.css" />
+<script src="scripts/libs/JSOG.js"></script>
 <script src="scripts/libs/jquery.js"></script>
 <script src="scripts/libs/jquery.form.js"></script>
 <script src="scripts/libs/knockout.jquery.mobile.js"></script>
@@ -51,9 +52,9 @@
 <script src="scripts/app/util.js"></script>
 <script src="scripts/app/service.js"></script>
 <script src="scripts/app/baseViewModel.js"></script>
-<script src="scripts/app/pages/organizationListViewModel.js"></script>
-<script src="scripts/app/pages/organizationDetailViewModel.js"></script>
-<script src="scripts/app/pages/organization.js"></script>
+<script src="scripts/app/pages/organization/organizationListViewModel.js"></script>
+<script src="scripts/app/pages/organization/organizationDetailViewModel.js"></script>
+<script src="scripts/app/pages/organization/organization.js"></script>
 <link rel="shortcut icon" href="favicon.ico">
 <style>
 @media screen and (min-height:768px) {
@@ -149,45 +150,42 @@
   </div>
   <div data-role="content" style="padding: 2px 2px; margin-bottom:64px">
     <ul class="nav nav-tabs" id="myTabs" role="tablist" style="margin-left: 2px; margin-right: 2px; margin-top: 4px; border-bottom-width: 0px;">
-      <li style="min-width: 80px;" role="presentation" class="active"><a href="#home" id="home-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true">
+      <li style="min-width: 80px;" role="presentation" class="active"><a href="#all" data-bind="click:switchTab" id="all-tab" role="tab" data-toggle="tab" aria-controls="all" aria-expanded="true">
         <p align="center" style="margin: 0px 0px; font-weight: 200"><i class="fa fa-2x fa-building"></i></p>
         </a></li>
-      <li style="min-width: 80px;" role="search"><a href="#search" role="tab" id="search-tab" data-toggle="tab" aria-controls="search">
+      <li style="min-width: 80px;" role="search"><a href="#search" data-bind="click:switchTab" role="tab" id="search-tab" data-toggle="tab" aria-controls="search">
         <p align="center" style="margin: 0px 0px;"><i class="fa fa-2x fa-search"></i></p>
         </a></li>
     </ul>
     <div id="myTabContent" class="tab-content">
-      <div role="tabpanel" class="tab-pane active" id="home" aria-labelledBy="home-tab">
+      <div role="tabpanel" class="tab-pane active" id="all" aria-labelledBy="all-tab">
         <div class="col-sm-12 col-xs-12 col-md-3 col-lg-3" style="padding: 0px 0px; ">
           <div class="ui-body ui-body-b ui-content" style="background-image: url(images/works-bg.jpg); border-width:1px; border-bottom-right-radius: 0.31em; border-bottom-left-radius:0.31em; min-height: 640px; max-height:640px; margin: 0 2px; padding: 2px 2px; overflow: auto; overflow-style:auto; ">
             <form class="ui-filterable" style="margin: -4px 2px; margin-bottom:-3px; text-shadow: 0 0 0;">
-              <input id="rich-autocomplete-input2" data-type="search" placeholder="输入关键字筛选结果...">
+              <input id="organization-input" data-type="search" placeholder="输入关键字筛选结果...">
             </form>
-            <ul data-role="listview" data-theme="b" data-filter="true" data-inset="true" data-input="#rich-autocomplete-input2" style="margin: 2px 2px;">
-              <li class="ui-nodisc-icon ui-alt-icon"><a href="#" style="padding:6px 12px">
-                <h2 style=" margin-bottom:0px">Org ID</h2>
-                <p style="margin-top:0px; color:#90a4ae">组织</p>
-                <span class="ui-li-count" style="color: #009688">Level</span> </a></li>
-              <li class="ui-nodisc-icon ui-alt-icon"><a href="#" style="padding:6px 12px">
-                <h2 style=" margin-bottom:0px">Org ID</h2>
-                <p style="margin-top:0px; color:#90a4ae">组织</p>
-                <span class="ui-li-count" style="color: #009688">Level</span> </a></li>
+            <ul data-role="listview" data-theme="b" data-filter="true" 
+             data-bind="jqmTemplate: { name: 'item', foreach: $root.all.items }, jqmRefreshList: $root.all.items"
+             data-inset="true" data-input="#organization-input" style="margin: 2px 2px;">
             </ul>
           </div>
         </div>
         <div class="col-sm-12 col-xs-12 col-md-9 col-lg-9" style="padding: 0px 0px; ">
-          <div class="ui-body ui-body-b ui-content" style="background-image: url(images/works-bg.jpg); border-width:1px; border-bottom-right-radius: 0.31em; border-bottom-left-radius:0.31em; min-height: 640px; max-height:640px; overflow:scroll; overflow-style:auto; margin: 0 2px; padding: 2px 2px;">
+          <div class="ui-body ui-body-b ui-content" data-bind="visible:typeof(detail.id())==='number'" style="background-image: url(images/works-bg.jpg); border-width:1px; border-bottom-right-radius: 0.31em; border-bottom-left-radius:0.31em; min-height: 640px; max-height:640px; overflow:scroll; overflow-style:auto; margin: 0 2px; padding: 2px 2px;">
             <div class="row" style="margin:0px 0px; padding:3px 3px">
               <div class="col-sm-6 col-xs-12 col-md-4 col-lg-4" style="padding: 3px 3px; ">
-                <p align="left" style="padding: 0px 0px; margin-bottom:0px; font-weight: 300; font-size: large; color:#455a64"><b>Org ID</b><br>
-                  组织名称 </p>
+                <p align="left" style="padding: 0px 0px; margin-bottom:0px; font-weight: 300; font-size: large; color:#455a64"><b data-bind="text:detail.id"></b><br>
+                  <span data-bind="text:detail.name"></span>
+                </p>
               </div>
               <div class="col-sm-6 col-xs-12 col-md-4 col-lg-4" style="padding: 3px 3px; ">
-                <p style="margin-bottom: 6px;  margin-top: 3px; padding: 0px 0px; font-size: larger"><span style="font-weight: 300" class="label label-info">Level</span></p>
-                <p style="padding:0px 0px; margin-bottom:16px; font-size: small; padding-bottom:0px; font-weight:300; color:#90a4ae"><i class="fa fa-fw fa-plus-square"></i> <b>2018-4-4</b> 16:00 <font color="#BDBDBD">|</font> <i class="fa fa-fw fa-clock"></i> <b>2018-4-4</b> 16:00 <font color="#BDBDBD">|</font> <font><i class="fa fa-fw fa-user-circle"></i></font> 张三</p>
+                <p style="margin-bottom: 6px;  margin-top: 3px; padding: 0px 0px; font-size: larger"><span style="font-weight: 300" class="label label-info" data-bind="text:'Level '+detail.level()"></span></p>
+                <p style="padding:0px 0px;margin-bottom:16px; font-size: small; padding-bottom:0px; font-weight:300; color:#90a4ae">
+                  <span><i class="fa fa-fw fa-clock"></i>&nbsp;<b data-bind="text:eim.util.formatDateTime(detail.updatedAt(),'t3')"></b>&nbsp;<span data-bind="text:eim.util.formatDateTime(detail.updatedAt(),'t4')"></span>&nbsp;<font color="#BDBDBD">|</font>&nbsp;<font><i class="fa fa-fw fa-user-circle"></i></font>&nbsp;<span data-bind="text:detail.updatedBy"></span></span>
+                </p>
               </div>
               <div class="col-sm-6 col-xs-12 col-md-4 col-lg-4" style="padding: 3px 3px; ">
-                <p align="right" style="padding:3px 3px; margin-bottom:0px;"><a href="#popaction" data-rel="popup" data-position-to="window"  style="font-weight:300;  margin-left:20px; color:#0288d1"><i class="material-icons">content_copy</i></a><a href="#popaction" data-rel="popup" data-position-to="window"  style="font-weight:300; margin-left: 20px;   color:#0288d1"><i class="material-icons">edit</i></a><a href="#popaction" data-rel="popup" data-position-to="window"  style="font-weight:300;  margin-left:20px; color:#0288d1"><i class="material-icons">delete</i></a></p>
+                <p align="right" style="padding:3px 3px; margin-bottom:0px;"><a href="#popaction" data-rel="popup" data-position-to="window"  style="font-weight:300;  margin-left:20px; color:#0288d1"><i class="material-icons">content_copy</i></a><a href="javascript:void(0);" data-bind="attr:{href:'organization_edit.html?id='+detail.id()}" style="font-weight:300; margin-left: 20px;   color:#0288d1"><i class="material-icons">edit</i></a><a href="#popaction" data-rel="popup" data-position-to="window"  style="font-weight:300;  margin-left:20px; color:#0288d1"><i class="material-icons">delete</i></a></p>
               </div>
             </div>
             <ul class="nav nav-tabs" id="tskTabs" role="tablist" style="margin-left: 2px; margin-right: 2px; margin-top: 4px; border-bottom-width: 0px;">
@@ -205,28 +203,26 @@
                     <legend style="margin-bottom: 16px;"><font size="-1" color="#bdbdbd" style="font-weight:600"><i class="fa fa-fw fa-info"></i> 基本信息</font></legend>
                     <div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
                       <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">编码</font></label>
-                      <b>40181022001</b> </div>
+                      <b data-bind="text:detail.sn"></b><b>&nbsp;</b></div>
                     <div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
                       <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">名称</font></label>
-                      <b>40181022001</b></div>
+                      <b data-bind="text:detail.name"></b><b>&nbsp;</b></div>
                     <div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
                       <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">税务识别号</font></label>
-                      <b>W240001</b></div>
+                      <b  data-bind="text:detail.taxNumber"></b><b>&nbsp;</b></div>
                   </div>
                   <div class="row" style="margin:0px 0px; padding:6px 6px;">
                     <div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
                       <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">上层组织</font></label>
-                      <b>VS0010</b> </div>
+                      <b data-bind="text:detail.superiorDepartment() && detail.superiorDepartment().name"></b><b>&nbsp;</b></div>
                     <div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
                       <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">负责人</font></label>
-                      <b>张三</b> </div>
+                      <b data-bind="text:detail.departmentManager() && detail.departmentManager().name"></b><b>&nbsp;</b></div>
                   </div>
-                  
-				  
-				  <div class="row" style="margin:0px 0px; padding:6px 6px;">
+				          <div class="row" style="margin:0px 0px; padding:6px 6px;">
                     <div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
                       <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">地址</font></label>
-                      <b>VS0010</b> </div>
+                      <b data-bind="text:detail.address"></b><b>&nbsp;</b></div>
                     
 					
 					<!--<div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
@@ -238,7 +234,7 @@
                   <div class="row" style="margin:0px 0px; padding:6px 6px;">
                     <legend style="margin-bottom: 16px;"><font size="-1" color="#bdbdbd" style="font-weight:600"><i class="fa fa-fw fa-sitemap"></i> 下属组织</font></legend>
                     <div data-role="collapsible" data-collapsed="false" data-content-theme="a" data-collapsed-icon="carat-d" data-expanded-icon="carat-u" style="margin-top:18px;" data-iconpos="right">
-                      <h4><i class="fa fa-table"></i> 3</h4>
+                      <h4><i class="fa fa-table"></i>&nbsp;<span data-bind="text:detail.subordinateDepartments().length"></span></h4>
                       <table data-role="table" id="movie-table-custom" class="ui-body-d ui-shadow table-stripe ui-responsive movie-list table-stroke" data-mode="reflow"  style="margin-bottom: 8px; margin-top:8px; padding: 3px 3px">
                         <thead>
                           <tr class="ui-bar-d">
@@ -248,19 +244,8 @@
                             <!--<th>默认成本中心</th>-->
                           </tr>
                         </thead>
-                        <tbody>
-                          <tr>
-                            <th style="text-align:center">ID 001</th>
-                            <td>shanghaiAVC</td>
-                            <td>张三</td>
-                            <!--<td>Cost Center 123</td>-->
-                          </tr>
-                          <tr>
-                            <th style="text-align:center">ID 002</th>
-                            <td>shanghaiAVC</td>
-                            <td>张三</td>
-                            <!--<td>Cost Center 123</td>-->
-                          </tr>
+                        <tbody data-bind="template: { name: 'organizationRow', foreach:detail.subordinateDepartments }">
+                        
                         </tbody>
                       </table>
                     </div>
@@ -349,11 +334,11 @@
   <div data-role="footer"  data-fullscreen="true" data-position="fixed" style=" border-bottom-width: 0px;">
     <div data-role="navbar" >
       <ul>
-        <li><a href="#" data-rel="popup" class="ui-btn-b" style="font-weight:300"><i class="fa fa-2x fa-chevron-left"></i><br>
+        <li data-bind="css: { 'ui-disabled': !($root.all.hasPrev()) }"><a href="javascript:void(0)"   data-bind="click: getPrev" class="ui-btn-b" style="font-weight:300"><i class="fa fa-2x fa-chevron-left"></i><br>
           上一页</a></li>
-        <li><a href="#" data-rel="popup" class="ui-btn-b" style="font-weight:300"><i class="fa fa-2x fa-chevron-right"></i><br>
+          <li data-bind="css: { 'ui-disabled': !($root.all.hasNext()) }"><a href="javascript:void(0)"  data-bind="click:getNext" class="ui-btn-b" style="font-weight:300"><i class="fa fa-2x fa-chevron-right"></i><br>
           下一页</a></li>
-        <li><a href="#" data-rel="popup"  class="ui-btn-b" style="font-weight:300"><i class="fas fa-2x fa-sync-alt"></i><br>
+          <li><a href="javascript:void(0)"  data-bind="click: function(){$root.getData();}"  class="ui-btn-b" style="font-weight:300"><i class="fas fa-2x fa-sync-alt"></i><br>
           刷新</a></li>
         <li><a href="#popmore" data-rel="popup" data-position-to="window"  class="ui-btn-b" style="font-weight:300"><i class="fa fa-2x fa-ellipsis-h"></i><br>
           更多</a></li>
@@ -371,7 +356,7 @@
     <div data-role="popup" id="popmore" data-theme="b" data-overlay-theme="a" style="border-width: 0px; border-radius: 6px  ">
       <ul data-role="listview"  data-inset="true" style="min-width:240px; border-radius: 6px">
         <li data-role="list-divider" style="border-width: 0px; padding-left: 12px;  background-color: #455a64; "><i class="fas fa-tasks"></i></li>
-        <li><a href="eim_org_add.html" rel="external" style=" padding-bottom: 15px; padding-top: 15px; font-weight: 400"><img src="images/suppliez/shopping-cart.svg" class="ui-li-icon" style="top: 15px;">创建</a></li>
+        <li><a href="organization_add.html" rel="external" style=" padding-bottom: 15px; padding-top: 15px; font-weight: 400"><img src="images/suppliez/shopping-cart.svg" class="ui-li-icon" style="top: 15px;">创建</a></li>
         <li><a href="#" rel="external" style=" padding-bottom: 15px; padding-top: 15px; font-weight: 400"><img src="images/suppliez/synchronization-arrows.svg" class="ui-li-icon" style="top: 15px;">源数据同步</a></li>
        
       </ul>
@@ -379,11 +364,26 @@
   </div>
   <!-- /footer --> 
 </div>
-<script>
-$('#myTabs a').click(function (e) {
-  e.preventDefault()
-  $(this).tab('show')
-})
-</script>
+
+
+  <script type="text/html" id="item">
+    <li class="ui-nodisc-icon ui-alt-icon">
+      <a href="javascript:void(0)" style="padding:6px 12px" data-bind="click:$root.selectItem.bind($root)">
+        <h2 style=" margin-bottom:0px" data-bind="text:id"></h2>
+        <p style="margin-top:0px; color:#90a4ae" data-bind="text:name"></p>
+        <span class="ui-li-count" style="color: #009688" data-bind="text:'Level '+ level"></span>
+      </a>
+    </li>
+  </script>
+  
+<script type="text/html" id="organizationRow">
+  <tr>
+    <th style="text-align:center" data-bind="text:$data.id"></th>
+    <td  data-bind="text:$data.name"></td>
+    <td data-bind="text:$data.departmentManager&&$data.departmentManager.name"></td>
+    <!--<td>Cost Center 123</td>-->
+  </tr>
+ </script>
+
 </body>
 </html>

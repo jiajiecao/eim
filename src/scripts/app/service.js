@@ -2,6 +2,8 @@
 
     eim.service = {
         login: function (userName, password) {
+
+            var dfd = $.Deferred();
             var getUserInfo = function (accessToken) {
                 var url = eim.config.oAuth2Url + "userinfo";
                 var settings = {
@@ -49,7 +51,9 @@
             eim.service.loginError = false;
             sessionStorage.removeItem("Bearer");
             sessionStorage.removeItem("bpms_user");
-            return requestOAuth2(userName, password).then(
+            sessionStorage.removeItem("bpms_token");
+            var token = eim.util.getAuthToken(userName, password);
+            requestOAuth2(userName, password).then(
                 function (response) {
                     if (response && response.access_token)
                         sessionStorage.setItem("Bearer", JSON.stringify(response));
@@ -81,18 +85,26 @@
                     user.Roles = roles.join(",");
                 }
                 sessionStorage.setItem("bpms_user", JSON.stringify(user));
-
-                var token = eim.util.getAuthToken(userName, password);
                 return eim.util.request("history/historic-activity-instances", {}, {
                     "token": token
                 });
+            }).then(function () {
+                sessionStorage.setItem("bpms_token", token);
+                dfd.resolve();
+            }, function () {
+                dfd.reject();
             });
 
+            return dfd.promise();
         },
-        getCenterList: function (page, size) {
+        getMasterDataList: function (type, page, size) {
             var param = { page: page, size: size };
-            var url = eim.config.hrUrl + "costCenter"; //+ $.param(param);
+            var url = eim.config.hrUrl + type;
             return eim.util.requestWithBearer(url, param);
+        },
+        getMasterDataDetail: function (type, id) {
+            var url = eim.config.hrUrl + type + "/id/" + id;
+            return eim.util.requestWithBearer(url);
         }
 
     };

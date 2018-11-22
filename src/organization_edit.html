@@ -3,42 +3,56 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, target-densitydpi=device-dpi">
-<title>bpmsadmin | EIM</title>
-<!--<link href="css/jquery.mobile-1.3.2.css" rel="stylesheet" />-->
-<link href="themes/jquery.mobile-1.4.5.min.css" rel="stylesheet" type="text/css" />
-
-<!--<link href="css/jquery.mobile.theme-1.3.2.css" rel="stylesheet" />
-<link href="css/jquery.mobile.structure-1.3.2.css" rel="stylesheet" />-->
-
-<link rel="stylesheet" href="themes/bladecolor.min.css" />
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="themes/bootstrap.min.css">
-
-<!-- Optional theme -->
-<link rel="stylesheet" href="themes/bootstrap-theme.min.css">
-<link rel="stylesheet" href="themes/jqm-demos.css">
-<link rel="stylesheet" href="themes/jquery.mobile.icons.min.css">
-<link rel="stylesheet" href="themes/jquery.mobile.structure-1.4.5.min.css">
-<link href="themes/font-awesome5.min.css" rel="stylesheet" type="text/css">
-<link href="css/googleicon.css" rel="stylesheet">
-<link href="css/site.css" rel="stylesheet" />
-<!--<script src="scripts/lib/jquery-1.8.2.js"></script>
-<!--<script src="scripts/app/knockout.jquery.mobile.js"></script>-->
-<!--<script src="scripts/lib/jquery.mobile-1.3.2.js"></script>-->
-
-<script src="vendor/jquery/dist/jquery.js"></script>
-<script src="lib/jquery.mobile-1.4.5.js"></script>
-<script src="js/bootstrap.min.js"></script>
+<title>bpms admin | EIM</title>
+<link rel="stylesheet" type="text/css" href="themes/jquery.mobile.css" />
+<link rel="stylesheet" type="text/css" href="themes/color.css" />
+<link rel="stylesheet" type="text/css" href="themes/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="themes/owl.carousel.css">
+<link rel="stylesheet" type="text/css" href="themes/owl.theme.css">
+<link rel="stylesheet" type="text/css" href="themes/owl.transitions.css">
+<link rel="stylesheet" type="text/css" href="themes/bootstrap-theme.css">
+<link rel="stylesheet" type="text/css" href="themes/jqm-demos.css">
+<link rel="stylesheet" type="text/css" href="themes/jquery.mobile.icons.css">
+<link rel="stylesheet" type="text/css" href="themes/jquery.mobile.structure.css">
+<link rel="stylesheet" type="text/css" href="themes/font-awesome5.min.css">
+<link rel="stylesheet" type="text/css" href="themes/google-icon.css">
+<link rel="stylesheet" type="text/css" href="themes/site.css" />
+<script src="scripts/libs/jquery.js"></script>
+<script src="scripts/libs/jquery.form.js"></script>
+<script src="scripts/libs/knockout.jquery.mobile.js"></script>
+<script src="scripts/libs/jquery.mobile.js"></script>
+<script src="scripts/libs/bootstrap.js"></script>
+<script src="scripts/libs/knockout.js"></script>
+<script src="scripts/libs/koExternalTemplateEngine_all.js"></script>
+<script src="scripts/libs/ko.extension.js"></script>
+<script src="scripts/libs/jquery.sparkline.js"></script>
+<script src="scripts/libs/bootstrap-collapse.js"></script>
+<script src="scripts/libs/bootstrap-transition.js"></script>
+<script src="scripts/libs/bootstrap-tab.js"></script>
+<script src="scripts/libs/prettify.js"></script>
+<script src="scripts/libs/application.js"></script>
+<script src="scripts/libs/moment/moment.js"></script>
+<script src="scripts/libs/moment/locale/zh-cn.js"></script>
+<script src="scripts/libs/bootstrap-datetimepicker.js"></script>
+<script src="scripts/libs/oex/utils.js"></script>
+<script src="scripts/libs/oex/jqm-checked.js"></script>
+<script src="scripts/libs/oex/jqm-datetime.js"></script>
+<script src="scripts/libs/oex/jqm-selected.js"></script>
+<script src="scripts/libs/oex/jqm-number.js"></script>
+<script src="scripts/libs/oex/jqm-money.js"></script>
+<script src="scripts/libs/oex/jqm-tel.js"></script>
+<script src="scripts/libs/oex/jqm-email.js"></script>
+<script src="scripts/libs/oex/jqm-switch.js"></script>
+<script src="scripts/libs/oex/jqm-auto.js"></script>
+<script src="scripts/libs/oex/jqm-id.js"></script>
+<script src="scripts/libs/oex/jqm-upload.js"></script>
+<script src="scripts/libs/oex/jqm-ctr.js"></script>
+<script src="scripts/app/config.js"></script>
 <script src="scripts/app/util.js"></script>
-<script src="scripts/lib/amplify.js"></script>
-<script src="scripts/lib/knockout-2.2.0.js"></script>
-<script src="scripts/lib/knockout.mapping-latest.js"></script>
-<script src="scripts/lib/koExternalTemplateEngine_all.js"></script>
-<script src="scripts/app/services/user.js"></script>
-<script src="scripts/app/viewmodel/LogonViewModel.js"></script>
-<script src="scripts/app/ko.extentions.js"></script>
-<script src="scripts/app/app.js"></script>
-<script src="scripts/app/logonApp.js"></script>
+<script src="scripts/app/service.js"></script>
+<script src="scripts/app/baseViewModel.js"></script>
+<script src="scripts/app/pages/organization/organizationEditViewModel.js"></script>
+<script src="scripts/app/pages/organization/organizationEdit.js"></script>
 <link rel="shortcut icon" href="favicon.ico">
 <style>
 textarea.ui-input-text {
@@ -135,8 +149,6 @@ textarea.ui-input-text {
 	clear: left;
 }
 }
-</style>
-<style>
 @media screen and (min-width:0px) {
 .row {
 	margin-left: 0px;
@@ -167,6 +179,7 @@ textarea.ui-input-text {
 	margin-left: 100px;
 	margin-right: 100px;
 	margin-top: 32px;
+}
 }
  @media screen and (min-width:1600px) {
 .row {

@@ -17,6 +17,7 @@
 <link rel="stylesheet" type="text/css" href="themes/font-awesome5.min.css">
 <link rel="stylesheet" type="text/css" href="themes/google-icon.css">
 <link rel="stylesheet" type="text/css" href="themes/site.css" />
+<script src="scripts/libs/JSOG.js"></script>
 <script src="scripts/libs/jquery.js"></script>
 <script src="scripts/libs/jquery.form.js"></script>
 <script src="scripts/libs/knockout.jquery.mobile.js"></script>
@@ -51,9 +52,9 @@
 <script src="scripts/app/util.js"></script>
 <script src="scripts/app/service.js"></script>
 <script src="scripts/app/baseViewModel.js"></script>
-<script src="scripts/app/pages/centerListViewModel.js"></script>
-<script src="scripts/app/pages/centerDetailViewModel.js"></script>
-<script src="scripts/app/pages/center.js"></script>
+<script src="scripts/app/pages/center/centerListViewModel.js"></script>
+<script src="scripts/app/pages/center/centerDetailViewModel.js"></script>
+<script src="scripts/app/pages/center/center.js"></script>
 <link rel="shortcut icon" href="favicon.ico">
 <style>
 @media screen and (min-height:768px) {
@@ -165,33 +166,33 @@ $(function () {
         <div class="col-sm-12 col-xs-12 col-md-3 col-lg-3" style="padding: 0px 0px; ">
           <div class="ui-body ui-body-b ui-content" style="background-image: url(images/works-bg.jpg); border-width:1px; border-bottom-right-radius: 0.31em; border-bottom-left-radius:0.31em; min-height: 640px; max-height:640px; margin: 0 2px; padding: 2px 2px; overflow: auto; overflow-style:auto; ">
             <form class="ui-filterable" style="margin: -4px 2px; margin-bottom:-3px; text-shadow: 0 0 0;">
-              <input id="rich-autocomplete-input2" data-type="search" placeholder="输入关键字筛选结果...">
+              <input id="center-input" data-type="search" placeholder="输入关键字筛选结果...">
             </form>
-            <ul data-role="listview" data-theme="b" data-filter="true" data-inset="true" data-input="#rich-autocomplete-input2" style="margin: 2px 2px;">
-              <li class="ui-nodisc-icon ui-alt-icon"><a href="#" style="padding:6px 12px">
-                <h2 style=" margin-bottom:0px">costCenter ID</h2>
-                <p style="margin-top:0px; color:#90a4ae">成本中心</p>
-               </a></li>
-              <li class="ui-nodisc-icon ui-alt-icon"><a href="#" style="padding:6px 12px">
-                <h2 style=" margin-bottom:0px">costCenter ID</h2>
-                <p style="margin-top:0px; color:#90a4ae">成本中心</p>
-                </a></li>
+            <ul data-role="listview" data-theme="b" data-filter="true" 
+             data-bind="jqmTemplate: { name: 'item', foreach: $root.all.items }, jqmRefreshList: $root.all.items"
+             data-inset="true" data-input="#center-input" style="margin: 2px 2px;">
+             
             </ul>
           </div>
         </div>
         <div class="col-sm-12 col-xs-12 col-md-9 col-lg-9" style="padding: 0px 0px; ">
-          <div class="ui-body ui-body-b ui-content" style="background-image: url(images/works-bg.jpg); border-width:1px; border-bottom-right-radius: 0.31em; border-bottom-left-radius:0.31em; min-height: 640px; max-height:640px; overflow:scroll; overflow-style:auto; margin: 0 2px; padding: 2px 2px;">
+          <div class="ui-body ui-body-b ui-content" data-bind="visible:typeof(detail.id())==='number'" style="background-image: url(images/works-bg.jpg); border-width:1px; border-bottom-right-radius: 0.31em; border-bottom-left-radius:0.31em; min-height: 640px; max-height:640px; overflow:scroll; overflow-style:auto; margin: 0 2px; padding: 2px 2px;">
             <div class="row" style="margin:0px 0px; padding:3px 3px">
               <div class="col-sm-6 col-xs-12 col-md-4 col-lg-4" style="padding: 3px 3px; ">
-                <p align="left" style="padding: 0px 0px; margin-bottom:0px; font-weight: 300; font-size: large; color:#455a64"><b>costCenter ID</b><br>
-                  成本中心名称 </p>
+                <p align="left" style="padding: 0px 0px; margin-bottom:0px; font-weight: 300; font-size: large; color:#455a64"><b data-bind="text:detail.id"></b><br>
+                <span data-bind="text:detail.name"></span>
+                </p>
               </div>
               <div class="col-sm-6 col-xs-12 col-md-4 col-lg-4" style="padding: 3px 3px; ">
-               
-                <p style="padding:0px 0px; margin-bottom:16px; font-size: small; padding-bottom:0px; font-weight:300; color:#90a4ae"><i class="fa fa-fw fa-plus-square"></i> <b>2018-4-4</b> 16:00 <font color="#BDBDBD">|</font> <i class="fa fa-fw fa-clock"></i> <b>2018-4-4</b> 16:00 <font color="#BDBDBD">|</font> <font><i class="fa fa-fw fa-user-circle"></i></font> 张三</p>
+                <!-- <p style="padding:0px 0px;margin-bottom:16px; font-size: small; padding-bottom:0px; font-weight:300; color:#90a4ae">
+                  <span><i class="fa fa-fw fa-plus-square"></i>&nbsp;<b data-bind="text:eim.util.formatDateTime(detail.createdAt(),'t3')"></b>&nbsp;<span data-bind="text:eim.util.formatDateTime(detail.createdAt(),'t4')"></span>&nbsp;<font color="#BDBDBD">|</font>&nbsp;<font><i class="fa fa-fw fa-user-circle"></i></font>&nbsp;<span data-bind="text:detail.createdBy"></span></span>
+                </p> -->
+                <p style="padding:0px 0px;margin-bottom:16px; font-size: small; padding-bottom:0px; font-weight:300; color:#90a4ae">
+                  <span><i class="fa fa-fw fa-clock"></i>&nbsp;<b data-bind="text:eim.util.formatDateTime(detail.updatedAt(),'t3')"></b>&nbsp;<span data-bind="text:eim.util.formatDateTime(detail.updatedAt(),'t4')"></span>&nbsp;<font color="#BDBDBD">|</font>&nbsp;<font><i class="fa fa-fw fa-user-circle"></i></font>&nbsp;<span data-bind="text:detail.updatedBy"></span></span>
+                </p>
               </div>
               <div class="col-sm-6 col-xs-12 col-md-4 col-lg-4" style="padding: 3px 3px; ">
-                <p align="right" style="padding:3px 3px; margin-bottom:0px;"><a href="#popaction" data-rel="popup" data-position-to="window"  style="font-weight:300;  margin-left:20px; color:#0288d1"><i class="material-icons">content_copy</i></a><a href="#popaction" data-rel="popup" data-position-to="window"  style="font-weight:300; margin-left: 20px;   color:#0288d1"><i class="material-icons">edit</i></a><a href="#popaction" data-rel="popup" data-position-to="window"  style="font-weight:300;  margin-left:20px; color:#0288d1"><i class="material-icons">delete</i></a></p>
+                <p align="right" style="padding:3px 3px; margin-bottom:0px;"><a href="#popaction" data-rel="popup" data-position-to="window"  style="font-weight:300;  margin-left:20px; color:#0288d1"><i class="material-icons">content_copy</i></a><a data-bind="attr:{href:'center_edit.html?id='+detail.id()}" rel="external"  style="font-weight:300; margin-left: 20px; color:#0288d1"><i class="material-icons">edit</i></a><a data-bind="attr:{href:'organization_edit.html?id='+detail.id()}" rel="external"  style="font-weight:300;  margin-left:20px; color:#0288d1"><i class="material-icons">delete</i></a></p>
               </div>
             </div>
             <ul class="nav nav-tabs" id="tskTabs" role="tablist" style="margin-left: 2px; margin-right: 2px; margin-top: 4px; border-bottom-width: 0px;">
@@ -209,17 +210,20 @@ $(function () {
                     <legend style="margin-bottom: 16px;"><font size="-1" color="#bdbdbd" style="font-weight:600"><i class="fa fa-fw fa-info"></i> 基本信息</font></legend>
                     <div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
                       <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">编码</font></label>
-                      <b>40181022001</b> </div>
+                      <b data-bind="text:detail.code"></b><b>&nbsp;</b>
+                    </div>
                     <div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
                       <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">名称</font></label>
-                      <b>40181022001</b></div>
+                      <b data-bind="text:detail.name"></b><b>&nbsp;</b>
+                    </div>
               
                   </div>
                   <div class="row" style="margin:0px 0px; padding:6px 6px;">
    
                     <div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
                       <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">负责人</font></label>
-                      <b>张三</b> </div>
+                      <b data-bind="text:detail.costCenterManager() && detail.costCenterManager().name"></b><b>&nbsp;</b>
+                    </div>
                   </div>
                   
 				  
@@ -257,26 +261,26 @@ $(function () {
             <p align="right"><a href="#" style="font-weight:300;  margin-left:20px; color:#0288d1"><i class="material-icons">refresh</i></a> <a href="#" style="font-weight:300;  margin-left:20px; color:#0288d1"><i class="material-icons">search</i></a></p>
             <div class=" col-lg-3 col-sm-12 col-xs-12 col-md-6" style="padding:3px 3px; ">
               <label for="amount"><font color="#9e9e9e" size="-1">成本中心ID</font></label>
-              <input type="text" data-clear-btn="true" name="amount" id="amount" data-inline="false" data-theme="b" style="font-weight:600; height:39px;">
+              <input type="text" data-clear-btn="true" name="amount1" id="amount1" data-inline="false" data-theme="b" style="font-weight:600; height:39px;">
             </div>
             <div class=" col-lg-3 col-sm-12 col-xs-12 col-md-6" style="padding:3px 3px; ">
               <label for="amount"><font color="#9e9e9e" size="-1">成本中心级别</font></label>
-              <input type="text" data-clear-btn="true" name="amount" id="amount" data-inline="false" data-theme="b" style="font-weight:600; height:39px;">
+              <input type="text" data-clear-btn="true" name="amount2" id="amount2" data-inline="false" data-theme="b" style="font-weight:600; height:39px;">
             </div>
             <div class=" col-lg-6 col-sm-12 col-xs-12 col-md-6" style="padding:3px 3px; ">
               <label for="amount"><font color="#9e9e9e" size="-1">成本中心名称</font></label>
-              <input type="text" data-clear-btn="true" name="amount" id="amount" data-inline="false" data-theme="b" style="font-weight:600; height:39px;">
+              <input type="text" data-clear-btn="true" name="amount3" id="amount3" data-inline="false" data-theme="b" style="font-weight:600; height:39px;">
             </div>
           </div>
           <div class="row">
             <legend style="padding-left: 3px;"><font size="-1" color="#000000"></font></legend>
             <div class=" col-lg-3 col-sm-6 col-xs-12 col-md-6" style="padding:3px 3px; ">
               <label for="amount"><font color="#9e9e9e" size="-1">负责人</font></label>
-              <input type="text" data-clear-btn="true" name="amount" id="amount" data-inline="false" data-theme="b" style="font-weight:600; height:39px;">
+              <input type="text" data-clear-btn="true" name="amount4" id="amount4" data-inline="false" data-theme="b" style="font-weight:600; height:39px;">
             </div>
             <div class=" col-lg-3 col-sm-6 col-xs-12 col-md-6" style="padding:3px 3px; ">
               <label for="amount"><font color="#9e9e9e" size="-1">默认成本中心</font></label>
-              <input type="text" data-clear-btn="true" name="amount" id="amount" data-inline="false" data-theme="b" style="font-family:Arial, FontAwesome; font-weight:300; height:39px;">
+              <input type="text" data-clear-btn="true" name="amount5" id="amount5" data-inline="false" data-theme="b" style="font-family:Arial, FontAwesome; font-weight:300; height:39px;">
             </div>
           </div>
         </div>
@@ -309,11 +313,11 @@ $(function () {
   <div data-role="footer"  data-fullscreen="true" data-position="fixed" style=" border-bottom-width: 0px;">
     <div data-role="navbar" >
       <ul>
-        <li><a href="#" data-rel="popup" class="ui-btn-b" style="font-weight:300"><i class="fa fa-2x fa-chevron-left"></i><br>
+        <li data-bind="css: { 'ui-disabled': !($root.all.hasPrev()) }"><a href="javascript:void(0)"   data-bind="click: getPrev" class="ui-btn-b" style="font-weight:300"><i class="fa fa-2x fa-chevron-left"></i><br>
           上一页</a></li>
-        <li><a href="#" data-rel="popup" class="ui-btn-b" style="font-weight:300"><i class="fa fa-2x fa-chevron-right"></i><br>
+          <li data-bind="css: { 'ui-disabled': !($root.all.hasNext()) }"><a href="javascript:void(0)"  data-bind="click:getNext" class="ui-btn-b" style="font-weight:300"><i class="fa fa-2x fa-chevron-right"></i><br>
           下一页</a></li>
-        <li><a href="#" data-rel="popup"  class="ui-btn-b" style="font-weight:300"><i class="fas fa-2x fa-sync-alt"></i><br>
+          <li><a href="javascript:void(0)"  data-bind="click: function(){$root.getData();}"  class="ui-btn-b" style="font-weight:300"><i class="fas fa-2x fa-sync-alt"></i><br>
           刷新</a></li>
         <li><a href="#popmore" data-rel="popup" data-position-to="window"  class="ui-btn-b" style="font-weight:300"><i class="fa fa-2x fa-ellipsis-h"></i><br>
           更多</a></li>
@@ -331,7 +335,7 @@ $(function () {
     <div data-role="popup" id="popmore" data-theme="b" data-overlay-theme="a" style="border-width: 0px; border-radius: 6px  ">
       <ul data-role="listview"  data-inset="true" style="min-width:240px; border-radius: 6px">
         <li data-role="list-divider" style="border-width: 0px; padding-left: 12px;  background-color: #455a64; "><i class="fas fa-tasks"></i></li>
-        <li><a href="eim_costCenter_add.html" rel="external" style=" padding-bottom: 15px; padding-top: 15px; font-weight: 400"><img src="images/suppliez/shopping-cart.svg" class="ui-li-icon" style="top: 15px;">创建</a></li>
+        <li><a href="center_add.html" rel="external" style=" padding-bottom: 15px; padding-top: 15px; font-weight: 400"><img src="images/suppliez/shopping-cart.svg" class="ui-li-icon" style="top: 15px;">创建</a></li>
         <li><a href="#" rel="external" style=" padding-bottom: 15px; padding-top: 15px; font-weight: 400"><img src="images/suppliez/synchronization-arrows.svg" class="ui-li-icon" style="top: 15px;">源数据同步</a></li>
        
       </ul>
@@ -339,11 +343,14 @@ $(function () {
   </div>
   <!-- /footer --> 
 </div>
-<script>
-$('#myTabs a').click(function (e) {
-  e.preventDefault()
-  $(this).tab('show')
-})
+
+<script type="text/html" id="item">
+  <li class="ui-nodisc-icon ui-alt-icon">
+    <a href="javascript:void(0)" style="padding:6px 12px" data-bind="click:$root.selectItem.bind($root)">
+      <h2 style="margin-bottom:0px" data-bind="text:id"></h2>
+      <p style="margin-top:0px; color:#90a4ae" data-bind="text:name"></p>
+    </a>
+  </li>
 </script>
 </body>
 </html>

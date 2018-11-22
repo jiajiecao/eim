@@ -58,11 +58,11 @@
             }
             eim.service.login(userName, password)
                 .then(function (data) {
-                    var token = eim.util.getAuthToken(userName, password);
-                    sessionStorage.setItem("bpms_token", token);
-                    return eim.util.request("runtime/tasks");
+                    loader.hide();
+                    var target = eim.util.getUrlParam(window.location.href, "target") || "index.html";
+                    window.location.replace(target);
                 }, function (err) {
-                    sessionStorage.removeItem("bpms_token");
+
                     var message = eim.service.loginError ? "您输入的登陆信息不正确" : "网络异常";
                     self.message(message);
                     if (err && err.status && err.statusText) {
@@ -72,19 +72,6 @@
                     hasError = true;
                     loader.hide();
 
-                })
-                .then(function (data) {
-                    loader.hide();
-                    var target = eim.util.getUrlParam(window.location.href, "target") || "index.html";
-                    window.location.replace(target);
-                }, function () {
-                    loader.hide();
-                    if (hasError) {
-                        return;
-                    }
-                    sessionStorage.removeItem("bpms_token");
-                    self.message("获取任务失败");
-                    $("#popupMessage").popup("open");
                 });
         };
 

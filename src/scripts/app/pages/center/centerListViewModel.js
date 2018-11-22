@@ -30,19 +30,17 @@
         var root = this;
         root.loading();
         index = index || root.all.pageIndex();
-        return eim.service.getCenterList(index, root.pageSize).then(function (result) {
-            root.all.items(result);
-            var total = result.length ? result[0].TOTAL_ROWS : 0;
-            var pageCount = Math.floor((total - 1) / root.pageSize) + 1;
+        return eim.service.getMasterDataList("costCenter", index - 1, root.pageSize).then(function (result) {
+            root.all.items(result.content);
+            var pageCount = Math.floor((result.totalElements  - 1) / root.pageSize) + 1;
             root.all.pageCount(pageCount);
 
             root.loading(false);
         }, function (result) {
-            root.show({
-                title: "获取成本中心列表",
-                //subTitle: "",
-                //code: "E03",
-                message: "获取成本中心列表失败" + " " + (result && result.errorMessage || "")
+            root.pop("error", {
+                "title": "获取成本中心列表",
+                "detail": "获取成本中心列表失败" + " " + (result && result.errorMessage || ""),
+                "code": "错误代码：" + result.status + " " + result.statusText
             });
             root.loading(false);
         });
@@ -51,7 +49,5 @@
         var root = this;
         root.tab("all");
         root.getData();
-
-
     };
 })(window.eim = window.eim || {}, jQuery, ko, moment);

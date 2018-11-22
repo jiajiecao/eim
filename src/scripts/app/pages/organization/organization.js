@@ -11,16 +11,16 @@
         var root = this;
         var request = this.constructor.prototype.getData.apply(this, arguments);
         request.then(function () {
-            if (!root.detail.MAT_ID_() && root.all.items().length) {
+            if (typeof (root.detail.id()) !== "number" && root.all.items().length) {
                 root.selectItem(root.all.items()[0]);
             }
         });
     };
 
     eim.ViewModels.OrganizationViewModel.prototype.selectItem = function ($data) {
-        this.detail.MAT_ID_($data && $data.MAT_ID_);
-
-        if (this.detail.MAT_ID_()) {
+        var id = $data && $data.id;
+        this.detail.id(id);
+        if (typeof (id) === "number") {
             this.detail.init();
         }
     };
@@ -31,5 +31,5 @@ $(function () {
     $('[data-toggle="tooltip"]').tooltip();
     var viewModel = new window.eim.ViewModels.OrganizationViewModel();
     ko.applyBindings(viewModel);
-    viewModel.init();
+    viewModel.ensureLogin().then(function () { viewModel.init(); });
 });
