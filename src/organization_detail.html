@@ -17,6 +17,7 @@
 <link rel="stylesheet" type="text/css" href="themes/font-awesome5.min.css">
 <link rel="stylesheet" type="text/css" href="themes/google-icon.css">
 <link rel="stylesheet" type="text/css" href="themes/site.css" />
+<script src="scripts/libs/JSOG.js"></script>
 <script src="scripts/libs/jquery.js"></script>
 <script src="scripts/libs/jquery.form.js"></script>
 <script src="scripts/libs/knockout.jquery.mobile.js"></script>
@@ -51,8 +52,8 @@
 <script src="scripts/app/util.js"></script>
 <script src="scripts/app/service.js"></script>
 <script src="scripts/app/baseViewModel.js"></script>
-<script src="scripts/app/pages/organization/organizationEditViewModel.js"></script>
-<script src="scripts/app/pages/organization/organizationEdit.js"></script>
+<script src="scripts/app/pages/organization/organizationDetailViewModel.js"></script>
+<script src="scripts/app/pages/organization/organizationDetail.js"></script>
 <link rel="shortcut icon" href="favicon.ico">
 <style>
 textarea.ui-input-text {
@@ -196,7 +197,7 @@ textarea.ui-input-text {
     <div data-role="header" data-theme="b" style=" background-color:#FFFFFF; box-shadow:0 2px 3px 0 rgba(0, 0, 0, 0.14)">
     <div class="ui-grid-a">
       <div class="ui-block-a">
-        <h3 style="margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom:8px; text-shadow: 0 0px; color:#cfd8dc; font-weight: 200; text-align:left"><img src="images/bpmslogoxsn1.png" height="26px" style="margin-top:-3px;"><font class="hidden-xs"> | 更新组织</font></h3>
+        <h3 style="margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom:8px; text-shadow: 0 0px; color:#cfd8dc; font-weight: 200; text-align:left"><img src="images/bpmslogoxsn1.png" height="26px" style="margin-top:-3px;"><font class="hidden-xs"> | <span data-bind="text:mode().text"></span></font></h3>
       </div>
       <div class="ui-block-b">
         <h3 style="margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom:8px; text-shadow: 0 0px; color:#bdbdbd; text-align:right"><a href="#panelgrid" style="color: #009688"><i class="fa fa-bars"></i></a></h3>

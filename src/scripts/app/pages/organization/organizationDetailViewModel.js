@@ -24,6 +24,14 @@
 
             self[i] = $.isArray(value) ? ko.observableArray(value) : ko.observable(value);
         }
+
+        this.mode = ko.pureComputed(function () {
+            if (typeof (self.id()) === "number") {
+                return { id: "edit", name: "更新", text: "更新组织" };
+            }
+            return { id: "add", name: "创建", text: "创建组织" };
+        }, this);
+
         self.init = function () {
             var self = this;
             var showError = function (result) {

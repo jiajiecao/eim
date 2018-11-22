@@ -2,6 +2,7 @@
     eim.ViewModels = eim.ViewModels || {};
     eim.ViewModels.EmployeeDetailViewModel = function () {
         var self = this;
+        window.detail = this;
         var defaultData = {
             id: "",
             name: "",
@@ -29,9 +30,9 @@
             wagesCard: "",
             workAddress: "",
             belongToDepartment: null,
-            inChargeOfCostCenter:null,
-            manageToDepartment:null,
-            staffs:[],
+            inChargeOfCostCenter: null,
+            manageToDepartment: null,
+            staffs: [],
             chargeToCostCenter: [
             ],
             managers: [
@@ -46,6 +47,13 @@
             var value = defaultData[i];
             self[i] = $.isArray(value) ? ko.observableArray(value) : ko.observable(value);
         }
+        this.mode = ko.pureComputed(function () {
+            if (typeof (this.id()) === "number") {
+                return { id: "edit", name: "更新", text: "更新员工" };
+             
+            }
+            return { id: "add", name: "创建", text: "创建员工" };
+        }, this);
 
         self.init = function () {
             var self = this;

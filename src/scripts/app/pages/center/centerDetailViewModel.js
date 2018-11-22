@@ -16,9 +16,15 @@
 
         for (var i in defaultData) {
             var value = defaultData[i];
-
             self[i] = $.isArray(value) ? ko.observableArray(value) : ko.observable(value);
         }
+
+        this.mode = ko.pureComputed(function () {
+            if (typeof (self.id()) === "number") {
+                return { id: "edit", name: "更新", text: "更新成本中心" };
+            }
+            return { id: "add", name: "创建", text: "创建成本中心" };
+        }, this);
 
         self.init = function () {
             var self = this;
@@ -30,8 +36,15 @@
                 });
                 self.loading(false);
             }
+            if (this.mode().id === "add") {
+                for (var i in defaultData) {
+                    var value = defaultData[i];
+                    self[i](value);
+                }
+                return;
+            }
             self.loading();
-            return eim.service.getMasterDataDetail("costCenter",self.id()).then(function (result) {
+            return eim.service.getMasterDataDetail("costCenter", self.id()).then(function (result) {
                 var item = JSOG.decode(result);
                 for (var i in item) {
                     var field = self[i];
