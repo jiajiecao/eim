@@ -242,27 +242,27 @@ textarea.ui-input-text {
     </div>
   </div>
   <div data-role="panel" id="panelgrid" data-position-fixed="true" data-position="right" data-display="overlay"  data-theme="a">
-    <div class="jqm-block-content" style="margin: -14px -14px; margin-bottom: 14px; padding: 9px 9px; padding-top: 30px; background-color: #0277bd; border:none; min-height: 0px; border-radius: 0em;">
+    <div class="jqm-block-content" style="margin: -14px -14px; margin-bottom: 14px; padding: 9px 9px; padding-top: 30px; background-color: #455a64; border:none; min-height: 0px; border-radius: 0em;">
       <p align="center" style="margin-bottom:10px;"><i class="material-icons md-56 md-light">face</i></p>
       <div class="ui-grid-a" style="text-shadow: 0 0 0; color:#FFFFFF">
         <div class="ui-block-a">
-          <p align="left"><font size="+1">邵剑秋</font><br>
-            <font color="#BDBDBD">ITMGT<br>
-            121123</font></p>
+          <p align="left" style="padding-left:8px;"><font size="+1" data-bind="text:user.name"></font><br>
+            <font color="#BDBDBD"><span data-bind="text:user.email"></span><br>
+            <span data-bind="text:user.userId"></span></font></p>
         </div>
         <div class="ui-block-b">
-          <p align="right" style="margin-top: 8px;"><a href="#"><i class="fa fa-2x fa-sign-out"></i></a></p>
+          <p align="right" style="margin-top: 10px; padding-right:3px;"><a href="javascript:void(0);" data-bind="click:logout"><i class="fas fa-sign-out-alt"></i></a></p>
         </div>
       </div>
     </div>
     <ul data-role="listview" data-theme="b" class="ui-nodisc-icon ui-alt-icon">
-      <li><a href="#" rel="external" style=" padding-bottom: 15px; padding-top: 15px; font-weight: 400"><img src="images/Glyphish/icons/81-dashboard@2x.png" class="ui-li-icon" style="top: 15px;">我的工作台</a></li>
-      <li><a href="#" rel="external" style=" padding-bottom: 15px; padding-top: 15px; font-weight: 400"><img src="images/Glyphish/icons/44-shoebox@2x.png" class="ui-li-icon" style="top: 15px;">我的任务</a></li>
-      <li><a href="#" rel="external" style=" padding-bottom: 15px; padding-top: 15px; font-weight: 400"><img src="images/Glyphish/icons/10-medical@2x.png" class="ui-li-icon" style="top: 15px;">启动流程</a></li>
-      <li><a href="#" rel="external" style=" padding-bottom: 15px; padding-top: 15px; font-weight: 400"><img src="images/Glyphish/icons/15-tags@2x.png" class="ui-li-icon" style="top: 15px;">我的流程</a></li>
-      <li><a href="#" rel="external" style=" padding-bottom: 15px; padding-top: 15px; font-weight: 400"><img src="images/Glyphish/icons/62-contrast@2x.png" class="ui-li-icon" style="top: 15px;">报表</a></li>
+      <li><a href="index.html" rel="external" style=" padding-bottom: 15px; padding-top: 15px; font-weight: 400"><img src="images/clipboard.svg" class="ui-li-icon" style="top: 16px;">我的工作台</a></li>
+      <li><a href="#" rel="external" style=" padding-bottom: 15px; padding-top: 15px; font-weight: 400"><img src="images/clipboard.svg" class="ui-li-icon" style="top: 15px;">我的任务</a></li>
+      <li><a href="#" rel="external" style=" padding-bottom: 15px; padding-top: 15px; font-weight: 400"><img src="images/suppliez/tag-button-with-happy-face.svg" class="ui-li-icon" style="top: 15px;">供应商生命周期</a></li>
+      <li><a href="#" rel="external" style=" padding-bottom: 15px; padding-top: 15px; font-weight: 400"><img src="images/suppliez/direction.svg" class="ui-li-icon" style="top: 15px;">供应链执行</a></li>
+      <li><a href="#" rel="external" style=" padding-bottom: 15px; padding-top: 15px; font-weight: 400"><img src="images/analytics.svg" class="ui-li-icon" style="top: 15px;">数据中心</a></li>
     </ul>
-    <p align="center" style="margin-top: 30px;"><img src="images/bpmslogoxsn1.png" height="21px"></p>
+    <p align="center" style="margin-top: 30px;"><img src="images/suppliez.png" height="28px"></p>
   </div>
   <br>
   <br>
