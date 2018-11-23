@@ -2,8 +2,9 @@
     eim.ViewModels = eim.ViewModels || {};
     eim.ViewModels.CenterDetailViewModel = function () {
         var self = this;
-        var defaultData = {
-            id: "",
+        self.id = ko.observable();
+        var defaultItem = {
+            id: null,
             code: "",
             name: "",
             costCenterManager: null,
@@ -13,18 +14,35 @@
             updatedAt: null,
             updatedBy: null,
         };
-
-        for (var i in defaultData) {
-            var value = defaultData[i];
-            self[i] = $.isArray(value) ? ko.observableArray(value) : ko.observable(value);
-        }
-
-        this.mode = ko.pureComputed(function () {
-            if (typeof (self.id()) === "number") {
-                return { id: "edit", name: "更新", text: "更新成本中心" };
+        self.item = $.extend({}, defaultItem);
+        self.editingItem={
+            name: {
+                id: "name",
+                name: "名称",
+                value: ko.observable(""),
+                controlType: "t1",
+                required: true
+            },
+            costCenterManager: {
+                id: "costCenterManager",
+                name: "负责人",
+                placeholder: "搜索负责人...",
+                value: ko.observable(),
+                controlType: "psbn"
             }
-            return { id: "add", name: "创建", text: "创建成本中心" };
-        }, this);
+        };
+
+            // for (var i in defaultItem) {
+            //     var value = defaultItem[i];
+            //     self[i] = $.isArray(value) ? ko.observableArray(value) : ko.observable(value);
+            // }
+
+            this.mode = ko.pureComputed(function () {
+                if (typeof (self.id()) === "number") {
+                    return { id: "edit", name: "更新", text: "更新成本中心" };
+                }
+                return { id: "add", name: "创建", text: "创建成本中心" };
+            }, this);
 
         self.init = function () {
             var self = this;
@@ -37,21 +55,13 @@
                 self.loading(false);
             }
             if (this.mode().id === "add") {
-                for (var i in defaultData) {
-                    var value = defaultData[i];
-                    self[i](value);
-                }
+                self.item = $.extend({}, defaultItem);
                 return;
             }
             self.loading();
             return eim.service.getMasterDataDetail("costCenter", self.id()).then(function (result) {
                 var item = JSOG.decode(result);
-                for (var i in item) {
-                    var field = self[i];
-                    if (field) {
-                        field(item[i]);
-                    }
-                }
+                self.item = $.extend({}, item);
                 self.loading(false);
             }, showError);
         };
