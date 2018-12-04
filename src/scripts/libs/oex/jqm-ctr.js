@@ -63,28 +63,22 @@ ko.bindingHandlers.basicField = {
                 '</select>' +
                 '</div>' +
                 '</fieldset>',
-            "psbi": '<form class="ui-filterable" autocomplete="off" onsubmit="function(){return false;}">' +
+            "employee": '<form class="ui-filterable" autocomplete="off" onsubmit="function(){return false;}">' +
                 '<input style="height:38px;" data-type="search">' +
                 '</form>' +
-                '<ul style="display:none;" data-role="listview" class="ui-nodisc-icon ui-alt-icon ui-listview ui-listview-inset ui-corner-all ui-shadow" ' +
+                '<ul  data-role="listview" class="ui-nodisc-icon ui-alt-icon ui-listview ui-listview-inset ui-corner-all ui-shadow" ' +
                 ' data-inset="true">' +
                 '</ul>',
-            "psbm": '<form class="ui-filterable" autocomplete="off" onsubmit="function(){return false;}">' +
+            "department": '<form class="ui-filterable" autocomplete="off" onsubmit="function(){return false;}">' +
                 '<input style="height:38px;" data-type="search">' +
                 '</form>' +
-                '<ul style="display:none;" data-role="listview" class="ui-nodisc-icon ui-alt-icon ui-listview ui-listview-inset ui-corner-all ui-shadow" ' +
+                '<ul  data-role="listview" class="ui-nodisc-icon ui-alt-icon ui-listview ui-listview-inset ui-corner-all ui-shadow" ' +
                 ' data-inset="true">' +
                 '</ul>',
-            "psbn": '<form class="ui-filterable" autocomplete="off" onsubmit="function(){return false;}">' +
+            "costCenter": '<form class="ui-filterable" autocomplete="off" onsubmit="function(){return false;}">' +
                 '<input style="height:38px;" data-type="search">' +
                 '</form>' +
-                '<ul style="display:none;" data-role="listview" class="ui-nodisc-icon ui-alt-icon ui-listview ui-listview-inset ui-corner-all ui-shadow" ' +
-                ' data-inset="true">' +
-                '</ul>',
-            "bpid": '<form class="ui-filterable" autocomplete="off" onsubmit="function(){return false;}">' +
-                '<input style="height:38px;" data-type="search">' +
-                '</form>' +
-                '<ul style="display:none;" data-role="listview" class="ui-nodisc-icon ui-alt-icon ui-listview ui-listview-inset ui-corner-all ui-shadow" ' +
+                '<ul  data-role="listview" class="ui-nodisc-icon ui-alt-icon ui-listview ui-listview-inset ui-corner-all ui-shadow" ' +
                 ' data-inset="true">' +
                 '</ul>'
         };
@@ -138,7 +132,7 @@ ko.bindingHandlers.basicField = {
                 tag.append("<option value='" + item.id.trim() + "'>" + item.name.trim() + "</option>");
             });
 
-        } else if (controlType === "psbi" || controlType == "psbm" || controlType == "psbn" || controlType == "bpid") {
+        } else if (controlType === "employee" || controlType == "department" || controlType == "costCenter") {
             tag = $(element).find("input").first();
             if (valueUnwrapped.placeholder)
                 tag.attr("placeholder", valueUnwrapped.placeholder);
@@ -271,7 +265,7 @@ ko.bindingHandlers.basicField = {
             binding = {
                 "switch": valueAccessor().value
             };
-        if (controlType === "psbi" || controlType === "psbm" || controlType === "psbn")
+        if (controlType === "employee" || controlType === "department" || controlType === "costCenter")
             binding = {
                 "auto": valueAccessor().value
             };
@@ -466,6 +460,8 @@ ko.bindingHandlers.basicTables = {
                 "foreach": valueAccessor()
             }
         }, bindingContext);
+
+
     },
 
     update: function (element, valueAccessor, allBindings, viewModel, bindingContext) {

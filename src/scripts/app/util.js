@@ -107,6 +107,18 @@
 
             return $.ajax(settings);
         },
+        debounce: function (action) {
+            var idle = eim.config.delaySearch || 1000;
+            var last;
+            return function () {
+                var ctx = this,
+                    args = arguments;
+                clearTimeout(last);
+                last = setTimeout(function () {
+                    action.apply(ctx, args);
+                }, idle);
+            };
+        },
         isWeChat: function () {
             var userAgent = window.navigator.userAgent.toLowerCase();
             var matched = userAgent.match(/MicroMessenger/i);

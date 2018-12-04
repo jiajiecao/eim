@@ -2,13 +2,25 @@
 ko.bindingHandlers[getBindingName("auto")] = (function () {
 
     return {
-        init: function (element, valueAccessor, allBindings) {
-            var index = 0;
+        init: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
+            if (!$("#autoRow").length) {
+                var template = "<script type=\"text/html\" id=\"autoRow\">" +
+                    "<li data-icon=\"check\" class=\"ui-li-has-count ui-first-child ui-last-child\">" +
+                    "<a href=\"javascript:void(0)\" data-bind=\"click:function(){}\" " +
+                    "class=\"ui-btn ui-btn-icon-right ui-icon-check\">" +
+                    "<span data-bind=\"text:name\"></span>" +
+                    "<span class=\"ui-li-count ui-body-inherit\" data-bind=\"text:departmentName\"></span>" +
+                    "</a>" +
+                    "</li>" +
+                    "</script>";
+                $("body").append(template);
+            }
+
             var modelValue = valueAccessor();
             var $element = $(element);
             var prevent = false;
             var fnInvalid = allBindings() && allBindings().invalid;
-            var controlType = $element.attr("controlType") || "psbi";
+            var controlType = $element.attr("controlType");
 
             // Prevent form submission
             var _onKeyDown = function (event) {
@@ -26,65 +38,29 @@ ko.bindingHandlers[getBindingName("auto")] = (function () {
                 }
             };
 
-            var items = [];
-            var updateList = function () {
-                var container = $element.closest("form[data-bind]");
-                if (!container.length) {
-                    container = $element.closest("div[data-bind]");
-                }
-                var ul = container.find("ul");
-                var lis = "";
-                if (items.length) {
-                    for (var i = 0; i < items.length; i++) {
-                        var item = items[i];
-                        var showEmail = controlType === "psbm";
-                        var hideStyle = "style=\"display:none;\"";
-                        var li = "<li data-icon=\"check\" class=\"ui-li-has-count ui-first-child ui-last-child\">" +
-                            "<a href=\"javascript:void(0)\" " +
-                            "class=\"ui-btn ui-btn-icon-right ui-icon-check\">" +
-                            "<span>" + item.name + "</span>" +
-                            "<span class=\"ui-li-count ui-body-inherit\" " + (showEmail ? "" : hideStyle) + ">" + item.mail + "</span>" +
-                            "<span class=\"ui-li-count ui-body-inherit\" " + (showEmail ? hideStyle : "") + ">" + item.sn + "</span>";
-                        li += "</a></li>";
-                        lis += li;
-                    }
-                    ul.html(lis);
-                    ul.find("li").first().addClass("ui-first-child");
-                    ul.find("li").last().addClass("ui-last-child");
-                    ul.find("li").click(function (e) {
-                        var li = $(e.target);
-                        if (li[0].tagName.toLowerCase() !== "li") {
-                            li = li.closest("li");
-                        }
-                        var name = li.find("span").eq(0).html();
-                        var email = li.find("span").eq(1).html();
-                        var key = li.find("span").eq(2).html();
-                        var selectedText = "";
-                        var selectedValue = "";
-                        if (controlType === "psbm") {
-                            selectedText = email;
-                            selectedValue = email;
-                        } else if (controlType === "psbn") {
-                            selectedText = name;
-                            selectedValue = name;
-                        } else {
-                            selectedText = key;
-                            selectedValue = key;
-                        }
-                        modelValue(selectedValue);
-                        if (fnInvalid) {
-                            fnInvalid(false);
-                        }
-                        $element.val(selectedText);
-                        ul.html("");
-                        ul.hide();
-                    });
-                    ul.show();
-                } else {
-                    ul.html("");
-                    ul.hide();
-                }
+            var items = ko.observableArray();
+            var container = $element.closest("form");
+
+            var ul = container.find("ul")[0];
+            // $element.removeAttr("data-bind");
+
+            var childBindingContext = bindingContext.createChildContext(
+                bindingContext.$rawData,
+                null, // Optionally, pass a string here as an alias for the data item in descendant contexts
+                function (context) {
+                    ko.utils.extend(context, valueAccessor());
+                });
+            var selectItem = function (model, $e) {
+                var tempItem = items()[$($e.target).index()];
+                modelValue(tempItem);
+                //item(tempItem && tempItem.name || "");
+                items.removeAll();
             };
+            ko.applyBindingsToNode(ul,
+                {
+                    click: selectItem,
+                    jqmTemplate: { name: 'autoRow', foreach: items }, jqmRefreshList: items
+                }, childBindingContext);
 
             var _onKeyUp = function (event) {
 
@@ -94,19 +70,17 @@ ko.bindingHandlers[getBindingName("auto")] = (function () {
 
                 modelValue(null);
                 var text = $element.val().trim();
-                var me = BPMS.util.getUser().userId;
+                //var me = eim.util.getUser().userId;
                 if (text) {
-                    BPMS.Services.getSuggestion(text).then(function (result) {
+                    eim.service.getSuggestion(controlType, text).then(function (result) {
                         // items = result.filter(function(person) {
                         //     return person.sn !== me;
                         // });
-                        items = result;
-                        updateList();
+                        items(result);
                     }, function (result) {
-                        if (!window.vm)
-                            return;
+                        var root = ko.contextFor(event.target).$root;
 
-                        window.vm.loading(false);
+                        root.loading(false);
 
                         var message = "由于网络问题，无法获取数据，请稍后重试。";
                         if (result && result.responseJSON && result.responseJSON.cause) {
@@ -114,18 +88,17 @@ ko.bindingHandlers[getBindingName("auto")] = (function () {
                             message = cause.substring(cause.indexOf(":") + 1).trim();
                         }
                         window.vm.pop("error", {
-                            "title": "获取人员列表失败",
+                            "title": "获取列表失败",
                             "detail": message,
                             "code": "错误代码：" + result.status + " " + result.statusText
                         });
                     });
                 } else {
-                    items = [];
-                    updateList();
+                    items.removeAll();
                 }
             };
 
-            var _search = BPMS.util.debounce(_onKeyUp);
+            var _search = eim.util.debounce(_onKeyUp);
 
             $element.on("keydown", _onKeyDown)
                 .on("keypress", _onKeyPress)
@@ -133,19 +106,25 @@ ko.bindingHandlers[getBindingName("auto")] = (function () {
                 //.on("change", _search)
                 .on("input", _search);
 
+            return {
+                "controlsDescendantBindings": true
+            };
+
         },
 
         update: function (element, valueAccessor, allBindings) {
             var modelValue = valueAccessor();
             var fnInvalid = allBindings() && allBindings().invalid;
-            var newValue = modelValue();
-            var $element = $(element);
+            var newValue = modelValue() && modelValue().name;
+            // allBindings().value(newValue);
             if (newValue) {
-                $element.val(newValue);
-                if (fnInvalid) {
-                    fnInvalid(false);
-                }
+                $(element).val(newValue);
             }
+
+            if (fnInvalid) {
+                fnInvalid(!newValue);
+            }
+
 
         }
     };

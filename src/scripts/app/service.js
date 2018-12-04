@@ -97,6 +97,9 @@
 
             return dfd.promise();
         },
+        getSuggestion: function (type, text) {
+            return eim.util.requestWithBearer(eim.config.hrUrl + type + "/autoComplete/" + text);
+        },
         getMasterDataList: function (type, page, size) {
             var param = { page: page, size: size };
             var url = eim.config.hrUrl + type;
