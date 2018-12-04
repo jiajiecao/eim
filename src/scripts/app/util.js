@@ -86,13 +86,13 @@
 
             return $.ajax(defaultSettings);
         },
-        requestWithBearer: function (url,data) {
+        requestWithBearer: function (url, data, settings) {
             var bearer = sessionStorage.getItem("Bearer");
             if (!bearer) {
                 location.href = "login.html";
             }
-            var token=JSON.parse(bearer).access_token;
-            var settings = {
+            var token = JSON.parse(bearer).access_token;
+            var defaultSettings = {
                 dataType: "json",
                 url: url,
                 crossDomain: true,
@@ -101,11 +101,11 @@
                 }
             };
 
-            settings.url = url;
-            settings.type = "GET";
-            settings.data = data;
+            defaultSettings.url = url;
+            defaultSettings.type = settings && settings.type || "GET";
+            defaultSettings.data = data;
 
-            return $.ajax(settings);
+            return $.ajax(defaultSettings);
         },
         debounce: function (action) {
             var idle = eim.config.delaySearch || 1000;
@@ -197,6 +197,32 @@
             }
             var formattedValue = moment(stamp).format(format);
             return formattedValue;
+        },
+        // resetFields: function (defaultData, data) {
+        //     for (var i in defaultData) {
+        //         var value = defaultData[i];
+
+
+        //         if (ko.isObservable(data[i])) {
+        //             data[i](value);
+        //         }
+        //     }
+        // },
+        validateFields: function (data, fields) {
+            var isValid = true;
+            fields.forEach(function (field, index) {
+                var ele = $("#" + field).parent();
+                var value = ko.unwrap(data[field]);
+                if (value === null
+                    || typeof (value) === "undefined"
+                    || typeof (value) === "string" && value.trim() === "") {
+                    ele.addClass("ui-invalid");
+                    isValid = false;
+                } else {
+                    ele.removeClass("ui-invalid");
+                }
+            });
+            return isValid;
         }
 
     };

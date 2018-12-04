@@ -108,7 +108,16 @@
         getMasterDataDetail: function (type, id) {
             var url = eim.config.hrUrl + type + "/id/" + id;
             return eim.util.requestWithBearer(url);
+        },
+        postMasterDataDetail: function (type, o) {
+            var url = eim.config.hrUrl + type;
+            return eim.util.requestWithBearer(url, o, { type: "POST" });
+        },
+        putMasterDataDetail: function (type, o) {
+            var url = eim.config.hrUrl + type;
+            return eim.util.requestWithBearer(url, o, { type: "PUT" });
         }
+
 
     };
 

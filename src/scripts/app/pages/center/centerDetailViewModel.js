@@ -27,7 +27,7 @@
             return { id: "add", name: "创建", text: "创建成本中心" };
         }, this);
 
-        self.init = function () {
+        this.init = function () {
             var self = this;
             var showError = function (result) {
                 self.pop("error", {
@@ -37,13 +37,23 @@
                 });
                 self.loading(false);
             }
-            if (this.mode().id === "add") {
-                for (var i in defaultData) {
-                    var value = defaultData[i];
-                    self[i](value);
+            for (var i in defaultData) {
+                if (i == "id") {
+                    continue;
                 }
+                var value = defaultData[i];
+                self[i](value);
+                var ele = $("#" + i);
+                ele.parent().removeClass("ui-invalid");
+                var clearBtn = ele.parent().find("a.ui-input-clear").not(".ui-input-clear-hidden");
+                if (clearBtn && clearBtn.length) {
+                    clearBtn.click();
+                }
+            }
+            if (this.mode().id === "add") {
                 return;
             }
+
             self.loading();
             return eim.service.getMasterDataDetail("costCenter", self.id()).then(function (result) {
                 var item = JSOG.decode(result);
@@ -56,6 +66,59 @@
                 self.loading(false);
             }, showError);
         };
+
+        this.reset = function () {
+            eim.util.resetFields(defaultData, this);
+        };
+
+        this.save = function () {
+            var self = this;
+            var valid = eim.util.validateFields(self, ["name", "code"]);
+            if (!valid) {
+                return;
+            }
+
+
+            var obj = {
+                name: self.name(),
+                code: self.code()
+            };
+            var sn = self.costCenterManager() && self.costCenterManager().sn;
+            if (sn) {
+                obj.costCenterManager = {
+                    sn: sn
+                }
+            }
+
+            var showError = function (result) {
+                self.pop("error", {
+                    "title": self.mode().text,
+                    "detail": self.mode().text + "失败" + " " + (result && result.errorMessage || ""),
+                    "code": "错误代码：" + result.status + " " + result.statusText
+                });
+                self.loading(false);
+            }
+
+            var showSuccess = function (result) {
+                self.pop("success", {
+                    "title": self.mode().text,
+                    "detail": self.mode().text + "成功" + " " + (result && result.errorMessage || ""),
+                });
+                self.loading(false);
+            }
+            self.loading();
+            if (this.mode().id === "add") {
+                eim.service.postMasterDataDetail("costCenter", obj).then(function (result) {
+                    showSuccess(result);
+                }, showError);
+            } else {
+                obj.id = self.id();
+                eim.service.putMasterDataDetail("costCenter", obj).then(function (result) {
+                    showSuccess(result);
+                }, showError);
+            }
+        };
+
     };
 
     eim.ViewModels.CenterDetailViewModel.extend(eim.ViewModels.BaseViewModel);

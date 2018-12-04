@@ -220,19 +220,25 @@ textarea.ui-input-text {
           <div class="row">
             <div class=" col-lg-4 col-sm-12 col-xs-12 col-md-4" style="padding:3px 3px; ">
               <label for="id" style="color: #78909c; font-size: small">成本中心ID <font color="#d32f2f"><i data-bind="visible:typeof(id()) ==='number'" class="fa fa-fw fa-asterisk"></i></font></label>
-              <input type="text" disabled data-clear-btn="true" data-bind="value:id" name="centerId" id="centerId" data-inline="false" data-theme="b" style="font-weight:600; font-size: large">
+              <input type="text" disabled data-clear-btn="true" data-bind="value:id" name="id" id="id" data-inline="false" data-theme="b" style="font-weight:600; font-size: large">
             </div>
             <div class=" col-lg-4 col-sm-12 col-xs-12 col-md-4" style="padding:3px 3px; ">
-              <label for="id" style="color: #78909c; font-size: small">名称 <font color="#d32f2f"><i class="fa fa-fw fa-asterisk"></i></font></label>
-              <input type="text" data-clear-btn="true" data-bind="value:name" name="centerName" id="centerName" data-inline="false" data-theme="b" style="font-weight:600; font-size: large">
+              <label for="id" style="color: #78909c; font-size: small">成本中心代码 <font color="#d32f2f"><i class="fa fa-fw fa-asterisk"></i></font></label>
+              <input type="text" data-clear-btn="true" data-bind="value:code" name="code" id="code" data-inline="false" data-theme="b" style="font-weight:600; font-size: large">
             </div>
 			    </div>
           <div class="row">
               <legend style="padding-left: 3px;"><font size="-1" color="#000000"></font></legend>
+
+              <div class=" col-lg-4 col-sm-12 col-xs-12 col-md-4" style="padding:3px 3px; ">
+                <label for="id" style="color: #78909c; font-size: small">名称 <font color="#d32f2f"><i class="fa fa-fw fa-asterisk"></i></font></label>
+                <input type="text" data-clear-btn="true" data-bind="value:name" name="name" id="name" data-inline="false" data-theme="b" style="font-weight:600; font-size: large">
+              </div>
+
           <div class=" col-lg-4 col-sm-12 col-xs-12 col-md-4" style="padding:3px 3px; ">
                 <label for="id" style="color: #78909c; font-size: small">负责人 <font color="#d32f2f"></font></label>
                 <form  autocomplete="off" onsubmit="function(){return false;}">
-                    <input  controlType="employee" data-bind="auto:costCenterManager" name="centerManager" id="centerManager" data-type="search" data-inline="false" data-theme="b" style="font-weight:600; font-size: large">
+                    <input  controlType="employee" data-bind="auto:costCenterManager" name="costCenterManager" id="costCenterManager" data-type="search" data-inline="false" data-theme="b" style="font-weight:600; font-size: large">
                     <ul  data-role="listview" class="ui-nodisc-icon ui-alt-icon ui-listview ui-listview-inset ui-corner-all ui-shadow" data-inset="true">
                     </ul> 
                   </form>
@@ -274,13 +280,13 @@ textarea.ui-input-text {
   <div data-role="footer"  data-fullscreen="true" data-position="fixed" style=" border-bottom-width: 0px;">
     <div data-role="navbar">
       <ul>
-        <li><a href="#popsubmit" data-rel="popup" data-position-to="window" class="ui-btn-b" style="font-weight:300">
+        <li><a href="javascript:void(0);" data-bind="click:save" class="ui-btn-b" style="font-weight:300">
 			
 			 <p align="center" style="margin-bottom:4px; text-shadow: 1px 1px 3px rgba(74,74,74,0.4); color:#333333"><i class="material-icons md-light" style="color:#333333">send</i></p>
           <p align="center" style="margin: 0px 0px; margin-top:8px;">提交</p>
 
 			</a></li>
-        <li><a href="#" data-rel="popup"  class="ui-btn-b" style="font-weight:300">
+        <li><a hhref="javascript:void(0);" data-bind="click:init"  class="ui-btn-b" style="font-weight:300">
 			
 			 <p align="center" style="margin-bottom:4px; text-shadow: 1px 1px 3px rgba(74,74,74,0.4); color:#333333"><i class="material-icons md-light" style="color:#333333">refresh</i></p>
           <p align="center" style="margin: 0px 0px; margin-top:8px;">重置</p>
