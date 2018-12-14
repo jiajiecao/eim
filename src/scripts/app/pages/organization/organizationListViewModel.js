@@ -25,7 +25,12 @@
 
     eim.ViewModels.OrganizationListViewModel.extend(eim.ViewModels.BaseViewModel);
     eim.ViewModels.OrganizationListViewModel.prototype.pageSize = eim.config.pageSize;
-
+    eim.ViewModels.OrganizationListViewModel.prototype.delete = function () {
+        var root = this;
+        root.detail.delete().then(function () {
+            root.getData();
+        });
+    };
     eim.ViewModels.OrganizationListViewModel.prototype.getData = function (index) {
         var root = this;
         root.loading();

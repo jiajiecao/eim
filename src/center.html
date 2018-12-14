@@ -11,6 +11,7 @@
 <link rel="stylesheet" type="text/css" href="themes/owl.theme.css">
 <link rel="stylesheet" type="text/css" href="themes/owl.transitions.css">
 <link rel="stylesheet" type="text/css" href="themes/bootstrap-theme.css">
+<link rel="stylesheet" type="text/css" href="themes/bootstrap-datetimepicker.css">
 <link rel="stylesheet" type="text/css" href="themes/jqm-demos.css">
 <link rel="stylesheet" type="text/css" href="themes/jquery.mobile.icons.css">
 <link rel="stylesheet" type="text/css" href="themes/jquery.mobile.structure.css">
@@ -150,7 +151,6 @@ $(function () {
       </div>
     </div>
     <!-- /grid-a --> 
-    
   </div>
   <div data-role="content" style="padding: 2px 2px; margin-bottom:64px">
     <ul class="nav nav-tabs" id="myTabs" role="tablist" style="margin-left: 2px; margin-right: 2px; margin-top: 4px; border-bottom-width: 0px;">
@@ -192,7 +192,10 @@ $(function () {
                 </p>
               </div>
               <div class="col-sm-6 col-xs-12 col-md-4 col-lg-4" style="padding: 3px 3px; ">
-                <p align="right" style="padding:3px 3px; margin-bottom:0px;"><a href="#popaction" data-rel="popup" data-position-to="window"  style="font-weight:300;  margin-left:20px; color:#0288d1"><i class="material-icons">content_copy</i></a><a data-bind="attr:{href:'center_detail.html?id='+detail.id()}" rel="external"  style="font-weight:300; margin-left: 20px; color:#0288d1"><i class="material-icons">edit</i></a><a data-bind="attr:{href:'organization_edit.html?id='+detail.id()}" rel="external"  style="font-weight:300;  margin-left:20px; color:#0288d1"><i class="material-icons">delete</i></a></p>
+                <p align="right" style="padding:3px 3px; margin-bottom:0px;">
+                  <a href="#popaction" data-rel="popup" data-position-to="window"  style="font-weight:300;  margin-left:20px; color:#0288d1"><i class="material-icons">content_copy</i></a>
+                  <a data-bind="attr:{href:'center_detail.html?id='+detail.id()}" rel="external"  style="font-weight:300; margin-left: 20px; color:#0288d1"><i class="material-icons">edit</i></a>
+                  <a href="javascript:void(0);" data-bind="click:$root.delete" style="font-weight:300;  margin-left:20px; color:#0288d1"><i class="material-icons">delete</i></a></p>
               </div>
             </div>
             <ul class="nav nav-tabs" id="tskTabs" role="tablist" style="margin-left: 2px; margin-right: 2px; margin-top: 4px; border-bottom-width: 0px;">
@@ -203,7 +206,7 @@ $(function () {
                 <p align="center" style="margin: 0px 0px;"><i class="fa fa-2x fa-history"></i></p>
                 </a></li>
             </ul>
-            <div id="myTskTabContent" class="tab-content">
+            <div id="centerTabContent" class="tab-content">
               <div role="tabpanel" class="tab-pane active" id="info" aria-labelledBy="info-tab">
                 <div class="ui-body ui-body-b ui-content" style=" border-width:1px; border-bottom-right-radius: 0.31em; border-bottom-left-radius:0.31em;  margin: 0 2px; margin-bottom:3px; padding: 6px 6px">
                   <div class="row" style="margin:0px 0px; padding:6px 6px;">

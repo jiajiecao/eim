@@ -25,14 +25,19 @@
 
     eim.ViewModels.CenterListViewModel.extend(eim.ViewModels.BaseViewModel);
     eim.ViewModels.CenterListViewModel.prototype.pageSize = eim.config.pageSize;
-
+    eim.ViewModels.CenterListViewModel.prototype.delete = function () {
+        var root = this;
+        root.detail.delete().then(function () {
+            root.getData();
+        });
+    };
     eim.ViewModels.CenterListViewModel.prototype.getData = function (index) {
         var root = this;
         root.loading();
         index = index || root.all.pageIndex();
         return eim.service.getMasterDataList("costCenter", index - 1, root.pageSize).then(function (result) {
             root.all.items(result.content);
-            var pageCount = Math.floor((result.totalElements  - 1) / root.pageSize) + 1;
+            var pageCount = Math.floor((result.totalElements - 1) / root.pageSize) + 1;
             root.all.pageCount(pageCount);
 
             root.loading(false);

@@ -116,7 +116,11 @@
         putMasterDataDetail: function (type, o) {
             var url = eim.config.hrUrl + type;
             return eim.util.requestWithBearer(url, o, { type: "PUT" });
-        }
+        },
+        deleteMasterDataDetail: function (type, id) {
+            var url = eim.config.hrUrl + type + "/delete" + type.substring(0, 1).toUpperCase() + type.substring(1) + "/" + id;
+            return eim.util.requestWithBearer(url, {}, { type: "DELETE" });
+        },
 
 
     };

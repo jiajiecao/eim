@@ -1,4 +1,155 @@
 (function (eim) {
+
+
+    var buildTable = function (fields, items) {
+        var tempTable = {};
+        fields = JSON.parse(JSON.stringify(fields)).sort(function (a, b) {
+            return a.seq - b.seq;
+        });
+        fields.forEach(function (field) {
+            field.value = ko.observable();
+        });
+        tempTable.headers = ko.observableArray(fields);
+        tempTable.rows = ko.isObservable(items) ? items : ko.observableArray(items || []);
+        tempTable.showFullText = function (data, e) {
+            var t = e.target;
+            var link = (t.tagName.toLowerCase() !== "a") ? $(t).closest("a") : $(t);
+            data = data.trim().replace(/\r/g, "").replace(/\n/g, "<br/>");
+            var root = $root || ko.contextFor(t).$root;
+            root.pop("fullText", {
+                "description": data,
+                "positionTo": "#" + link.attr("id")
+            });
+        };
+        tempTable.isMultiText = function (value) {
+            value = ko.unwrap(value);
+            var type = typeof (value);
+            return (type == "string" && value.indexOf("\n") >= 0);
+        };
+        tempTable.showCell = function (index) {
+            var field = ko.unwrap(this.headers)[index];
+            return !/\$\$H/i.exec(field.id);
+        };
+        tempTable.formatCell = function (value, headers, index) {
+            value = ko.unwrap(value);
+            if (typeof (value) === "string" && value.indexOf("\n") >= 0) {
+                //var fullValue = value.trim().replace(/\r/g, "").replace(/\n/, "<br/>");
+                value = value.trim().split("\n")[0].trim() + "...";
+                return value;
+            }
+
+            if (!headers) {
+                return value;
+            }
+
+            var allHeaders = ko.unwrap(headers);
+            var indexValue = ko.unwrap(index);
+            var type = allHeaders[indexValue].controlType;
+            type = type || "";
+
+            if (type == "t3" || type == "t4" || type == "t5") {
+                if (typeof (value) == "number" && !isNaN(value)) {
+                    value = eim.util.formatDateTime(value, type);
+                    return value;
+                }
+                if (typeof (value) == "string" && value) {
+                    value = eim.util.formatDateTime(Number(value), type);
+                    return value;
+                }
+            }
+            // if (type == "t6") {
+            //     if (typeof(value) == "string" && value.length > 0) {
+            //         value = Number(value).toString();
+            //         return value;
+            //     }
+            // }
+            if (type == "t11") {
+                if (typeof (value) == "string" && value || typeof (value) == "number") {
+                    value = eim.util.formatMoney(value);
+                    return value;
+                } else {
+                    value = "";
+                    return value;
+                }
+            }
+            return value;
+        };
+
+        tempTable.editIndx = ko.observable(-1);
+        tempTable.removeRow = function (row) {
+            if (this.editIndx() >= 0) {
+                if ($root) {
+                    $root.pop("error", {
+                        "title": "输入错误",
+                        "description": "请先完成行项目的编辑。"
+                    });
+                }
+                return;
+            }
+            this.rows.remove(row);
+            $("table[data-role='table']").each(function () {
+                if (ko.contextFor(this).editable) {
+                    var tableWidget = $.data(this, "mobile-table");
+                    tableWidget.refresh();
+                }
+            });
+        };
+        tempTable.editRow = function (row, index) {
+            this.editIndx(index);
+            for (var i in this.headers()) {
+                var head = this.headers()[i];
+                head.value(row[i]);
+            }
+        };
+        tempTable.saveRow = function () {
+            var row = [];
+            if (!eim.util.validateFields(this.headers())) {
+                if ($root) {
+                    $root.pop("error", {
+                        "title": "输入错误",
+                        "description": "您的输入有误，请重新输入。"
+                    });
+                }
+                return;
+            }
+
+            for (var i in this.headers()) {
+                var head = this.headers()[i];
+                var dynamicValue = head.value;
+
+                var value = dynamicValue();
+                // var name = head.id.replace(/\$/g, "");
+                // var clearBtn = $("[name='" + name + "']").parent().find("a.ui-input-clear").not(".ui-input-clear-hidden");
+                // if (clearBtn && clearBtn.length) {
+                //     clearBtn.click();
+                // }
+                row.push(value);
+                //dynamicValue("");
+                //dynamicValue(null);
+            }
+            var index = this.editIndx();
+            if (index >= 0) {
+                this.rows.splice(index, 1, row);
+            } else {
+                this.rows.push(row);
+            }
+            this.editIndx(-1);
+            eim.util.resetFields(this.headers());
+            $("table[data-role='table']").each(function () {
+                if (ko.contextFor(this).editable) {
+                    var tableWidget = $.data(this, "mobile-table");
+                    tableWidget.refresh();
+                }
+            });
+        };
+        tempTable.resetRow = function () {
+            this.editIndx(-1);
+            eim.util.resetFields(this.headers());
+        };
+
+        return tempTable;
+    };
+
     eim.util = {
         getAuthToken: function (username, password) {
             base64Encode = function (str) {
@@ -105,6 +256,15 @@
             defaultSettings.type = settings && settings.type || "GET";
             defaultSettings.data = data;
 
+            if (defaultSettings.type == "POST" || defaultSettings.type == "PUT") {
+                defaultSettings.headers["Content-Type"] = "application/json";
+                defaultSettings.data = defaultSettings.data || {};
+                defaultSettings.data = JSON.stringify(defaultSettings.data);
+            }
+            if (defaultSettings.type == "DELETE") {
+                defaultSettings.dataType = "text";
+            }
+
             return $.ajax(defaultSettings);
         },
         debounce: function (action) {
@@ -198,19 +358,40 @@
             var formattedValue = moment(stamp).format(format);
             return formattedValue;
         },
-        // resetFields: function (defaultData, data) {
-        //     for (var i in defaultData) {
-        //         var value = defaultData[i];
+        resetFields: function (defaultData, self) {
+            for (var i in defaultData) {
+                if (i == "id") {
+                    continue;
+                }
+                var value = defaultData[i];
 
-
-        //         if (ko.isObservable(data[i])) {
-        //             data[i](value);
-        //         }
-        //     }
-        // },
+                var ele = $("#" + i);
+                ele.parent().removeClass("ui-invalid");
+                var clearBtn = ele.parent().find("a.ui-input-clear").not(".ui-input-clear-hidden");
+                if (clearBtn && clearBtn.length) {
+                    clearBtn.click();
+                }
+                self[i](value);
+            }
+        },
+        buildTable: buildTable,
         validateFields: function (data, fields) {
             var isValid = true;
-            fields.forEach(function (field, index) {
+            fields.autocomplete.forEach(function (field, index) {
+                var ele = $("#" + field).parent();
+
+                var input = $("#" + field).val().trim();
+                if (!input) {
+                    data[field](null);
+                }
+                if ((data[field]() && data[field]().name || "") !== input) {
+                    ele.addClass("ui-invalid");
+                    isValid = false;
+                } else {
+                    ele.removeClass("ui-invalid");
+                }
+            });
+            fields.required.forEach(function (field, index) {
                 var ele = $("#" + field).parent();
                 var value = ko.unwrap(data[field]);
                 if (value === null
@@ -222,6 +403,7 @@
                     ele.removeClass("ui-invalid");
                 }
             });
+
             return isValid;
         }
 

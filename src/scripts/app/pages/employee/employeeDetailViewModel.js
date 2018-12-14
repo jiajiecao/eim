@@ -47,14 +47,88 @@
             var value = defaultData[i];
             self[i] = $.isArray(value) ? ko.observableArray(value) : ko.observable(value);
         }
+
+        var chargeToCostCenterFields = [
+            {
+                controlType: "t1",
+                fieldType: "string",
+                id: "tbhdcostcenter_成本中心编号_costCenterId_1_string_t1",
+                name: "成本中心编号",
+                readable: true,
+                required: true,
+                seq: 3,
+                type: "string"
+            },
+            {
+                controlType: "t1",
+                fieldType: "string",
+                id: "tbhdcostcenter_成本中心名称_costCenterName_2_string_t1",
+                name: "成本中心名称",
+                readable: true,
+                required: true,
+                visible: false,
+                seq: 4,
+                type: "string"
+            },
+            {
+                controlType: "t6",
+                fieldType: "string",
+                id: "tbhdcostcenter_百分比_costCenterPercentage_3_string_t6",
+                name: "百分比",
+                readable: true,
+                required: true,
+                seq: 3,
+                type: "string"
+            }
+        ];
+        self.costCenterTable = eim.util.buildTable(chargeToCostCenterFields, self.chargeToCostCenter);
+
         this.mode = ko.pureComputed(function () {
             if (typeof (this.id()) === "number") {
                 return { id: "edit", name: "更新", text: "更新员工" };
-             
+
             }
             return { id: "add", name: "创建", text: "创建员工" };
         }, this);
 
+        this.delete = function () {
+            self._dfd = $.Deferred();
+
+            var settings = {
+                title: "删除员工",
+                code: "",
+                detail: "确认删除员工 " + "<b>" + self.id() + ": " + self.name() + "</b>" + "?",
+                description: "",
+                callback: function () {
+                    self.doDelete();
+                }
+            };
+            self.delayPop("confirm", settings);
+            return self._dfd.promise();
+        };
+
+        this.doDelete = function () {
+            var message = "删除员工 " + self.id() + ": " + self.name();
+            self.loading(true);
+            return eim.service.deleteMasterDataDetail("employee", self.id()).then(function (result) {
+                self.id(null);
+                self.loading(false);
+                self.triggerDelay({
+                    type: "success",
+                    title: "删除员工",
+                    detail: message + "成功"
+                });
+                self._dfd.resolve();
+            }, function () {
+                self.loading(false);
+                self.triggerDelay({
+                    type: "error",
+                    title: "删除员工",
+                    detail: message + "失败"
+                });
+                self._dfd.reject();
+            });
+        };
         self.init = function () {
             var self = this;
             var showError = function (result) {
@@ -64,6 +138,10 @@
                     "code": "错误代码：" + result.status + " " + result.statusText
                 });
                 self.loading(false);
+            }
+            eim.util.resetFields(defaultData, self);
+            if (this.mode().id === "add") {
+                return;
             }
             self.loading();
             return eim.service.getMasterDataDetail("employee", self.id()).then(function (result) {

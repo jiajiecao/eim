@@ -25,7 +25,12 @@
 
     eim.ViewModels.EmployeeListViewModel.extend(eim.ViewModels.BaseViewModel);
     eim.ViewModels.EmployeeListViewModel.prototype.pageSize = eim.config.pageSize;
-
+    eim.ViewModels.EmployeeListViewModel.prototype.delete = function () {
+        var root = this;
+        root.detail.delete().then(function () {
+            root.getData();
+        });
+    };
     eim.ViewModels.EmployeeListViewModel.prototype.getData = function (index) {
 
         var root = this;

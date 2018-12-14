@@ -1,6 +1,9 @@
 (function (eim, $) {
     $(function () {
 
+        $("input[control-type='t3']").datetimepicker({
+            format: "YYYY-MM-DD"
+        });
         var viewModel = new window.eim.ViewModels.EmployeeDetailViewModel();
         var id = eim.util.getUrlParam(location.href, "id");
         if (typeof (id) !== "undefined") {

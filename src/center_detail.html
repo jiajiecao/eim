@@ -11,6 +11,7 @@
 <link rel="stylesheet" type="text/css" href="themes/owl.theme.css">
 <link rel="stylesheet" type="text/css" href="themes/owl.transitions.css">
 <link rel="stylesheet" type="text/css" href="themes/bootstrap-theme.css">
+<link rel="stylesheet" type="text/css" href="themes/bootstrap-datetimepicker.css">
 <link rel="stylesheet" type="text/css" href="themes/jqm-demos.css">
 <link rel="stylesheet" type="text/css" href="themes/jquery.mobile.icons.css">
 <link rel="stylesheet" type="text/css" href="themes/jquery.mobile.structure.css">
@@ -218,32 +219,28 @@ textarea.ui-input-text {
         <div class="ui-body ui-body-b ui-content" style="background-image: url(images/works-bg2.jpg); border-width:1px; border-bottom-right-radius: 0.31em; border-bottom-left-radius:0.31em; min-height: 800px; margin: 0 2px; padding: 6px 6px">
           
           <div class="row">
-            <div class=" col-lg-4 col-sm-12 col-xs-12 col-md-4" style="padding:3px 3px; ">
+            <div class="col-lg-4 col-sm-12 col-xs-12 col-md-4" style="padding:3px 3px; ">
               <label for="id" style="color: #78909c; font-size: small">成本中心ID <font color="#d32f2f"><i data-bind="visible:typeof(id()) ==='number'" class="fa fa-fw fa-asterisk"></i></font></label>
               <input type="text" disabled data-clear-btn="true" data-bind="value:id" name="id" id="id" data-inline="false" data-theme="b" style="font-weight:600; font-size: large">
             </div>
-            <div class=" col-lg-4 col-sm-12 col-xs-12 col-md-4" style="padding:3px 3px; ">
-              <label for="id" style="color: #78909c; font-size: small">成本中心代码 <font color="#d32f2f"><i class="fa fa-fw fa-asterisk"></i></font></label>
+            <div class="col-lg-4 col-sm-12 col-xs-12 col-md-4" style="padding:3px 3px; ">
+              <label for="code" style="color: #78909c; font-size: small">成本中心代码 <font color="#d32f2f"><i class="fa fa-fw fa-asterisk"></i></font></label>
               <input type="text" data-clear-btn="true" data-bind="value:code" name="code" id="code" data-inline="false" data-theme="b" style="font-weight:600; font-size: large">
             </div>
 			    </div>
           <div class="row">
               <legend style="padding-left: 3px;"><font size="-1" color="#000000"></font></legend>
-
               <div class=" col-lg-4 col-sm-12 col-xs-12 col-md-4" style="padding:3px 3px; ">
-                <label for="id" style="color: #78909c; font-size: small">名称 <font color="#d32f2f"><i class="fa fa-fw fa-asterisk"></i></font></label>
+                <label for="name" style="color: #78909c; font-size: small">名称 <font color="#d32f2f"><i class="fa fa-fw fa-asterisk"></i></font></label>
                 <input type="text" data-clear-btn="true" data-bind="value:name" name="name" id="name" data-inline="false" data-theme="b" style="font-weight:600; font-size: large">
               </div>
-
-          <div class=" col-lg-4 col-sm-12 col-xs-12 col-md-4" style="padding:3px 3px; ">
-                <label for="id" style="color: #78909c; font-size: small">负责人 <font color="#d32f2f"></font></label>
-                <form  autocomplete="off" onsubmit="function(){return false;}">
+              <div class=" col-lg-4 col-sm-12 col-xs-12 col-md-4" style="padding:3px 3px; ">
+                <label for="costCenterManager" style="color: #78909c; font-size: small">负责人 <font color="#d32f2f"></font></label>
+                <form  autocomplete="off" onsubmit="function() { return false; }">
                     <input  controlType="employee" data-bind="auto:costCenterManager" name="costCenterManager" id="costCenterManager" data-type="search" data-inline="false" data-theme="b" style="font-weight:600; font-size: large">
                     <ul  data-role="listview" class="ui-nodisc-icon ui-alt-icon ui-listview ui-listview-inset ui-corner-all ui-shadow" data-inset="true">
                     </ul> 
                   </form>
-
-              
               </div>
              
           </div>

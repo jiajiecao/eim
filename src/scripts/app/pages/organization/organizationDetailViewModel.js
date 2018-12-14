@@ -32,6 +32,44 @@
             return { id: "add", name: "创建", text: "创建组织" };
         }, this);
 
+        this.delete = function () {
+            self._dfd = $.Deferred();
+
+            var settings = {
+                title: "删除组织",
+                code: "",
+                detail: "确认删除组织 " + "<b>" + self.id() + ": " + self.name() + "</b>" + "?",
+                description: "",
+                callback: function () {
+                    self.doDelete();
+                }
+            };
+            self.delayPop("confirm", settings);
+            return self._dfd.promise();
+        };
+
+        this.doDelete = function () {
+            var message = "删除组织 " + self.id() + ": " + self.name();
+            self.loading(true);
+            return eim.service.deleteMasterDataDetail("department", self.id()).then(function (result) {
+                self.id(null);
+                self.loading(false);
+                self.triggerDelay({
+                    type: "success",
+                    title: "删除组织",
+                    detail: message + "成功"
+                });
+                self._dfd.resolve();
+            }, function () {
+                self.loading(false);
+                self.triggerDelay({
+                    type: "error",
+                    title: "删除组织",
+                    detail: message + "失败"
+                });
+                self._dfd.reject();
+            });
+        };
         self.init = function () {
             var self = this;
             var showError = function (result) {
@@ -41,6 +79,10 @@
                     "code": "错误代码：" + result.status + " " + result.statusText
                 });
                 self.loading(false);
+            }
+            eim.util.resetFields(defaultData, self);
+            if (this.mode().id === "add") {
+                return;
             }
             self.loading();
             return eim.service.getMasterDataDetail("department", self.id()).then(function (result) {

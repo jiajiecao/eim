@@ -15,6 +15,11 @@
         };
 
         this.fullText = ko.observable("");
+        this.cancelPop = function () {
+            var that = this;
+            that.dialogCallback = null;
+            that.closePop();
+        };
         this.closePop = function () {
             var that = this;
             var result = that.dialogCallback && that.dialogCallback();
@@ -157,6 +162,20 @@
                 "</p>" +
                 "</div>" +
                 "</div>",
+            "confirm": "<div data-role=\"popup\" data-dismissible=\"false\" data-theme=\"b\" data-overlay-theme=\"a\" class=\"ui-corner-all\" style=\"min-width:300px; max-width:300px; background-image:url(../../images/tweets-bg.jpg)\">" +
+                "<div data-role=\"content\" style=\"padding: 4px 4px;\">" +
+                "<p align=\"center\" style=\"margin:8px 8px;\"><font color=\"#607D8B\"><i class=\"fa fa-2x fa-info-circle\"></i></font></p>" +
+                "<hr style=\"border-color: #607D8B; margin-bottom: 0px; margin-top:11px;\">" +
+                "<p align=\"left\" style=\"padding: 0px 3px; margin-bottom: 24px;\"> <b><font color=\"#9e9e9e\" data-bind=\"text:popTitle\"></font></b> </p>" +
+                "<p data-bind=\"visible:!!popCode()\" align=\"left\" style=\"padding: 0px 3px; margin-bottom: 6px;\"> <span data-bind=\"text:popCode\"></span></p>" +
+                "<p data-bind=\"visible:!!popDetail()\" align=\"left\" style=\"padding: 0px 3px; margin-bottom: 6px;\"> <span data-bind=\"html:popDetail\"></span></p>" +
+                "<p data-bind=\"visible:!!popDescription()\" align=\"left\" style=\"padding: 0px 3px; margin-bottom: 16px;\"> <span  data-bind=\"text:popDescription\"></span></p>" +
+                "<div class=\"ui-grid-a\">" +
+                "<div class=\"ui-block-a\"><a href=\"javascript:void(0);\" data-bind=\"click:closePop\" class=\"ui-btn ui-corner-all ui-shadow  ui-btn-b ui-btn-icon-left ui-icon-check\"  style=\"background-color: #4caf50; color:#fff; text-shadow: 0 1px 0 #616161; margin-left:2px\">确认</a></div>" +
+                "<div class=\"ui-block-b\"><a href=\"javascript:void(0);\" data-bind=\"click:cancelPop\" class=\"ui-btn ui-corner-all ui-shadow  ui-btn-b ui-btn-icon-left ui-icon-delete\"  style=\"margin-right:2px;\">取消</a></div>" +
+                "</div>" +
+                "</div>" +
+                "</div>",
         };
         this.popTitle = ko.observable("");
         this.popDescription = ko.observable("");
@@ -230,6 +249,41 @@
             ko.applyBindings(that, that.currentPop[0]);
             that.currentPop.popup("open");
 
+        };
+
+        this.delayPop = function (type, options) {
+            var that = this;
+            var targetPop = $("#pop" + type);
+            if (targetPop.length) {
+                if (options) {
+                    targetPop = targetPop.popup(options);
+                }
+                targetPop.popup("open");
+            } else {
+                that.pop(type, options);
+                targetPop = that.currentPop;
+            }
+
+            targetPop.on("popupafterclose", function () {
+                setTimeout(function () {
+                    if (that.delayObject && typeof (that.delayObject) === "object") {
+                        that.pop(that.delayObject.type, that.delayObject);
+                        that.delayObject = "";
+                        return;
+                    }
+                    else if (that.delayObject && typeof (that.delayObject) === "string") {
+                        $("#pop" + that.delayObject).popup("open");
+                        that.delayObject = "";
+                    }
+                }, 500);
+            });
+        };
+        this.triggerDelay = function (obj) {
+            var that = this;
+            that.delayObject = obj;
+            if ($.mobile.popup && $.mobile.popup.active) {
+                $.mobile.popup.active.close();
+            }
         };
         this.keydownLogin = function (viewModel, event) {
             var element = $(document.activeElement);

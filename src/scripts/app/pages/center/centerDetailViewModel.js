@@ -37,19 +37,7 @@
                 });
                 self.loading(false);
             }
-            for (var i in defaultData) {
-                if (i == "id") {
-                    continue;
-                }
-                var value = defaultData[i];
-                self[i](value);
-                var ele = $("#" + i);
-                ele.parent().removeClass("ui-invalid");
-                var clearBtn = ele.parent().find("a.ui-input-clear").not(".ui-input-clear-hidden");
-                if (clearBtn && clearBtn.length) {
-                    clearBtn.click();
-                }
-            }
+            eim.util.resetFields(defaultData, self);
             if (this.mode().id === "add") {
                 return;
             }
@@ -67,13 +55,52 @@
             }, showError);
         };
 
-        this.reset = function () {
-            eim.util.resetFields(defaultData, this);
+
+        this.delete = function () {
+            self._dfd = $.Deferred();
+
+            var settings = {
+                title: "删除成本中心",
+                code: "",
+                detail: "确认删除成本中心 " + "<b>" + self.id() + ": " + self.name() + "</b>" + "?",
+                description: "",
+                callback: function () {
+                    self.doDelete();
+                }
+            };
+            self.delayPop("confirm", settings);
+            return self._dfd.promise();
+        };
+
+        this.doDelete = function () {
+            var message = "删除成本中心 " + self.id() + ": " + self.name();
+            self.loading(true);
+            return eim.service.deleteMasterDataDetail("costCenter", self.id()).then(function (result) {
+                self.id(null);
+                self.loading(false);
+                self.triggerDelay({
+                    type: "success",
+                    title: "删除成本中心",
+                    detail: message + "成功"
+                });
+                self._dfd.resolve();
+            }, function () {
+                self.loading(false);
+                self.triggerDelay({
+                    type: "error",
+                    title: "删除成本中心",
+                    detail: message + "失败"
+                });
+                self._dfd.reject();
+            });
         };
 
         this.save = function () {
             var self = this;
-            var valid = eim.util.validateFields(self, ["name", "code"]);
+            var valid = eim.util.validateFields(self, {
+                required: ["name", "code"],
+                autocomplete: ["costCenterManager"]
+            });
             if (!valid) {
                 return;
             }
@@ -100,10 +127,18 @@
             }
 
             var showSuccess = function (result) {
-                self.pop("success", {
+                var obj = {
                     "title": self.mode().text,
                     "detail": self.mode().text + "成功" + " " + (result && result.errorMessage || ""),
-                });
+                };
+                if (self.mode().id === "add") {
+                    obj.callback = function () {
+                        location.href = "center_detail.html?" + $.param({ id: result.id });
+                    }
+                }
+                self.pop("success", obj);
+
+
                 self.loading(false);
             }
             self.loading();
