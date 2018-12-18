@@ -48,6 +48,20 @@
             self[i] = $.isArray(value) ? ko.observableArray(value) : ko.observable(value);
         }
 
+        var consterCenterField = {
+            controlType: "auto",
+            fieldType: "string",
+            id: "tbhdcostcenter_成本中心_costCenterId_1_string_auto",
+            name: "成本中心",
+            readable: true,
+            writable: true,
+            required: true,
+            seq: 1,
+            type: "string",
+            value: ko.observable()
+        };
+
+
         var chargeToCostCenterFields = [
             {
                 controlType: "t1",
@@ -55,8 +69,9 @@
                 id: "tbhdcostcenter_成本中心编号_costCenterId_1_string_t1",
                 name: "成本中心编号",
                 readable: true,
+                writable: true,
                 required: true,
-                seq: 3,
+                seq: 1,
                 type: "string"
             },
             {
@@ -65,9 +80,10 @@
                 id: "tbhdcostcenter_成本中心名称_costCenterName_2_string_t1",
                 name: "成本中心名称",
                 readable: true,
+                writable: true,
                 required: true,
                 visible: false,
-                seq: 4,
+                seq: 2,
                 type: "string"
             },
             {
@@ -76,17 +92,18 @@
                 id: "tbhdcostcenter_百分比_costCenterPercentage_3_string_t6",
                 name: "百分比",
                 readable: true,
+                writable: true,
                 required: true,
                 seq: 3,
                 type: "string"
             }
         ];
         self.costCenterTable = eim.util.buildTable(chargeToCostCenterFields, self.chargeToCostCenter);
+        self.constCenterForm = [consterCenterField, self.costCenterTable.headers()[2]];
 
         this.mode = ko.pureComputed(function () {
             if (typeof (this.id()) === "number") {
                 return { id: "edit", name: "更新", text: "更新员工" };
-
             }
             return { id: "add", name: "创建", text: "创建员工" };
         }, this);

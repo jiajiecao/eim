@@ -35,22 +35,22 @@ ko.bindingHandlers.basicField = {
             //money
             't11': '<input style="height:38px;" control-type="t11" data-clear-btn="true" type="text"/>',
             'cbv': '' +
-                '<form>' +
+                '<form onsubmit="return false;" novalidate>' +
                 '<fieldset data-role="controlgroup">' +
                 '</fieldset>' +
                 '</form>',
             'cbh': '' +
-                '<form>' +
+                '<form onsubmit="return false;" novalidate>' +
                 '<fieldset data-role="controlgroup" data-type="horizontal">' +
                 '</fieldset>' +
                 '</form>',
             'rbv': '' +
-                '<form>' +
+                '<form onsubmit="return false;" novalidate>' +
                 '<fieldset data-role="controlgroup">' +
                 '</fieldset>' +
                 '</form>',
             'rbh': '' +
-                '<form>' +
+                '<form onsubmit="return false;" novalidate>' +
                 '<fieldset data-role="controlgroup" data-type="horizontal">' +
                 '</fieldset>' +
                 '</form>',
@@ -63,21 +63,9 @@ ko.bindingHandlers.basicField = {
                 '</select>' +
                 '</div>' +
                 '</fieldset>',
-            "employee": '<form class="ui-filterable" autocomplete="off" onsubmit="function(){return false;}">' +
+            "auto": '<div onsubmit="return false;" novalidate class="ui-filterable" autocomplete="off">' +
                 '<input style="height:38px;" data-type="search">' +
-                '</form>' +
-                '<ul  data-role="listview" class="ui-nodisc-icon ui-alt-icon ui-listview ui-listview-inset ui-corner-all ui-shadow" ' +
-                ' data-inset="true">' +
-                '</ul>',
-            "department": '<form class="ui-filterable" autocomplete="off" onsubmit="function(){return false;}">' +
-                '<input style="height:38px;" data-type="search">' +
-                '</form>' +
-                '<ul  data-role="listview" class="ui-nodisc-icon ui-alt-icon ui-listview ui-listview-inset ui-corner-all ui-shadow" ' +
-                ' data-inset="true">' +
-                '</ul>',
-            "costCenter": '<form class="ui-filterable" autocomplete="off" onsubmit="function(){return false;}">' +
-                '<input style="height:38px;" data-type="search">' +
-                '</form>' +
+                '</div>' +
                 '<ul  data-role="listview" class="ui-nodisc-icon ui-alt-icon ui-listview ui-listview-inset ui-corner-all ui-shadow" ' +
                 ' data-inset="true">' +
                 '</ul>'
@@ -132,7 +120,7 @@ ko.bindingHandlers.basicField = {
                 tag.append("<option value='" + item.id.trim() + "'>" + item.name.trim() + "</option>");
             });
 
-        } else if (controlType === "employee" || controlType == "department" || controlType == "costCenter") {
+        } else if (controlType === "auto") {
             tag = $(element).find("input").first();
             if (valueUnwrapped.placeholder)
                 tag.attr("placeholder", valueUnwrapped.placeholder);
@@ -265,7 +253,7 @@ ko.bindingHandlers.basicField = {
             binding = {
                 "switch": valueAccessor().value
             };
-        if (controlType === "employee" || controlType === "department" || controlType === "costCenter")
+        if (controlType === "auto")
             binding = {
                 "auto": valueAccessor().value
             };
@@ -291,7 +279,7 @@ ko.bindingHandlers.basicForm = {
     init: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
         if (!$("#basicField").length) {
             var template = "<script type=\"text/html\" id=\"basicField\">" +
-                "<form class=\"col-lg-4 col-sm-6 col-xs-12 col-md-6\" style=\"padding:3px 3px;\"" +
+                "<form onsubmit=\"return false;\" novalidate class=\"col-lg-4 col-sm-6 col-xs-12 col-md-6\" style=\"padding:3px 3px;\"" +
                 "data-bind=\"basicField: $data\">" +
                 "<label><font color=\"#9e9e9e\" size=\"-1\"></font></label>" +
                 "</form>" +

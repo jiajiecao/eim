@@ -3,24 +3,33 @@ ko.bindingHandlers[getBindingName("auto")] = (function () {
 
     return {
         init: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
+            console.log(viewModel);
             if (!$("#autoRow").length) {
                 var template = "<script type=\"text/html\" id=\"autoRow\">" +
                     "<li data-icon=\"check\" class=\"ui-li-has-count ui-first-child ui-last-child\">" +
-                    "<a href=\"javascript:void(0)\" data-bind=\"click:function(){}\" " +
+                    "<a href=\"javascript:void(0)\" " +
                     "class=\"ui-btn ui-btn-icon-right ui-icon-check\">" +
-                    "<span data-bind=\"text:name\"></span>" +
-                    "<span class=\"ui-li-count ui-body-inherit\" data-bind=\"text:departmentName\"></span>" +
+                    "<span data-bind=\"text:$data[$parent.nameField]\"></span>" +
+                    "<span class=\"ui-li-count ui-body-inherit\" data-bind=\"text:$data[$parent.keyField]\"></span>" +
                     "</a>" +
                     "</li>" +
                     "</script>";
                 $("body").append(template);
             }
-
+            var root = ko.contextFor(element).$root;
             var modelValue = valueAccessor();
             var $element = $(element);
-            var prevent = false;
+            console.log(element);
+            var dataSource = null;
+            for (var i in eim.config.autoCompleteDataSource) {
+                if ($element.attr("id").toLowerCase().indexOf(i.toLowerCase()) >= 0) {
+                    dataSource = eim.config.autoCompleteDataSource[i];
+                }
+            }
+            viewModel.keyField = dataSource.keyField || "id";
+            viewModel.nameField = dataSource.nameField || "name";
+
             var fnInvalid = allBindings() && allBindings().invalid;
-            var controlType = $element.attr("controlType");
 
             // Prevent form submission
             var _onKeyDown = function (event) {
@@ -51,16 +60,26 @@ ko.bindingHandlers[getBindingName("auto")] = (function () {
                     ko.utils.extend(context, valueAccessor());
                 });
             var selectItem = function (model, $e) {
+                console.log($);
                 var tempItem = items()[$($e.target).index()];
                 modelValue(tempItem);
                 //item(tempItem && tempItem.name || "");
                 items.removeAll();
             };
-            ko.applyBindingsToNode(ul,
+            ko.applyBindingsToNode(element,
                 {
-                    click: selectItem,
-                    jqmTemplate: { name: 'autoRow', foreach: items }, jqmRefreshList: items
+                    event: {
+                        change: function () {
+                            modelValue(null);
+                        }
+                    }
                 }, childBindingContext);
+
+
+            ko.applyBindingsToNode(ul, {
+                click: selectItem,
+                jqmTemplate: { name: 'autoRow', foreach: items }, jqmRefreshList: items
+            }, childBindingContext);
 
             var _onKeyUp = function (event) {
 
@@ -72,13 +91,14 @@ ko.bindingHandlers[getBindingName("auto")] = (function () {
                 var text = $element.val().trim();
                 //var me = eim.util.getUser().userId;
                 if (text) {
-                    eim.service.getSuggestion(controlType, text).then(function (result) {
+
+
+                    eim.service.getSuggestion(dataSource.url, text).then(function (result) {
                         // items = result.filter(function(person) {
                         //     return person.sn !== me;
                         // });
                         items(result);
                     }, function (result) {
-                        var root = ko.contextFor(event.target).$root;
 
                         root.loading(false);
 
@@ -87,7 +107,7 @@ ko.bindingHandlers[getBindingName("auto")] = (function () {
                             var cause = result.responseJSON.cause;
                             message = cause.substring(cause.indexOf(":") + 1).trim();
                         }
-                        window.vm.pop("error", {
+                        root.pop("error", {
                             "title": "获取列表失败",
                             "detail": message,
                             "code": "错误代码：" + result.status + " " + result.statusText

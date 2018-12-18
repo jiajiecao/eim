@@ -364,7 +364,7 @@ textarea.ui-input-text {
 
             <div class="col-lg-4 col-sm-12 col-xs-12 col-md-4" style="padding:3px 3px; ">
               <label for="managers" style="color: #78909c; font-size: small">汇报给 </label>
-              <form  autocomplete="off" onsubmit="function() { return false; }">
+              <form  autocomplete="off" onsubmit="return false;">
                   <input  controlType="employee" data-bind="auto:managers" name="managers" id="managers" data-type="search" data-inline="false" data-theme="b" style="font-weight:600; font-size: large">
                   <ul  data-role="listview" class="ui-nodisc-icon ui-alt-icon ui-listview ui-listview-inset ui-corner-all ui-shadow" data-inset="true">
                   </ul> 
@@ -379,14 +379,13 @@ textarea.ui-input-text {
       </div>
       <div role="tabpanel" class="tab-pane" id="costcenter" aria-labelledBy="costcenter-tab">
         <div class="ui-body ui-body-b ui-content" style="background-image: url(images/works-bg2.jpg); border-width:1px; border-bottom-right-radius: 0.31em; border-bottom-left-radius:0.31em; min-height: 1000px; margin: 0 2px; padding: 6px 6px">
-        
+            <div class="row" data-bind="basicForm: constCenterForm">
+            </div>
+
+            <div class="row" data-bind="basicTable: costCenterTable">
+            </div>
       
-                <div class="row" data-bind="basicForm: costCenterTable.headers">
-                </div>
-          <div class="row" data-bind="basicTable:  costCenterTable">
-          </div>
-        
-        
+      
           <div class="row">
             <!--<div class=" col-lg-4 col-sm-12 col-xs-12 col-md-4" style="padding:3px 3px; ">
               <label for="id" style="color: #78909c; font-size: small">类型 <font color="#d32f2f"><i class="fa fa-fw fa-asterisk"></i></font></label>
