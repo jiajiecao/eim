@@ -21,13 +21,13 @@ ko.bindingHandlers[getBindingName("auto")] = (function () {
             var $element = $(element);
             console.log(element);
             var dataSource = null;
-            for (var i in eim.config.autoCompleteDataSource) {
+            for (var i in eim.config.autoDataSource) {
                 if ($element.attr("id").toLowerCase().indexOf(i.toLowerCase()) >= 0) {
-                    dataSource = eim.config.autoCompleteDataSource[i];
+                    dataSource = eim.config.autoDataSource[i];
                 }
             }
-            viewModel.keyField = dataSource.keyField || "id";
-            viewModel.nameField = dataSource.nameField || "name";
+            viewModel.keyField = "id";
+            viewModel.nameField = "name";
 
             var fnInvalid = allBindings() && allBindings().invalid;
 
@@ -70,7 +70,9 @@ ko.bindingHandlers[getBindingName("auto")] = (function () {
                 {
                     event: {
                         change: function () {
-                            modelValue(null);
+                            if (modelValue()) {
+                                modelValue(null);
+                            }
                         }
                     }
                 }, childBindingContext);
@@ -93,7 +95,7 @@ ko.bindingHandlers[getBindingName("auto")] = (function () {
                 if (text) {
 
 
-                    eim.service.getSuggestion(dataSource.url, text).then(function (result) {
+                    eim.service.getSuggestion(dataSource, text).then(function (result) {
                         // items = result.filter(function(person) {
                         //     return person.sn !== me;
                         // });
@@ -135,11 +137,9 @@ ko.bindingHandlers[getBindingName("auto")] = (function () {
         update: function (element, valueAccessor, allBindings) {
             var modelValue = valueAccessor();
             var fnInvalid = allBindings() && allBindings().invalid;
-            var newValue = modelValue() && modelValue().name;
+            var newValue = modelValue() && modelValue().name || "";
             // allBindings().value(newValue);
-            if (newValue) {
-                $(element).val(newValue);
-            }
+            $(element).val(newValue);
 
             if (fnInvalid) {
                 fnInvalid(!newValue);

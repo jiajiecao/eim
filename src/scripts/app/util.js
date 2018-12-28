@@ -3,20 +3,22 @@
 
     var buildTable = function (fields, items) {
         var tempTable = {};
+
         fields = JSON.parse(JSON.stringify(fields)).sort(function (a, b) {
             return a.seq - b.seq;
         });
         fields.forEach(function (field) {
-            field.value = ko.observable();
+            field.value = ko.observable(null);
         });
         tempTable.headers = ko.observableArray(fields);
         tempTable.rows = ko.isObservable(items) ? items : ko.observableArray(items || []);
         tempTable.showFullText = function (data, e) {
             var t = e.target;
+            var $root = ko.contextFor(document.body).$root;
             var link = (t.tagName.toLowerCase() !== "a") ? $(t).closest("a") : $(t);
             data = data.trim().replace(/\r/g, "").replace(/\n/g, "<br/>");
-            var root = $root || ko.contextFor(t).$root;
-            root.pop("fullText", {
+
+            $root.pop("fullText", {
                 "description": data,
                 "positionTo": "#" + link.attr("id")
             });
@@ -75,15 +77,15 @@
             return value;
         };
 
-        tempTable.editIndx = ko.observable(-1);
+        tempTable.editIndex = ko.observable(-1);
         tempTable.removeRow = function (row) {
-            if (this.editIndx() >= 0) {
-                if ($root) {
-                    $root.pop("error", {
-                        "title": "输入错误",
-                        "description": "请先完成行项目的编辑。"
-                    });
-                }
+            if (this.editIndex() >= 0) {
+                var $root = ko.contextFor(document.body).$root;
+                $root.pop("error", {
+                    "title": "输入错误",
+                    "description": "请先完成行项目的编辑。"
+                });
+
                 return;
             }
             this.rows.remove(row);
@@ -95,7 +97,7 @@
             });
         };
         tempTable.editRow = function (row, index) {
-            this.editIndx(index);
+            this.editIndex(index);
             for (var i in this.headers()) {
                 var head = this.headers()[i];
                 head.value(row[i]);
@@ -104,12 +106,12 @@
         tempTable.saveRow = function () {
             var row = [];
             if (!eim.util.validateFields(this.headers())) {
-                if ($root) {
-                    $root.pop("error", {
-                        "title": "输入错误",
-                        "description": "您的输入有误，请重新输入。"
-                    });
-                }
+                var $root = ko.contextFor(document.body).$root;
+                $root.pop("error", {
+                    "title": "输入错误",
+                    "description": "您的输入有误，请重新输入。"
+                });
+
                 return;
             }
 
@@ -127,13 +129,13 @@
                 //dynamicValue("");
                 //dynamicValue(null);
             }
-            var index = this.editIndx();
+            var index = this.editIndex();
             if (index >= 0) {
                 this.rows.splice(index, 1, row);
             } else {
                 this.rows.push(row);
             }
-            this.editIndx(-1);
+            this.editIndex(-1);
             eim.util.resetFields(this.headers());
             $("table[data-role='table']").each(function () {
                 if (ko.contextFor(this).editable) {
@@ -143,10 +145,10 @@
             });
         };
         tempTable.resetRow = function () {
-            this.editIndx(-1);
+            this.editIndex(-1);
             eim.util.resetFields(this.headers());
         };
-
+        tempTable.editable = true;
         return tempTable;
     };
 
@@ -358,7 +360,7 @@
             var formattedValue = moment(stamp).format(format);
             return formattedValue;
         },
-        resetFields: function (defaultData, self) {
+        mapFields: function (defaultData, self) {
             for (var i in defaultData) {
                 if (i == "id") {
                     continue;
@@ -374,26 +376,27 @@
                 self[i](value);
             }
         },
-        buildTable: buildTable,
-        validateFields: function (data, fields) {
-            var isValid = true;
-            fields.autocomplete.forEach(function (field, index) {
-                var ele = $("#" + field).parent();
-
-                var input = $("#" + field).val().trim();
-                if (!input) {
-                    data[field](null);
+        resetFields: function (fields) {
+            fields.forEach(function (field) {
+                var ele = $("[name='" + field.id + "']")
+                ele.parent().removeClass("ui-invalid");
+                var clearBtn = ele.parent().find("a.ui-input-clear").not(".ui-input-clear-hidden");
+                if (clearBtn && clearBtn.length) {
+                    clearBtn.click();
                 }
-                if ((data[field]() && data[field]().name || "") !== input) {
-                    ele.addClass("ui-invalid");
-                    isValid = false;
-                } else {
-                    ele.removeClass("ui-invalid");
-                }
+                field.value(null);
             });
-            fields.required.forEach(function (field, index) {
-                var ele = $("#" + field).parent();
-                var value = ko.unwrap(data[field]);
+
+        },
+
+        buildTable: buildTable,
+        validateFields: function (fields) {
+            var isValid = true;
+
+            fields.forEach(function (field, index) {
+                //var ele = $("#" + field.id).parent();
+                var ele = $("[name='" + field.id + "']").parent();
+                var value = ko.unwrap(field.value);
                 if (value === null
                     || typeof (value) === "undefined"
                     || typeof (value) === "string" && value.trim() === "") {

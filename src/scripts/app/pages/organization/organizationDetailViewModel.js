@@ -80,7 +80,7 @@
                 });
                 self.loading(false);
             }
-            eim.util.resetFields(defaultData, self);
+            eim.util.mapFields(defaultData, self);
             if (this.mode().id === "add") {
                 return;
             }

@@ -10,32 +10,11 @@
         pageSize: 15,
         //登陆有效期，默认30分钟
         activeTime: 15,
-        autoCompleteDataSource: {
-            costCenter: {
-                url: "costCenter",
-                keyField: "id",
-                nameField: "name"
-            },
-            "成本中心_costCenterId": {
-                url: "costCenter",
-                keyField: "id",
-                nameField: "name"
-            },
-            employee: {
-                url: "employee",
-                keyField: "id",
-                nameField: "name"
-            },
-            manager: {
-                url: "employee",
-                keyField: "id",
-                nameField: "name"
-            },
-            department: {
-                url: "department",
-                keyField: "id",
-                nameField: "name"
-            }
+        autoDataSource: {
+            costCenter:  "costCenter",
+            employee:"employee",
+            manager: "employee",
+            department:"department"
         }
     };
 })(window.eim = window.eim || {});
