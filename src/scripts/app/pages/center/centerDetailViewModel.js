@@ -37,7 +37,7 @@
                 });
                 self.loading(false);
             }
-            eim.util.resetFields(defaultData, self);
+            eim.util.mapFields(defaultData, self);
             if (this.mode().id === "add") {
                 return;
             }
@@ -97,10 +97,13 @@
 
         this.save = function () {
             var self = this;
-            var valid = eim.util.validateFields(self, {
-                required: ["name", "code"],
-                autocomplete: ["costCenterManager"]
-            });
+            var valid = eim.util.validateFields([{
+                id: "name",
+                value: self.name
+            }, {
+                id: "code",
+                value: self.code
+            }]);
             if (!valid) {
                 return;
             }
