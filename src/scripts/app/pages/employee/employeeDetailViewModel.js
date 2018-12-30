@@ -74,9 +74,9 @@
             //     type: "string"
             // },
             {
-                controlType: "t6",
+                controlType: "percent",
                 fieldType: "string",
-                id: "tbhdcostcenter_百分比_costCenterPercentage_2_string_t6",
+                id: "tbhdcostcenter_百分比_costCenterPercentage_2_string_percent",
                 name: "百分比",
                 readable: true,
                 writable: true,
@@ -94,7 +94,9 @@
             }
             return { id: "add", name: "创建", text: "创建员工" };
         }, this);
+        this.save=function(){
 
+        };
         this.delete = function () {
             self._dfd = $.Deferred();
 
@@ -144,9 +146,11 @@
                 self.loading(false);
             }
             eim.util.mapFields(defaultData, self);
+            self.costCenterTable.rows.removeAll();
             if (this.mode().id === "add") {
                 return;
             }
+            eim.util.resetFields( self.costCenterTable.headers());
             self.loading();
             return eim.service.getMasterDataDetail("employee", self.id()).then(function (result) {
                 var item = JSOG.decode(result);
@@ -156,6 +160,7 @@
                         field(item[i]);
                     }
                 }
+                self.costCenterTable.rows(self.chargeToCostCenter());
                 self.loading(false);
             }, showError);
         };

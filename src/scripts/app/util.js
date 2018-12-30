@@ -48,7 +48,7 @@
             var indexValue = ko.unwrap(index);
             var type = allHeaders[indexValue].controlType;
             type = type || "";
-
+            var fieldName = allHeaders[indexValue].name;
             if (type == "t3" || type == "t4" || type == "t5") {
                 if (typeof (value) == "number" && !isNaN(value)) {
                     value = eim.util.formatDateTime(value, type);
@@ -59,12 +59,16 @@
                     return value;
                 }
             }
-            // if (type == "t6") {
-            //     if (typeof(value) == "string" && value.length > 0) {
-            //         value = Number(value).toString();
-            //         return value;
-            //     }
-            // }
+            if (type === "percent") {
+                value = value? value *100+"%":"";
+                value = "<span style=\"font-weight: 700; color: #03a9f4; text-align: right\">" + value + "</span>"
+            }
+            if (type === "auto") {
+                if (value) {
+                    value = value.id + " (" + value.name + ")";
+                    return value;
+                }
+            }
             if (type == "t11") {
                 if (typeof (value) == "string" && value || typeof (value) == "number") {
                     value = eim.util.formatMoney(value);

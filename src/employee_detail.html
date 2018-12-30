@@ -41,6 +41,7 @@
 <script src="scripts/libs/oex/jqm-datetime.js"></script>
 <script src="scripts/libs/oex/jqm-selected.js"></script>
 <script src="scripts/libs/oex/jqm-number.js"></script>
+<script src="scripts/libs/oex/jqm-percent.js"></script>
 <script src="scripts/libs/oex/jqm-money.js"></script>
 <script src="scripts/libs/oex/jqm-tel.js"></script>
 <script src="scripts/libs/oex/jqm-email.js"></script>
@@ -233,8 +234,8 @@ textarea.ui-input-text {
         <div class="ui-body ui-body-b ui-content" style="background-image: url(images/works-bg2.jpg); border-width:1px; border-bottom-right-radius: 0.31em; border-bottom-left-radius:0.31em; min-height: 1000px; margin: 0 2px; padding: 6px 6px">
           <div class="row">
             <div class=" col-lg-4 col-sm-12 col-xs-12 col-md-4" style="padding:3px 3px; ">
-              <label for="id" style="color: #78909c; font-size: small">员工ID <font color="#d32f2f"><i class="fa fa-fw fa-asterisk"></i></font></label>
-              <input type="text" data-clear-btn="true" data-bind="value:id"  name="id" id="id" data-inline="false" data-theme="b" style="font-weight:600; font-size: large">
+              <label for="id" style="color: #78909c; font-size: small">员工ID <font color="#d32f2f"><i data-bind="visible:typeof(id()) ==='number'" class="fa fa-fw fa-asterisk"></i></font></label>
+              <input type="text" disabled data-clear-btn="true" data-bind="value:id"  name="id" id="id" data-inline="false" data-theme="b" style="font-weight:600; font-size: large">
             </div>
             <div class=" col-lg-4 col-sm-12 col-xs-12 col-md-4" style="padding:3px 3px; ">
               <label for="identityCard" style="color: #78909c; font-size: small">身份证编号 <font color="#d32f2f"><i class="fa fa-fw fa-asterisk"></i></font></label>
@@ -386,15 +387,9 @@ textarea.ui-input-text {
                 <a href="javascript:void(0);" data-bind="click:function(){costCenterTable.saveRow();}"><i class="material-icons md-36">add_circle_outline</i></a>
               </p>
             </div>
-  
             <div class="row" data-bind="basicTable: costCenterTable">
             </div>
-      
-      
-    
-        
-                   
-          <div class="row">
+          <div class="row" data-bind="visible:false">
             <legend style="padding-left: 3px;"><font size="-1" color="#000000"></font></legend>
             <table data-role="table" id="movie-table-custom" class="ui-body-d ui-shadow table-stripe ui-responsive movie-list table-stroke" data-mode="reflow"  style="margin-bottom: 8px; margin-top:8px; padding: 3px 3px">
               <thead>
@@ -477,11 +472,11 @@ textarea.ui-input-text {
   <div data-role="footer"  data-fullscreen="true" data-position="fixed" style=" border-bottom-width: 0px;">
     <div data-role="navbar">
       <ul>
-        <li><a href="#popsubmit" data-rel="popup" data-position-to="window" class="ui-btn-b" style="font-weight:300">
+        <li><a href="javascript:void(0);" data-bind="click:save"  class="ui-btn-b" style="font-weight:300">
           <p align="center" style="margin-bottom:4px; text-shadow: 1px 1px 3px rgba(74,74,74,0.4); color:#333333"><i class="material-icons md-light" style="color:#333333">send</i></p>
           <p align="center" style="margin: 0px 0px; margin-top:8px;">提交</p>
           </a></li>
-        <li><a href="#" data-rel="popup"  class="ui-btn-b" style="font-weight:300">
+        <li><a href="javascript:void(0);" data-bind="click:init" class="ui-btn-b" style="font-weight:300">
           <p align="center" style="margin-bottom:4px; text-shadow: 1px 1px 3px rgba(74,74,74,0.4); color:#333333"><i class="material-icons md-light" style="color:#333333">refresh</i></p>
           <p align="center" style="margin: 0px 0px; margin-top:8px;">重置</p>
           </a> </li>

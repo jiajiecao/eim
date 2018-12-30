@@ -68,7 +68,9 @@ ko.bindingHandlers.basicField = {
                 '</div>' +
                 '<ul  data-role="listview" class="ui-nodisc-icon ui-alt-icon ui-listview ui-listview-inset ui-corner-all ui-shadow" ' +
                 ' data-inset="true">' +
-                '</ul>'
+                '</ul>',
+                'percent': '<input style="height:38px;" control-type="percentƒ" data-clear-btn="true" type="number"/>',
+           
         };
         //ui-li-has-count ui-screen-hidden
         //ui-li-has-count ui-first-child ui-last-child
@@ -233,6 +235,10 @@ ko.bindingHandlers.basicField = {
             binding = {
                 "number": valueAccessor().value
             };
+            if (controlType == "percent")
+            binding = {
+                "percent": valueAccessor().value
+            };
         if (controlType == "t7")
             binding = {
                 "email": valueAccessor().value
@@ -335,9 +341,8 @@ ko.bindingHandlers.basicTable = {
          "</script>";
          */
         var cell = "<script type=\"text/html\" id=\"tableCell\">" +
-            "<td>" +
-            "<!-- ko text: formatCell($data,headers,$index) -->" +
-            "<!-- /ko -->" +
+            "<td data-bind=\"html:formatCell($data,headers,$index)\">" +
+           
             "<!-- ko if: isMultiText($data) -->" +
             "<!-- ko template: { name: 'showText'} -->" +
             "<!-- /ko -->" +
