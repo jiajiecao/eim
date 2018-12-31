@@ -60,7 +60,7 @@
                 }
             }
             if (type === "percent") {
-                value = value? value *100+"%":"";
+                value = value ? value * 100 + "%" : "";
                 value = "<span style=\"font-weight: 700; color: #03a9f4; text-align: right\">" + value + "</span>"
             }
             if (type === "auto") {
@@ -364,7 +364,7 @@
             var formattedValue = moment(stamp).format(format);
             return formattedValue;
         },
-        mapFields: function (defaultData, self) {
+        mapFields: function (defaultData, viewModel) {
             for (var i in defaultData) {
                 if (i == "id") {
                     continue;
@@ -377,7 +377,13 @@
                 if (clearBtn && clearBtn.length) {
                     clearBtn.click();
                 }
-                self[i](value);
+                viewModel[i](value);
+            }
+        },
+        unmapFields: function (data, viewModel) {
+            for (var i in data) {
+                var value = ko.unwrap(viewModel[i]);
+                data[i] = value;
             }
         },
         resetFields: function (fields) {
@@ -394,20 +400,41 @@
         },
 
         buildTable: buildTable,
+        isChinese: function (arguments) {
+         
+            for (var i in arguments) {
+                var name = arguments[i];
+                if (/[^\u4e00-\u9fa5]/.test(name)) {
+                    return false;
+                }
+            }
+            return true;
+        },
+
         validateFields: function (fields) {
             var isValid = true;
 
             fields.forEach(function (field, index) {
                 //var ele = $("#" + field.id).parent();
-                var ele = $("[name='" + field.id + "']").parent();
+                var $e = $("[name='" + field.id + "']");
+                if (field.controlType == "cbh" ||
+                    field.controlType == "cbv" ||
+                    field.controlType == "rbh" ||
+                    field.controlType == "rbv") {
+                    $e = $e.children();
+                } else if (field.controlType == "t2") {
+                } else {
+                    $e = $e.parent();
+                }
+
                 var value = ko.unwrap(field.value);
                 if (value === null
                     || typeof (value) === "undefined"
                     || typeof (value) === "string" && value.trim() === "") {
-                    ele.addClass("ui-invalid");
+                    $e.addClass("ui-invalid");
                     isValid = false;
                 } else {
-                    ele.removeClass("ui-invalid");
+                    $e.removeClass("ui-invalid");
                 }
             });
 

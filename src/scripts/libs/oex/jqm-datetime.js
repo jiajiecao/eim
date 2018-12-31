@@ -26,7 +26,7 @@ ko.bindingHandlers[getBindingName("datetime")] = (function () {
                         date = moment(date.format("YYYY-MM-DD HH:mm"));
                     }
                     var stamp = date.format("x");
-                    modelValue(stamp);
+                    modelValue(Number(stamp));
                     if (fnInvalid)
                         fnInvalid(false);
                 }

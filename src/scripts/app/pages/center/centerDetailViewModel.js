@@ -29,6 +29,7 @@
 
         this.init = function () {
             var self = this;
+            self.tab("home");
             var showError = function (result) {
                 self.pop("error", {
                     "title": "获取成本中心",
@@ -105,6 +106,7 @@
                 value: self.code
             }]);
             if (!valid) {
+                self.tab("home");
                 return;
             }
 

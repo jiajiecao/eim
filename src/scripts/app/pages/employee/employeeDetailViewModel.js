@@ -48,7 +48,19 @@
             self[i] = $.isArray(value) ? ko.observableArray(value) : ko.observable(value);
         }
 
-      
+        self.editRoles = ko.observable();
+        self.editRoles.subscribe(function (value) {
+            value = value ? value.toString().trim() : "";
+            var items = [];
+            value.split(",").forEach(function (item) {
+                var newItem = item.trim();
+                if (newItem && items.indexOf(newItem) < 0) {
+                    items.push(newItem);
+                }
+                self.roles(items);
+            });
+        });
+
         var chargeToCostCenterFields = [
             {
                 controlType: "auto",
@@ -85,8 +97,19 @@
                 type: "string"
             }
         ];
-        self.costCenterTable = eim.util.buildTable(chargeToCostCenterFields, self.chargeToCostCenter);
-      //  self.constCenterForm = [consterCenterField, self.costCenterTable.headers()[2]];
+        self.costCenterTable = eim.util.buildTable(chargeToCostCenterFields, []);
+        self.chargeToCostCenter.subscribe(function (values) {
+            var newValues = values.map(function (value) {
+                return [{
+                    id: value.costCenter.id,
+                    code: value.costCenter.code,
+                    name: value.costCenter.name,
+                }, value.rate];
+
+            });
+            self.costCenterTable.rows(newValues);
+        });
+        //  self.constCenterForm = [consterCenterField, self.costCenterTable.headers()[2]];
 
         this.mode = ko.pureComputed(function () {
             if (typeof (this.id()) === "number") {
@@ -94,9 +117,148 @@
             }
             return { id: "add", name: "创建", text: "创建员工" };
         }, this);
-        this.save=function(){
+        this.save = function () {
+            var self = this;
+            var fields = [
+                "identityCard",
+                "lastName",
+                "firstName",
+                "sex",
+                "maritalStatus",
+                "nationality",
+                "birth",
+                "homeAddress",
+                "editRoles",
+                "workType",
+                "hireStatus",
+                "expenseType"
+            ].map(function (fieldName) {
+                var field = {
+                    id: fieldName,
+                    value: self[fieldName]
+                };
+                if (fieldName === "sex" ||
+                    fieldName === "maritalStatus") {
+                    field.controlType = "rbv";
+                }
+                if (fieldName === "homeAddress") {
+                    field.controlType = "t2";
+                }
+                return field;
+            });
+            var valid = eim.util.validateFields(fields);
+            if (!valid) {
+                self.tab("home");
+                self.pop("error", {
+                    "title": "输入错误",
+                    "description": "您的输入有误，请重新输入。"
+                });
 
+                return;
+            }
+            valid = self.costCenterTable.rows().length > 0;
+            if (!valid) {
+                self.tab("costcenter");
+                self.pop("error", {
+                    "title": "输入错误",
+                    "description": "您的输入有误，请重新输入。"
+                });
+                return;
+            }
+            var data = $.extend({}, defaultData);
+
+
+            eim.util.unmapFields(data, self);
+            var costCenters = self.costCenterTable.rows().map(function (row) {
+                return {
+                    "costCenter": {
+                        "code": row[0].code
+                    },
+                    "rate": row[1]
+                }
+            });
+            var isChinese = eim.util.isChinese(data.firstName, data.lastName);
+            if (isChinese) {
+                data.name = data.lastName + data.firstName;
+            }
+            else {
+                data.name = data.firstName + " " + data.lastName;
+            }
+
+            var showError = function (result) {
+                self.pop("error", {
+                    "title": self.mode().text,
+                    "detail": self.mode().text + "失败" + " " + (result && result.errorMessage || ""),
+                    "code": "错误代码：" + result.status + " " + result.statusText
+                });
+                self.loading(false);
+            }
+
+            var cleanStructure = function (obj) {
+                ["manageToDepartment", "belongToDepartment", "inChargeOfCostCenter"].forEach(function (field) {
+                    if (obj[field]) {
+                        var newObj = {};
+                        if (obj[field].sn) {
+                            newObj.sn = obj[field].sn;
+                        }
+                        if (obj[field].code) {
+                            newObj.code = obj[field].code;
+                        }
+                        if (obj[field].id) {
+                            newObj.id = obj[field].id;
+                        }
+                        obj[field] = newObj;
+                    }
+                });
+
+            };
+            var showSuccess = function (result) {
+                var obj = {
+                    "title": self.mode().text,
+                    "detail": self.mode().text + "成功" + " " + (result && result.errorMessage || ""),
+                };
+                if (self.mode().id === "add") {
+                    obj.callback = function () {
+                        location.href = "employee_detail.html?" + $.param({ id: result.id });
+                    }
+                }
+                self.pop("success", obj);
+                self.loading(false);
+            }
+            self.loading();
+            cleanStructure(data);
+            data.staffs = data.staffs.map(function (staff) {
+                return {
+                    id: staff.id
+                };
+            });
+
+            data.managers = data.managers.map(function (manager) {
+                return {
+                    id: manager.id
+                };
+            });
+            //data.staffs = [];
+            //data.managers = [];
+            data.chargeToCostCenter = costCenters;
+            delete data.updatedAt;
+            delete data.updatedBy;
+
+            delete data.createdAt;
+            delete data.createdBy;
+            if (this.mode().id === "add") {
+                delete data.id;
+                eim.service.postMasterDataDetail("employee", data).then(function (result) {
+                    showSuccess(result);
+                }, showError);
+            } else {
+                data.id = self.id();
+                eim.service.putMasterDataDetail("employee", data).then(function (result) {
+                    showSuccess(result);
+                }, showError);
+            }
         };
+
         this.delete = function () {
             self._dfd = $.Deferred();
 
@@ -137,6 +299,7 @@
         };
         self.init = function () {
             var self = this;
+            self.tab("home");
             var showError = function (result) {
                 self.pop("error", {
                     "title": "获取员工",
@@ -146,21 +309,24 @@
                 self.loading(false);
             }
             eim.util.mapFields(defaultData, self);
-            self.costCenterTable.rows.removeAll();
+            self.editRoles(null);
+            //self.costCenterTable.rows.removeAll();
             if (this.mode().id === "add") {
                 return;
             }
-            eim.util.resetFields( self.costCenterTable.headers());
+            eim.util.resetFields(self.costCenterTable.headers());
             self.loading();
             return eim.service.getMasterDataDetail("employee", self.id()).then(function (result) {
                 var item = JSOG.decode(result);
+                console.log(item)
                 for (var i in item) {
                     var field = self[i];
                     if (field) {
                         field(item[i]);
                     }
                 }
-                self.costCenterTable.rows(self.chargeToCostCenter());
+                self.editRoles(self.roles().toString());
+                //self.costCenterTable.rows(self.chargeToCostCenter());
                 self.loading(false);
             }, showError);
         };

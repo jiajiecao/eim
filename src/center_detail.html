@@ -209,7 +209,7 @@ textarea.ui-input-text {
   </div>
     
     <ul class="nav nav-tabs" id="myTabs" role="tablist" style="margin-left: 2px; margin-right: 2px; margin-top: 4px; border-bottom-width: 0px;">
-      <li style="min-width: 80px;" role="presentation" class="active"><a href="#home" id="home-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true">
+      <li style="min-width: 80px;" role="presentation" class="active"><a href="#home" id="home-tab" data-bind="click:switchTab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true">
         <p align="center" style="margin: 0px 0px;"><i class="fa fa-2x fa-edit"></i></p>
         </a></li>
       
@@ -236,7 +236,7 @@ textarea.ui-input-text {
               </div>
               <div class=" col-lg-4 col-sm-12 col-xs-12 col-md-4" style="padding:3px 3px; ">
                 <label for="costCenterManager" style="color: #78909c; font-size: small">负责人 <font color="#d32f2f"></font></label>
-                <form  autocomplete="off" onsubmit="function() { return false; }">
+                <form  autocomplete="off" onsubmit="return false;">
                     <input controlType="auto" data-bind="auto:costCenterManager" name="costCenterManager" id="costCenterManager" data-type="search" data-inline="false" data-theme="b" style="font-weight:600; font-size: large">
                     <ul  data-role="listview" class="ui-nodisc-icon ui-alt-icon ui-listview ui-listview-inset ui-corner-all ui-shadow" data-inset="true">
                     </ul> 
@@ -313,11 +313,6 @@ textarea.ui-input-text {
   </div>
   <!-- /footer --> 
 </div>
-<script>
-$('#myTabs a').click(function (e) {
-  e.preventDefault()
-  $(this).tab('show')
-})
-</script>
+
 </body>
 </html>

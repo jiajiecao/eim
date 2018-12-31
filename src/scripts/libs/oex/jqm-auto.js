@@ -3,7 +3,6 @@ ko.bindingHandlers[getBindingName("auto")] = (function () {
 
     return {
         init: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
-            console.log(viewModel);
             if (!$("#autoRow").length) {
                 var template = "<script type=\"text/html\" id=\"autoRow\">" +
                     "<li data-icon=\"check\" class=\"ui-li-has-count ui-first-child ui-last-child\">" +
@@ -19,7 +18,6 @@ ko.bindingHandlers[getBindingName("auto")] = (function () {
             var root = ko.contextFor(element).$root;
             var modelValue = valueAccessor();
             var $element = $(element);
-            console.log(element);
             var dataSource = null;
             for (var i in eim.config.autoDataSource) {
                 if ($element.attr("id").toLowerCase().indexOf(i.toLowerCase()) >= 0) {
@@ -60,8 +58,8 @@ ko.bindingHandlers[getBindingName("auto")] = (function () {
                     ko.utils.extend(context, valueAccessor());
                 });
             var selectItem = function (model, $e) {
-                console.log($);
-                var tempItem = items()[$($e.target).index()];
+                var index = $($e.target).closest("li").index();
+                var tempItem = items()[index];
                 modelValue(tempItem);
                 //item(tempItem && tempItem.name || "");
                 items.removeAll();

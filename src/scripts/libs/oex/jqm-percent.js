@@ -18,7 +18,7 @@ ko.bindingHandlers[getBindingName("percent")] = (function () {
                 text = isValid ? number.toString() : "";
                 $element.val(text);
 
-                var value = isValid ? (number / 100).toString() : null;
+                var value = isValid ? Number(number / 100) : null;
                 modelValue(value);
             };
 
