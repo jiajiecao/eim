@@ -2,6 +2,7 @@
     eim.ViewModels = eim.ViewModels || {};
     eim.ViewModels.OrganizationDetailViewModel = function () {
         var self = this;
+        window.detail=this;
         var defaultData = {
             id: "",
             address: "",
@@ -38,7 +39,7 @@
             var settings = {
                 title: "删除组织",
                 code: "",
-                detail: "确认删除组织 " + "<b>" + self.id() + ": " + self.name() + "</b>" + "?",
+                detail: "确认删除组织 " + "<b>" + self.sn() + ": " + self.name() + "</b>" + "?",
                 description: "",
                 callback: function () {
                     self.doDelete();
@@ -49,7 +50,7 @@
         };
 
         this.doDelete = function () {
-            var message = "删除组织 " + self.id() + ": " + self.name();
+            var message = "删除组织 " + self.sn() + ": " + self.name();
             self.loading(true);
             return eim.service.deleteMasterDataDetail("department", self.id()).then(function (result) {
                 self.id(null);
@@ -95,6 +96,98 @@
                 }
                 self.loading(false);
             }, showError);
+        };
+
+
+        this.save = function () {
+            var self = this;
+            var valid = eim.util.validateFields([{
+                id: "sn",
+                value: self.sn
+            }, {
+                id: "name",
+                value: self.name
+            }, {
+                id: "level",
+                value: self.level
+            }]);
+            if (!valid) {
+                self.tab("home");
+                return;
+            }
+
+
+            var data = $.extend({}, defaultData);
+            eim.util.unmapFields(data, self);
+
+            if (data.departmentManager) {
+                data.departmentManager = {
+                    sn: data.departmentManager.sn,
+                    id: data.departmentManager.id
+                }
+            }
+
+            if (data.superiorDepartment) {
+                data.superiorDepartment = {
+                    sn: data.superiorDepartment.sn,
+                    id: data.superiorDepartment.id
+                }
+            }
+            ["subordinateDepartments", "members"].forEach(function (field) {
+                var items = data[field];
+                var newItems = [];
+                items.forEach(function (item) {
+                    var newItem = {};
+                    // if (item.sn) {
+                    //     newItem.sn = item.sn;
+                    // }
+                    // if (item.code) {
+                    //     newItem.code = item.code;
+                    // }
+                    if (item.id) {
+                        newItem.id = item.id;
+                    }
+                    newItems.push(newItem);
+                });
+                data[field] = newItems;
+
+            });
+
+            var showError = function (result) {
+                self.pop("error", {
+                    "title": self.mode().text,
+                    "detail": self.mode().text + "失败" + " " + (result && result.errorMessage || ""),
+                    "code": "错误代码：" + result.status + " " + result.statusText
+                });
+                self.loading(false);
+            }
+
+            var showSuccess = function (result) {
+                var obj = {
+                    "title": self.mode().text,
+                    "detail": self.mode().text + "成功" + " " + (result && result.errorMessage || ""),
+                };
+                obj.callback = function () {
+                    location.href = "organization_detail.html?" + $.param({ id: result.id });
+                }
+
+                self.pop("success", obj);
+
+
+                self.loading(false);
+            }
+            self.loading();
+            if (this.mode().id === "add") {
+                delete data.id;
+                eim.service.postMasterDataDetail("department", data).then(function (result) {
+                    showSuccess(result);
+                }, showError);
+            } else {
+                data.id = self.id();
+                eim.service.putMasterDataDetail("department", data).then(function (result) {
+                    showSuccess(result);
+                }, showError);
+            }
         };
     };
 

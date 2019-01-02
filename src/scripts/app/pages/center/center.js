@@ -2,7 +2,7 @@
     eim.ViewModels = eim.ViewModels || {};
     //登录页面viewmodel
     eim.ViewModels.CenterViewModel = function () {
-        window.vm = this;
+        window.vm=this;
         this.detail = new eim.ViewModels.CenterDetailViewModel();
     };
     eim.ViewModels.CenterViewModel.extend(eim.ViewModels.CenterListViewModel);

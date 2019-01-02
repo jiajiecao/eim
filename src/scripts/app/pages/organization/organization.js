@@ -2,7 +2,7 @@
     eim.ViewModels = eim.ViewModels || {};
     //登录页面viewmodel
     eim.ViewModels.OrganizationViewModel = function () {
-        window.vm = this;
+        window.vm=this;
         this.detail = new eim.ViewModels.OrganizationDetailViewModel();
     };
     eim.ViewModels.OrganizationViewModel.extend(eim.ViewModels.OrganizationListViewModel);

@@ -220,51 +220,58 @@ textarea.ui-input-text {
           
           <div class="row">
             <div class=" col-lg-4 col-sm-12 col-xs-12 col-md-4" style="padding:3px 3px; ">
-              <label for="id" style="color: #78909c; font-size: small">组织ID <font color="#d32f2f"><i class="fa fa-fw fa-asterisk"></i></font></label>
-              <input type="text" data-clear-btn="true" name="amount" id="amount" data-inline="false" data-theme="b" style="font-weight:600; font-size: large">
+              <label for="sn" style="color: #78909c; font-size: small">组织ID <font color="#d32f2f"><i class="fa fa-fw fa-asterisk"></i></font></label>
+              <input type="text" data-clear-btn="true"  data-bind="value:sn" name="sn" id="sn" data-inline="false" data-theme="b" style="font-weight:600; font-size: large">
             </div>
             
         <div class=" col-lg-4 col-sm-12 col-xs-12 col-md-4" style="padding:3px 3px; ">
-              <label for="id" style="color: #78909c; font-size: small">名称 <font color="#d32f2f"><i class="fa fa-fw fa-asterisk"></i></font></label>
-              <input type="text" data-clear-btn="true" name="amount" id="amount" data-inline="false" data-theme="b" style="font-weight:600; font-size: large">
+              <label for="name" style="color: #78909c; font-size: small">名称 <font color="#d32f2f"><i class="fa fa-fw fa-asterisk"></i></font></label>
+              <input type="text" data-clear-btn="true"  data-bind="value:name" name="name" id="name" data-inline="false" data-theme="b" style="font-weight:600; font-size: large">
             </div>
 			  
 			<div class=" col-lg-4 col-sm-12 col-xs-12 col-md-4" style="padding:3px 3px; ">
-              <label for="id" style="color: #78909c; font-size: small">级别 <font color="#d32f2f"><i class="fa fa-fw fa-asterisk"></i></font></label>
-              <input type="text" data-clear-btn="true" name="amount" id="amount" data-inline="false" data-theme="b" style="font-weight:600; font-size: large">
+              <label for="level" style="color: #78909c; font-size: small">级别 <font color="#d32f2f"><i class="fa fa-fw fa-asterisk"></i></font></label>
+              <input type="text" data-clear-btn="true" data-bind="value:level" name="level" id="level" data-inline="false" data-theme="b" style="font-weight:600; font-size: large">
             </div>
 			
 			</div>
 			  <div class="row">
             <legend style="padding-left: 3px;"><font size="-1" color="#000000"></font></legend>
 			   <div class=" col-lg-4 col-sm-12 col-xs-12 col-md-4" style="padding:3px 3px; ">
-              <label for="id" style="color: #78909c; font-size: small">负责人 <font color="#d32f2f"></font></label>
-              <input type="text" data-clear-btn="true" name="amount" id="amount" data-inline="false" data-theme="b" style="font-weight:600; font-size: large">
+              <label for="departmentManager" style="color: #78909c; font-size: small">负责人 <font color="#d32f2f"></font></label>
+                <form  autocomplete="off" onsubmit="return false;">
+                  <input  controlType="employee" data-bind="auto:departmentManager" name="departmentManager" id="departmentManager" data-type="search" data-inline="false" data-theme="b" style="font-weight:600; font-size: large">
+                  <ul  data-role="listview" class="ui-nodisc-icon ui-alt-icon ui-listview ui-listview-inset ui-corner-all ui-shadow" data-inset="true">
+                  </ul> 
+                </form>
+           
             </div>
 				  
 
 			  
 			  <div class=" col-lg-4 col-sm-12 col-xs-12 col-md-4" style="padding:3px 3px; ">
-              <label for="id" style="color: #78909c; font-size: small">上层组织</label>
-              <input type="text" data-clear-btn="true" name="amount" id="amount" data-inline="false" data-theme="b" style="font-weight:600; font-size: large">
+              <label for="superiorDepartment" style="color: #78909c; font-size: small">上层组织</label>
+              <form  autocomplete="off" onsubmit="return false;">
+                <input  controlType="employee" data-bind="auto:superiorDepartment" name="superiorDepartment" id="superiorDepartment" data-type="search" data-inline="false" data-theme="b" style="font-weight:600; font-size: large">
+                <ul  data-role="listview" class="ui-nodisc-icon ui-alt-icon ui-listview ui-listview-inset ui-corner-all ui-shadow" data-inset="true">
+                </ul> 
+              </form>
             </div>
 			</div>
 			  <div class="row">
             <legend style="padding-left: 3px;"><font size="-1" color="#000000"></font></legend>
 			  
 			     <div class=" col-lg-4 col-sm-12 col-xs-12 col-md-4" style="padding:3px 3px; ">
-              <label for="id" style="color: #78909c; font-size: small">税务识别号</label>
-              <input type="text" data-clear-btn="true" name="amount" id="amount" data-inline="false" data-theme="b" style="font-weight:600; font-size: large">
+              <label for="taxNumber" style="color: #78909c; font-size: small">税务识别号</label>
+              <input type="text" data-clear-btn="true" data-bind="value:taxNumber" name="taxNumber" id="taxNumber" data-inline="false" data-theme="b" style="font-weight:600; font-size: large">
             </div>
 				   <div class=" col-lg-4 col-sm-12 col-xs-12 col-md-4" style="padding:3px 3px; ">
-              <label for="id" style="color: #78909c; font-size: small">地址</label>
-              <input type="text" data-clear-btn="true" name="amount" id="amount" data-inline="false" data-theme="b" style="font-weight:600; font-size: large">
+              <label for="address" style="color: #78909c; font-size: small">地址</label>
+              <textarea name="address" control-type="t2" id="address" data-bind="value:address" data-inline="false" data-theme="b" style="font-weight:600; font-size: large"></textarea>
+         
+            
             </div>
           </div>
-          
-            
-            
-          
         </div>
       </div>
       
@@ -294,28 +301,20 @@ textarea.ui-input-text {
     </ul>
     <p align="center" style="margin-top: 30px;"><img src="images/suppliez.png" height="28px"></p>
   </div>
-  <div data-role="popup" id="popupMessage" data-overlay-theme="a" data-theme="b" data-transition="pop" style="max-width:320px;" class="ui-corner-all">
-    <div data-role="content" data-theme="d" class="ui-corner-bottom ui-content">
-      <p align="center"><i class="fa fa-2x fa-frown-o"></i><br>
-        <br>
-        <font size="2">检查网络连接及用户名和密码</font></p>
-      <br>
-      <p align="center"><a href="#" data-role="button"  data-rel="back" data-transition="flow" data-theme="d">确定</a></p>
-    </div>
-  </div>
+
   <br>
   <br>
   <br>
   <div data-role="footer"  data-fullscreen="true" data-position="fixed" style=" border-bottom-width: 0px;">
     <div data-role="navbar">
       <ul>
-        <li><a href="#popsubmit" data-rel="popup" data-position-to="window" class="ui-btn-b" style="font-weight:300">
+        <li><a href="javascript:void(0);" data-bind="click:save" class="ui-btn-b" style="font-weight:300">
 			
 			 <p align="center" style="margin-bottom:4px; text-shadow: 1px 1px 3px rgba(74,74,74,0.4); color:#333333"><i class="material-icons md-light" style="color:#333333">send</i></p>
           <p align="center" style="margin: 0px 0px; margin-top:8px;">提交</p>
 
 			</a></li>
-        <li><a href="#" data-rel="popup"  class="ui-btn-b" style="font-weight:300">
+        <li><a href="javascript:void(0);" data-bind="click:init" class="ui-btn-b" style="font-weight:300">
 			
 			 <p align="center" style="margin-bottom:4px; text-shadow: 1px 1px 3px rgba(74,74,74,0.4); color:#333333"><i class="material-icons md-light" style="color:#333333">refresh</i></p>
           <p align="center" style="margin: 0px 0px; margin-top:8px;">重置</p>
@@ -332,24 +331,10 @@ textarea.ui-input-text {
       </ul>
     </div>
     <!-- /navbar -->
-     
-    <div data-role="popup" id="popsubmit"  data-dismissible="false" data-theme="b" data-overlay-theme="a" class="ui-corner-all" style="min-width:300px; max-width:300px; background-image:url(images/tweets-bg.jpg);">
-      <div data-role="content" style="padding: 4px 4px;">
-        <p align="center" style="margin:8px 8px;"><font color="#2196f3"><i class="fa fa-2x fa-check"></i></font></p>
-        <hr style="border-color: #2196f3; margin-bottom: 0px; margin-top:11px;">
-        <p align="left" style="padding: 0px 3px; margin-bottom: 32px;"> <strong>PID112333</strong><br>
-          Success messages give feedback to the user that an action has been executed. The user needs to acknowledge the message.</p>
-        <p style="padding: 0px 0px;"> <a href="#" data-rel="back" class="ui-btn  ui-corner-all ui-btn-b" style="background-color: #2196f3; font-weight: 400;  color:#fff; text-shadow: 0 1px 0 #111; margin: 0px 0px">确认</a> </p>
-      </div>
-    </div>
+ 
   </div>
   <!-- /footer --> 
 </div>
-<script>
-$('#myTabs a').click(function (e) {
-  e.preventDefault()
-  $(this).tab('show')
-})
-</script>
+
 </body>
 </html>

@@ -175,7 +175,7 @@
           <div class="ui-body ui-body-b ui-content" data-bind="visible:typeof(detail.id())==='number'" style="background-image: url(images/works-bg.jpg); border-width:1px; border-bottom-right-radius: 0.31em; border-bottom-left-radius:0.31em; min-height: 640px; max-height:640px; overflow:scroll; overflow-style:auto; margin: 0 2px; padding: 2px 2px;">
             <div class="row" style="margin:0px 0px; padding:3px 3px">
               <div class="col-sm-6 col-xs-12 col-md-4 col-lg-4" style="padding: 3px 3px; ">
-                <p align="left" style="padding: 0px 0px; margin-bottom:0px; font-weight: 300; font-size: large; color:#455a64"><b data-bind="text:detail.id"></b><br>
+                <p align="left" style="padding: 0px 0px; margin-bottom:0px; font-weight: 300; font-size: large; color:#455a64"><b data-bind="text:detail.sn"></b><br>
                   <span data-bind="text:detail.name"></span>
                 </p>
               </div>
@@ -188,7 +188,7 @@
               <div class="col-sm-6 col-xs-12 col-md-4 col-lg-4" style="padding: 3px 3px; ">
                 <p align="right" style="padding:3px 3px; margin-bottom:0px;">
                   <a href="#popaction" data-rel="popup" data-position-to="window"  style="font-weight:300;  margin-left:20px; color:#0288d1"><i class="material-icons">content_copy</i></a>
-                  <a href="javascript:void(0);" data-bind="attr:{href:'organization_detail.html?id='+detail.id()}" style="font-weight:300; margin-left: 20px;   color:#0288d1"><i class="material-icons">edit</i></a>
+                  <a href="javascript:void(0);" data-bind="attr:{href:'organization_detail.html?id='+detail.id()}" rel="external" style="font-weight:300; margin-left: 20px;   color:#0288d1"><i class="material-icons">edit</i></a>
                   <a href="javascript:void(0);" data-bind="click:$root.delete" style="font-weight:300;  margin-left:20px; color:#0288d1"><i class="material-icons">delete</i></a></p>
               </div>
             </div>
@@ -285,27 +285,27 @@
           <div class="row">
             <p align="right"><a href="#" style="font-weight:300;  margin-left:20px; color:#0288d1"><i class="material-icons">refresh</i></a> <a href="#" style="font-weight:300;  margin-left:20px; color:#0288d1"><i class="material-icons">search</i></a></p>
             <div class=" col-lg-3 col-sm-12 col-xs-12 col-md-6" style="padding:3px 3px; ">
-              <label for="amount"><font color="#9e9e9e" size="-1">组织ID</font></label>
-              <input type="text" data-clear-btn="true" name="amount" id="amount" data-inline="false" data-theme="b" style="font-weight:600; height:39px;">
+              <label for="amount1"><font color="#9e9e9e" size="-1">组织ID</font></label>
+              <input type="text" data-clear-btn="true" name="amount1" id="amount1" data-inline="false" data-theme="b" style="font-weight:600; height:39px;">
             </div>
             <div class=" col-lg-3 col-sm-12 col-xs-12 col-md-6" style="padding:3px 3px; ">
-              <label for="amount"><font color="#9e9e9e" size="-1">组织级别</font></label>
-              <input type="text" data-clear-btn="true" name="amount" id="amount" data-inline="false" data-theme="b" style="font-weight:600; height:39px;">
+              <label for="amount2"><font color="#9e9e9e" size="-1">组织级别</font></label>
+              <input type="text" data-clear-btn="true" name="amount2" id="amount2" data-inline="false" data-theme="b" style="font-weight:600; height:39px;">
             </div>
             <div class=" col-lg-6 col-sm-12 col-xs-12 col-md-6" style="padding:3px 3px; ">
-              <label for="amount"><font color="#9e9e9e" size="-1">组织名称</font></label>
-              <input type="text" data-clear-btn="true" name="amount" id="amount" data-inline="false" data-theme="b" style="font-weight:600; height:39px;">
+              <label for="amount3"><font color="#9e9e9e" size="-1">组织名称</font></label>
+              <input type="text" data-clear-btn="true" name="amount3" id="amount3" data-inline="false" data-theme="b" style="font-weight:600; height:39px;">
             </div>
           </div>
           <div class="row">
             <legend style="padding-left: 3px;"><font size="-1" color="#000000"></font></legend>
             <div class=" col-lg-3 col-sm-6 col-xs-12 col-md-6" style="padding:3px 3px; ">
-              <label for="amount"><font color="#9e9e9e" size="-1">负责人</font></label>
-              <input type="text" data-clear-btn="true" name="amount" id="amount" data-inline="false" data-theme="b" style="font-weight:600; height:39px;">
+              <label for="amount4"><font color="#9e9e9e" size="-1">负责人</font></label>
+              <input type="text" data-clear-btn="true" name="amount4" id="amount4" data-inline="false" data-theme="b" style="font-weight:600; height:39px;">
             </div>
             <div class=" col-lg-3 col-sm-6 col-xs-12 col-md-6" style="padding:3px 3px; ">
-              <label for="amount"><font color="#9e9e9e" size="-1">默认成本中心</font></label>
-              <input type="text" data-clear-btn="true" name="amount" id="amount" data-inline="false" data-theme="b" style="font-family:Arial, FontAwesome; font-weight:300; height:39px;">
+              <label for="amount5"><font color="#9e9e9e" size="-1">默认成本中心</font></label>
+              <input type="text" data-clear-btn="true" name="amount5" id="amount5" data-inline="false" data-theme="b" style="font-family:Arial, FontAwesome; font-weight:300; height:39px;">
             </div>
           </div>
         </div>
@@ -373,7 +373,7 @@
   <script type="text/html" id="item">
     <li class="ui-nodisc-icon ui-alt-icon">
       <a href="javascript:void(0)" style="padding:6px 12px" data-bind="click:$root.selectItem.bind($root)">
-        <h2 style=" margin-bottom:0px" data-bind="text:id"></h2>
+        <h2 style=" margin-bottom:0px" data-bind="text:sn"></h2>
         <p style="margin-top:0px; color:#90a4ae" data-bind="text:name"></p>
         <span class="ui-li-count" style="color: #009688" data-bind="text:'Level '+ level"></span>
       </a>
@@ -382,7 +382,7 @@
   
 <script type="text/html" id="organizationRow">
   <tr>
-    <th style="text-align:center" data-bind="text:$data.id"></th>
+    <th style="text-align:center" data-bind="text:$data.sn"></th>
     <td  data-bind="text:$data.name"></td>
     <td data-bind="text:$data.departmentManager&&$data.departmentManager.name"></td>
     <!--<td>Cost Center 123</td>-->

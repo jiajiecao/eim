@@ -4,7 +4,7 @@
     eim.ViewModels.EmployeeListViewModel = function () {
         var root = this;
         root.all = new eim.util.CreateTypeData(this.pageSize);
-
+      
         root.getPrev = function () {
             var root = this;
             var index = root.all.pageIndex();

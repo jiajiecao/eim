@@ -20,8 +20,14 @@ ko.bindingHandlers[getBindingName("auto")] = (function () {
             var $element = $(element);
             var dataSource = null;
             for (var i in eim.config.autoDataSource) {
-                if ($element.attr("id").toLowerCase().indexOf(i.toLowerCase()) >= 0) {
+                var id = $element.attr("id");
+                if (i === id) {
                     dataSource = eim.config.autoDataSource[i];
+                } else if (id.toLowerCase().indexOf(i.toLowerCase()) >= 0) {
+                    dataSource = eim.config.autoDataSource[i];
+                }
+                if (dataSource) {
+                    break;
                 }
             }
             viewModel.keyField = "id";
@@ -86,9 +92,8 @@ ko.bindingHandlers[getBindingName("auto")] = (function () {
                 if (fnInvalid) {
                     fnInvalid(true);
                 }
-
-                modelValue(null);
                 var text = $element.val().trim();
+                modelValue(null);
                 //var me = eim.util.getUser().userId;
                 if (text) {
 
@@ -137,7 +142,9 @@ ko.bindingHandlers[getBindingName("auto")] = (function () {
             var fnInvalid = allBindings() && allBindings().invalid;
             var newValue = modelValue() && modelValue().name || "";
             // allBindings().value(newValue);
-            $(element).val(newValue);
+            if (newValue) {
+                $(element).val(newValue);
+            }
 
             if (fnInvalid) {
                 fnInvalid(!newValue);

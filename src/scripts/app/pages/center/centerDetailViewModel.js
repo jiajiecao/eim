@@ -2,7 +2,7 @@
     eim.ViewModels = eim.ViewModels || {};
     eim.ViewModels.CenterDetailViewModel = function () {
         var self = this;
-        window.vm = self;
+        window.detail=this;
         var defaultData = {
             id: "",
             code: "",
@@ -63,7 +63,7 @@
             var settings = {
                 title: "删除成本中心",
                 code: "",
-                detail: "确认删除成本中心 " + "<b>" + self.id() + ": " + self.name() + "</b>" + "?",
+                detail: "确认删除成本中心 " + "<b>" + self.code() + ": " + self.name() + "</b>" + "?",
                 description: "",
                 callback: function () {
                     self.doDelete();
@@ -74,7 +74,7 @@
         };
 
         this.doDelete = function () {
-            var message = "删除成本中心 " + self.id() + ": " + self.name();
+            var message = "删除成本中心 " + self.code() + ": " + self.name();
             self.loading(true);
             return eim.service.deleteMasterDataDetail("costCenter", self.id()).then(function (result) {
                 self.id(null);
@@ -136,10 +136,8 @@
                     "title": self.mode().text,
                     "detail": self.mode().text + "成功" + " " + (result && result.errorMessage || ""),
                 };
-                if (self.mode().id === "add") {
-                    obj.callback = function () {
-                        location.href = "center_detail.html?" + $.param({ id: result.id });
-                    }
+                obj.callback = function () {
+                    location.href = "center_detail.html?" + $.param({ id: result.id });
                 }
                 self.pop("success", obj);
 

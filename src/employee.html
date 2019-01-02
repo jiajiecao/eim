@@ -178,7 +178,7 @@
             <div class="row" style="margin:0px 0px; padding:3px 3px">
               <div class="col-sm-6 col-xs-12 col-md-4 col-lg-4" style="padding: 3px 3px; ">
                 <p align="left" style="padding: 0px 0px; margin-bottom:0px; font-weight: 300; font-size: large; color:#455a64"><b data-bind="text:detail.name"></b><br>
-                  <span data-bind="text:detail.id"></span>
+                  <span data-bind="text:detail.sn"></span>
                 </p>
               </div>
               <div class="col-sm-6 col-xs-12 col-md-4 col-lg-4" style="padding: 3px 3px; ">
@@ -223,7 +223,7 @@
                     <legend style="margin-bottom: 16px;"><font size="-1" color="#bdbdbd" style="font-weight:600"><i class="fa fa-fw fa-info-circle"></i> 基本信息</font></legend>
                     <div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
                       <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">员工ID</font></label>
-                      <b data-bind="text:detail.id"></b><b>&nbsp;</b></div>
+                      <b data-bind="text:detail.sn"></b><b>&nbsp;</b></div>
                     <div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
                       <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">身份证编号</font></label>
                       <b data-bind="text:detail.identityCard"></b><b>&nbsp;</b></div>
@@ -503,7 +503,7 @@
   <li class="ui-nodisc-icon ui-alt-icon">
     <a href="javascript:void(0)" style="padding:6px 12px" data-bind="click:$root.selectItem.bind($root)">
       <h2 style=" margin-bottom:0px" data-bind="text:name"></h2>
-      <p style="margin-top:6px; color:#90a4ae" data-bind="text:id"></p>
+      <p style="margin-top:6px; color:#90a4ae" data-bind="text:sn"></p>
       <span class="ui-li-count" style="color: #009688"  data-bind="text:departmentName"></span>
     </a>
   </li>

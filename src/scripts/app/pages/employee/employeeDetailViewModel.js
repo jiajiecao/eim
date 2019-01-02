@@ -73,18 +73,6 @@
                 seq: 1,
                 type: "string"
             },
-            // {
-            //     controlType: "t1",
-            //     fieldType: "string",
-            //     id: "tbhdcostcenter_成本中心名称_costCenterName_2_string_t1",
-            //     name: "成本中心名称",
-            //     readable: true,
-            //     writable: true,
-            //     required: true,
-            //     visible: false,
-            //     seq: 2,
-            //     type: "string"
-            // },
             {
                 controlType: "percent",
                 fieldType: "string",
@@ -217,10 +205,8 @@
                     "title": self.mode().text,
                     "detail": self.mode().text + "成功" + " " + (result && result.errorMessage || ""),
                 };
-                if (self.mode().id === "add") {
-                    obj.callback = function () {
-                        location.href = "employee_detail.html?" + $.param({ id: result.id });
-                    }
+                obj.callback = function () {
+                    location.href = "employee_detail.html?" + $.param({ id: result.id });
                 }
                 self.pop("success", obj);
                 self.loading(false);
@@ -265,7 +251,7 @@
             var settings = {
                 title: "删除员工",
                 code: "",
-                detail: "确认删除员工 " + "<b>" + self.id() + ": " + self.name() + "</b>" + "?",
+                detail: "确认删除员工 " + "<b>" + self.sn() + ": " + self.name() + "</b>" + "?",
                 description: "",
                 callback: function () {
                     self.doDelete();
@@ -276,7 +262,7 @@
         };
 
         this.doDelete = function () {
-            var message = "删除员工 " + self.id() + ": " + self.name();
+            var message = "删除员工 " + self.sn() + ": " + self.name();
             self.loading(true);
             return eim.service.deleteMasterDataDetail("employee", self.id()).then(function (result) {
                 self.id(null);

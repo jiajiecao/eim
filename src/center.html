@@ -179,7 +179,7 @@ $(function () {
           <div class="ui-body ui-body-b ui-content" data-bind="visible:typeof(detail.id())==='number'" style="background-image: url(images/works-bg.jpg); border-width:1px; border-bottom-right-radius: 0.31em; border-bottom-left-radius:0.31em; min-height: 640px; max-height:640px; overflow:scroll; overflow-style:auto; margin: 0 2px; padding: 2px 2px;">
             <div class="row" style="margin:0px 0px; padding:3px 3px">
               <div class="col-sm-6 col-xs-12 col-md-4 col-lg-4" style="padding: 3px 3px; ">
-                <p align="left" style="padding: 0px 0px; margin-bottom:0px; font-weight: 300; font-size: large; color:#455a64"><b data-bind="text:detail.id"></b><br>
+                <p align="left" style="padding: 0px 0px; margin-bottom:0px; font-weight: 300; font-size: large; color:#455a64"><b data-bind="text:detail.code"></b><br>
                 <span data-bind="text:detail.name"></span>
                 </p>
               </div>
@@ -350,7 +350,7 @@ $(function () {
 <script type="text/html" id="item">
   <li class="ui-nodisc-icon ui-alt-icon">
     <a href="javascript:void(0)" style="padding:6px 12px" data-bind="click:$root.selectItem.bind($root)">
-      <h2 style="margin-bottom:0px" data-bind="text:id"></h2>
+      <h2 style="margin-bottom:0px" data-bind="text:code"></h2>
       <p style="margin-top:0px; color:#90a4ae" data-bind="text:name"></p>
     </a>
   </li>

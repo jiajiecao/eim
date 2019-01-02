@@ -11,10 +11,11 @@
         //登陆有效期，默认30分钟
         activeTime: 15,
         autoDataSource: {
-            costCenter:  "costCenter",
-            employee:"employee",
+            costCenter: "costCenter",
+            employee: "employee",
             manager: "employee",
-            department:"department"
+            departmentManager: "employee",
+            department: "department"
         }
     };
 })(window.eim = window.eim || {});
