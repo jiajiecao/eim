@@ -9,6 +9,7 @@
         });
         fields.forEach(function (field) {
             field.value = ko.observable(null);
+            field.disabled = ko.observable(false);
         });
         tempTable.headers = ko.observableArray(fields);
         tempTable.rows = ko.isObservable(items) ? items : ko.observableArray(items || []);
@@ -65,7 +66,7 @@
             }
             if (type === "auto") {
                 if (value) {
-                    value = value.id + " (" + value.name + ")";
+                    value = (value.code || value.sn || value.id) + " (" + value.name + ")";
                     return value;
                 }
             }
@@ -101,29 +102,60 @@
             });
         };
         tempTable.editRow = function (row, index) {
+            this.resetRow();
             this.editIndex(index);
+
             for (var i in this.headers()) {
                 var head = this.headers()[i];
                 head.value(row[i]);
+                var disabled = !!/\$\$V/i.exec(head.id);
+                head.disabled(disabled);
             }
         };
         tempTable.saveRow = function () {
+            var $root = ko.contextFor(document.body).$root;
+            var checkUnique = function (value, values) {
+                for (var i in values) {
+                    if (value && values[i] && (
+                        value === values[i] ||
+                        value.id === values[i].id
+                    )) {
+                        return false;
+                    }
+                }
+                return true;
+            }
             var row = [];
+            var currentRows = ko.unwrap(this.rows);
             if (!eim.util.validateFields(this.headers())) {
-                var $root = ko.contextFor(document.body).$root;
                 $root.pop("error", {
                     "title": "输入错误",
                     "description": "您的输入有误，请重新输入。"
                 });
-
                 return;
             }
-
+            var index = this.editIndex();
             for (var i in this.headers()) {
                 var head = this.headers()[i];
                 var dynamicValue = head.value;
 
                 var value = dynamicValue();
+                if (head.unique) {
+                    var otherRows = $.extend([], currentRows);
+                    if (index >= 0) {
+                        otherRows.splice(index, 1);
+                    }
+                    var cells = otherRows.map(function (tempRow) {
+                        return tempRow[i];
+                    });
+                    if (!checkUnique(value, cells)) {
+                        $root.pop("error", {
+                            "title": "输入错误",
+                            "description": head.name + "不能重复，请重新输入。"
+                        });
+                        return;
+                    }
+                }
                 // var name = head.id.replace(/\$/g, "");
                 // var clearBtn = $("[name='" + name + "']").parent().find("a.ui-input-clear").not(".ui-input-clear-hidden");
                 // if (clearBtn && clearBtn.length) {
@@ -133,7 +165,8 @@
                 //dynamicValue("");
                 //dynamicValue(null);
             }
-            var index = this.editIndex();
+
+
             if (index >= 0) {
                 this.rows.splice(index, 1, row);
             } else {
@@ -388,20 +421,23 @@
         },
         resetFields: function (fields) {
             fields.forEach(function (field) {
-                var ele = $("[name='" + field.id + "']")
+                var ele = $("[name='" + field.id.replace(/\$/g, "") + "']")
                 ele.parent().removeClass("ui-invalid");
                 var clearBtn = ele.parent().find("a.ui-input-clear").not(".ui-input-clear-hidden");
                 if (clearBtn && clearBtn.length) {
                     clearBtn.click();
                 }
                 field.value(null);
+                if (ko.isObservable(field.disabled)) {
+                    field.disabled(false);
+                }
             });
 
         },
 
         buildTable: buildTable,
         isChinese: function (arguments) {
-         
+
             for (var i in arguments) {
                 var name = arguments[i];
                 if (/[^\u4e00-\u9fa5]/.test(name)) {
@@ -416,7 +452,7 @@
 
             fields.forEach(function (field, index) {
                 //var ele = $("#" + field.id).parent();
-                var $e = $("[name='" + field.id + "']");
+                var $e = $("[name='" + field.id.replace(/\$/g, "") + "']");
                 if (field.controlType == "cbh" ||
                     field.controlType == "cbv" ||
                     field.controlType == "rbh" ||

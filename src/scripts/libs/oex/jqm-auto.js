@@ -9,7 +9,7 @@ ko.bindingHandlers[getBindingName("auto")] = (function () {
                     "<a href=\"javascript:void(0)\" " +
                     "class=\"ui-btn ui-btn-icon-right ui-icon-check\">" +
                     "<span data-bind=\"text:$data[$parent.nameField]\"></span>" +
-                    "<span class=\"ui-li-count ui-body-inherit\" data-bind=\"text:$data[$parent.keyField]\"></span>" +
+                    "<span class=\"ui-li-count ui-body-inherit\" data-bind=\"text:$parent.formatKeyField($data)\"></span>" +
                     "</a>" +
                     "</li>" +
                     "</script>";
@@ -19,19 +19,24 @@ ko.bindingHandlers[getBindingName("auto")] = (function () {
             var modelValue = valueAccessor();
             var $element = $(element);
             var dataSource = null;
-            for (var i in eim.config.autoDataSource) {
-                var id = $element.attr("id");
-                if (i === id) {
-                    dataSource = eim.config.autoDataSource[i];
-                } else if (id.toLowerCase().indexOf(i.toLowerCase()) >= 0) {
-                    dataSource = eim.config.autoDataSource[i];
-                }
-                if (dataSource) {
-                    break;
+            var id = $element.attr("id");
+            if (eim.config.autoDataSource[id]) {
+                dataSource = eim.config.autoDataSource[id];
+            }
+            else {
+                for (var i in eim.config.autoDataSource) {
+                    if (id.toLowerCase().indexOf(i.toLowerCase()) >= 0) {
+                        dataSource = eim.config.autoDataSource[i];
+                        break;
+                    }
                 }
             }
-            viewModel.keyField = "id";
+
+            viewModel.formatKeyField = function (data) {
+                return data.code || data.sn || data.id;
+            };
             viewModel.nameField = "name";
+
 
             var fnInvalid = allBindings() && allBindings().invalid;
 
@@ -142,9 +147,9 @@ ko.bindingHandlers[getBindingName("auto")] = (function () {
             var fnInvalid = allBindings() && allBindings().invalid;
             var newValue = modelValue() && modelValue().name || "";
             // allBindings().value(newValue);
-            if (newValue) {
-                $(element).val(newValue);
-            }
+
+            $(element).val(newValue);
+
 
             if (fnInvalid) {
                 fnInvalid(!newValue);

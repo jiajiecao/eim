@@ -29,9 +29,12 @@
             expenseType: "",
             wagesCard: "",
             workAddress: "",
+            salaryComponents: [],
             belongToDepartment: null,
             inChargeOfCostCenter: null,
             manageToDepartment: null,
+            fnDeleagatees: [],
+            fnDelegators: [],
             staffs: [],
             chargeToCostCenter: [
             ],
@@ -49,6 +52,7 @@
         }
 
         self.editRoles = ko.observable();
+        self.fnDeleagateeItem = ko.observable();
         self.editRoles.subscribe(function (value) {
             value = value ? value.toString().trim() : "";
             var items = [];
@@ -65,11 +69,12 @@
             {
                 controlType: "auto",
                 fieldType: "string",
-                id: "tbhdcostcenter_成本中心_costCenterId_1_string_auto",
+                id: "tbhdcostcenter_成本中心_costCenterId_1_string_auto_$$V",
                 name: "成本中心",
                 readable: true,
                 writable: true,
                 required: true,
+                unique: true,
                 seq: 1,
                 type: "string"
             },
@@ -294,6 +299,7 @@
                 });
                 self.loading(false);
             }
+            self.fnDeleagateeItem(null);
             eim.util.mapFields(defaultData, self);
             self.editRoles(null);
             //self.costCenterTable.rows.removeAll();

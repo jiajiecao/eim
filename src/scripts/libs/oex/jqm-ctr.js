@@ -69,8 +69,8 @@ ko.bindingHandlers.basicField = {
                 '<ul  data-role="listview" class="ui-nodisc-icon ui-alt-icon ui-listview ui-listview-inset ui-corner-all ui-shadow" ' +
                 ' data-inset="true">' +
                 '</ul>',
-                'percent': '<input style="height:38px;" control-type="percentƒ" data-clear-btn="true" type="number"/>',
-           
+            'percent': '<input style="height:38px;" control-type="percentƒ" data-clear-btn="true" type="number"/>',
+
         };
         //ui-li-has-count ui-screen-hidden
         //ui-li-has-count ui-first-child ui-last-child
@@ -85,7 +85,7 @@ ko.bindingHandlers.basicField = {
             if (controlType === "fs") {
                 tempHtml = tempHtml.replace('<div data-role="fieldcontain">',
                     '<div data-role="fieldcontain">' + label);
-            } else {
+            } else if ($(element).children("label").length === 0) {
                 tempHtml = label + tempHtml;
             }
         }
@@ -174,6 +174,8 @@ ko.bindingHandlers.basicField = {
                 format: format
             });
             // format: 'MM/YYYY'
+        } else if (controlType === "tree" || controlType === "cny") {
+            tag = $(element).find("input");
         } else {
             tag = $($(element).children("input")[0]);
         }
@@ -235,7 +237,7 @@ ko.bindingHandlers.basicField = {
             binding = {
                 "number": valueAccessor().value
             };
-            if (controlType == "percent")
+        if (controlType == "percent")
             binding = {
                 "percent": valueAccessor().value
             };
@@ -274,7 +276,14 @@ ko.bindingHandlers.basicField = {
             binding.validator = allBindings().validator;
         }
         ko.applyBindingsToNode(tag[0], binding, bindingContext);
-
+        if (typeof (valueUnwrapped.disabled) !== "undefined") {
+            var disableElement = controlType === "t2" ? tag[0] : tag.parent()[0];
+            ko.applyBindingsToNode(disableElement, {
+                css: {
+                    "ui-disabled": valueUnwrapped.disabled
+                }
+            }, bindingContext);
+        }
     }
 };
 
@@ -342,7 +351,7 @@ ko.bindingHandlers.basicTable = {
          */
         var cell = "<script type=\"text/html\" id=\"tableCell\">" +
             "<td data-bind=\"html:formatCell($data,headers,$index)\">" +
-           
+
             "<!-- ko if: isMultiText($data) -->" +
             "<!-- ko template: { name: 'showText'} -->" +
             "<!-- /ko -->" +
@@ -356,14 +365,22 @@ ko.bindingHandlers.basicTable = {
             "</i></font></a>" +
             "</script>";
 
+        var editCell = "<td style=\"text-align: center;\">" +
+
+            "<a href=\"javascript:void(0);\" data-bind=\"click: function () { $parent.editRow($data,$index()); }\"><i class=\"fas fa-fw fa-edit\"></i></a>&nbsp;&nbsp;" +
+            "<a href=\"javascript:void(0);\" data-bind=\"click: function () { $parent.removeRow($data) }\"><i class=\"fas fa-fw fa-times-circle\"></i></a>" +
+
+            "</td>";
+
         var row = "<script type=\"text/html\" id=\"tableRow\">" +
             "<tr>" +
             "<th class=\"rowOrder\" data-bind=\"text: ($index()+1)\"></th>" +
             "<!-- ko template: { name: 'tableCell', foreach: $data } -->" +
             "<!-- /ko -->" +
-            (editable ? "<td  style=\"text-align: center;\" data-bind=\"click: function () { $parent.removeRow($data) }\"><a href=\"javascript:void(0);\"><i class=\"fa fa-minus-circle\"></i></a></td>" : "") +
+            (editable ? editCell : "") +
             "</tr>" +
             "</script>";
+
 
         var table = "<script type=\"text/html\" id=\"basicTable\">" +
             "<table data-role=\"table\" class=\"ui-body-d ui-shadow table-stripe ui-responsive movie-list table-stroke\" data-mode=\"reflow\" style=\"margin-bottom: 8px; margin-top: 8px\">" +

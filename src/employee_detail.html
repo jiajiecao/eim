@@ -361,27 +361,39 @@ textarea.ui-input-text {
             <div class=" col-lg-4 col-sm-12 col-xs-12 col-md-4" style="padding:3px 3px; ">
               <label for="belongToDepartment" style="color: #78909c; font-size: small">负责人 <font color="#d32f2f"></font></label>
               <form  autocomplete="off" onsubmit="return false;">
-                  <input  controlType="employee" data-bind="auto:belongToDepartment" name="belongToDepartment" id="belongToDepartment" data-type="search" data-inline="false" data-theme="b" style="font-weight:600; font-size: large">
+                  <input  controlType="auto" data-bind="auto:belongToDepartment" name="belongToDepartment" id="belongToDepartment" data-type="search" data-inline="false" data-theme="b" style="font-weight:600; font-size: large">
                   <ul  data-role="listview" class="ui-nodisc-icon ui-alt-icon ui-listview ui-listview-inset ui-corner-all ui-shadow" data-inset="true">
                   </ul> 
                 </form>
             </div>
-
-
-
             <div class="col-lg-4 col-sm-12 col-xs-12 col-md-4" style="padding:3px 3px; ">
               <label for="managers" style="color: #78909c; font-size: small">汇报给 </label>
               <form  autocomplete="off" onsubmit="return false;">
-                  <input  controlType="employee" data-bind="auto:managers" name="managers" id="managers" data-type="search" data-inline="false" data-theme="b" style="font-weight:600; font-size: large">
+                  <input  controlType="auto" data-bind="auto:managers" name="managers" id="managers" data-type="search" data-inline="false" data-theme="b" style="font-weight:600; font-size: large">
                   <ul  data-role="listview" class="ui-nodisc-icon ui-alt-icon ui-listview ui-listview-inset ui-corner-all ui-shadow" data-inset="true">
                   </ul> 
                 </form>
             </div>
+
+            
+            <div class="col-lg-4 col-sm-12 col-xs-12 col-md-4" style="padding:3px 3px; ">
+              <label for="fnDeleagateeItem" style="color: #78909c; font-size: small">报销委托人 </label>
+              <form  autocomplete="off" onsubmit="return false;">
+                  <input  controlType="auto" data-bind="auto:fnDeleagateeItem" name="fnDeleagateeItem" id="fnDeleagateeItem" data-type="search" data-inline="false" data-theme="b" style="font-weight:600; font-size: large">
+                  <ul  data-role="listview" class="ui-nodisc-icon ui-alt-icon ui-listview ui-listview-inset ui-corner-all ui-shadow" data-inset="true">
+                  </ul> 
+                </form>
+            </div>
+
+  
+          </div>
+          <div class="row">
+            <legend style="padding-left: 3px;"><font size="-1" color="#000000"></font></legend>
             <div class=" col-lg-4 col-sm-12 col-xs-12 col-md-4" style="padding:3px 3px; ">
               <label for="workAddress" style="color: #78909c; font-size: small">工作地点 </label>
               <input type="text" data-clear-btn="true" data-bind="value:workAddress"  name="workAddress" id="workAddress" data-inline="false" data-theme="b" style="font-weight:600; font-size: large">
             </div>
-          </div>
+            </div>
         </div>
       </div>
       <div role="tabpanel" class="tab-pane" id="costcenter" aria-labelledBy="costcenter-tab">
@@ -389,53 +401,16 @@ textarea.ui-input-text {
             <div class="row" data-bind="basicForm: costCenterTable.headers">
             </div>
             <div class="row">
-              <p align="center">
-                <a href="javascript:void(0);" data-bind="click:function(){costCenterTable.saveRow();}"><i class="material-icons md-36">add_circle_outline</i></a>
+              <p align="center" style="font-size: large">
+           
+                <a href="javascript:void(0);" style="margin-left: 24px;" data-bind="visible:!(costCenterTable.editIndex()>=0),click:costCenterTable.saveRow.bind(costCenterTable)"><i class="fas fa-fw fa-plus-circle"></i></a>
+                <a href="javascript:void(0);" style="margin-left: 24px;" data-bind="visible:costCenterTable.editIndex()>=0,click:costCenterTable.saveRow.bind(costCenterTable)"><i class="far fa-fw fa-save"></i></a>
+                <a href="javascript:void(0);" style="margin-left: 24px;" data-bind="click:costCenterTable.resetRow.bind(costCenterTable)"><i class="fas  fa-fw fa-redo"></i></a>
               </p>
             </div>
             <div class="row" data-bind="basicTable: costCenterTable">
             </div>
-          <div class="row" data-bind="visible:false">
-            <legend style="padding-left: 3px;"><font size="-1" color="#000000"></font></legend>
-            <table data-role="table" id="movie-table-custom" class="ui-body-d ui-shadow table-stripe ui-responsive movie-list table-stroke" data-mode="reflow"  style="margin-bottom: 8px; margin-top:8px; padding: 3px 3px">
-              <thead>
-                <tr class="ui-bar-d">
-                  <th data-priority="2" style="text-align:center">#</th>
-                  <!--<th>类型</th>-->
-                  <th>成本中心编号</th>
-                  <th>成本中心名称</th>
-                  <th style="text-align: right">百分比</th>
-                  <th style="text-align: center">调整</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th style="text-align:center">1</th>
-                  <!--<td>默认</td>-->
-                  <td>CSA0001</td>
-                  <td>XXXXXXX部门</td>
-                  <td style="font-weight: 700; color: #03a9f4; text-align: right">10%</td>
-                  <td style="text-align: center"><a href="#"><i class="fa fa-fw fa-edit"></i></a></td>
-                </tr>
-                <tr>
-                  <th style="text-align:center">2</th>
-                  <!--<td>附加</td>-->
-                  <td>CSA0001</td>
-                  <td>XXXXXXX部门</td>
-                  <td style="font-weight: 700; color: #03a9f4; text-align: right">60%</td>
-                  <td style="text-align: center"><a href="#"><i class="fa fa-fw fa-edit"></i></a></td>
-                </tr>
-                <tr>
-                  <th style="text-align:center">3</th>
-                  <!--<td>附加</td>-->
-                  <td>CSA0001</td>
-                  <td>XXXXXXX部门</td>
-                  <td style="font-weight: 700; color: #03a9f4; text-align: right">30%</td>
-                  <td style="text-align: center"><a href="#"><i class="fa fa-fw fa-edit"></i></a></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+       
         </div>
       </div>
     </div>

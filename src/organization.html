@@ -244,7 +244,7 @@
                           <tr class="ui-bar-d">
                             <th data-priority="2" style="text-align:center">#</th>
                             <th>组织名称</th>
-                            <th>负责人</th>
+                            <!-- <th>负责人</th> -->
                             <!--<th>默认成本中心</th>-->
                           </tr>
                         </thead>
@@ -375,7 +375,7 @@
       <a href="javascript:void(0)" style="padding:6px 12px" data-bind="click:$root.selectItem.bind($root)">
         <h2 style=" margin-bottom:0px" data-bind="text:sn"></h2>
         <p style="margin-top:0px; color:#90a4ae" data-bind="text:name"></p>
-        <span class="ui-li-count" style="color: #009688" data-bind="text:'Level '+ level"></span>
+        <span class="ui-li-count" style="color: #009688" data-bind="text: level"></span>
       </a>
     </li>
   </script>
@@ -384,7 +384,7 @@
   <tr>
     <th style="text-align:center" data-bind="text:$data.sn"></th>
     <td  data-bind="text:$data.name"></td>
-    <td data-bind="text:$data.departmentManager&&$data.departmentManager.name"></td>
+    <!-- <td data-bind="text:$data.departmentManager&&$data.departmentManager.name"></td> -->
     <!--<td>Cost Center 123</td>-->
   </tr>
  </script>

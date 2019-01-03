@@ -182,7 +182,9 @@
                 </p>
               </div>
               <div class="col-sm-6 col-xs-12 col-md-4 col-lg-4" style="padding: 3px 3px; ">
-                <p style="margin-bottom: 8px;  margin-top: 3px; padding: 0px 0px; font-size: larger"><span style="font-weight: 300" class="label label-default" data-bind="visible:false">公司</span>&nbsp;<span style="font-weight: 300" class="label label-info" data-bind="vsisible:detail.belongToDepartment,text:detail.belongToDepartment()&&detail.belongToDepartment().name"></span></p>
+                <p style="margin-bottom: 8px;  margin-top: 3px; padding: 0px 0px; font-size: larger">
+                  <span style="font-weight: 300" class="label label-info" data-bind="visible:detail.belongToDepartment,text:detail.belongToDepartment()&&detail.belongToDepartment().name"></span>
+                </p>
                 <p style="padding:0px 0px; margin-bottom:16px; font-size: small; padding-bottom:0px; font-weight:300; color:#90a4ae">
                   <span><i class="fa fa-fw fa-clock"></i>&nbsp;<b data-bind="text:eim.util.formatDateTime(detail.updatedAt(),'t3')"></b>&nbsp;<span data-bind="text:eim.util.formatDateTime(detail.updatedAt(),'t4')"></span>&nbsp;<font color="#BDBDBD">|</font>&nbsp;<font><i class="fa fa-fw fa-user-circle"></i></font>&nbsp;<span data-bind="text:detail.updatedBy"></span></span>
                 </p>

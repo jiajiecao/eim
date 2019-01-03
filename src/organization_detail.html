@@ -231,7 +231,18 @@ textarea.ui-input-text {
 			  
 			<div class=" col-lg-4 col-sm-12 col-xs-12 col-md-4" style="padding:3px 3px; ">
               <label for="level" style="color: #78909c; font-size: small">级别 <font color="#d32f2f"><i class="fa fa-fw fa-asterisk"></i></font></label>
-              <input type="text" data-clear-btn="true" data-bind="value:level" name="level" id="level" data-inline="false" data-theme="b" style="font-weight:600; font-size: large">
+              <!-- <input type="text" data-clear-btn="true" data-bind="value:level" name="level" id="level" data-inline="false" data-theme="b" style="font-weight:600; font-size: large">
+            -->
+            <select data-overlay-theme="a" name="level" data-bind="selected:level"
+            data-native-menu="false" 
+            id="level" required="required" controlType="sbs" 
+            data-theme="b" tabindex="-1">
+              <option value="集团">集团</option>
+              <option value="公司">公司</option>
+              <option value="学校">学校</option>
+              <option value="部门">部门</option>
+            </select>
+
             </div>
 			
 			</div>
@@ -240,7 +251,7 @@ textarea.ui-input-text {
 			   <div class=" col-lg-4 col-sm-12 col-xs-12 col-md-4" style="padding:3px 3px; ">
               <label for="departmentManager" style="color: #78909c; font-size: small">负责人 <font color="#d32f2f"></font></label>
                 <form  autocomplete="off" onsubmit="return false;">
-                  <input  controlType="employee" data-bind="auto:departmentManager" name="departmentManager" id="departmentManager" data-type="search" data-inline="false" data-theme="b" style="font-weight:600; font-size: large">
+                  <input  controlType="auto" data-bind="auto:departmentManager" name="departmentManager" id="departmentManager" data-type="search" data-inline="false" data-theme="b" style="font-weight:600; font-size: large">
                   <ul  data-role="listview" class="ui-nodisc-icon ui-alt-icon ui-listview ui-listview-inset ui-corner-all ui-shadow" data-inset="true">
                   </ul> 
                 </form>
@@ -252,7 +263,7 @@ textarea.ui-input-text {
 			  <div class=" col-lg-4 col-sm-12 col-xs-12 col-md-4" style="padding:3px 3px; ">
               <label for="superiorDepartment" style="color: #78909c; font-size: small">上层组织</label>
               <form  autocomplete="off" onsubmit="return false;">
-                <input  controlType="employee" data-bind="auto:superiorDepartment" name="superiorDepartment" id="superiorDepartment" data-type="search" data-inline="false" data-theme="b" style="font-weight:600; font-size: large">
+                <input  controlType="auto" data-bind="auto:superiorDepartment" name="superiorDepartment" id="superiorDepartment" data-type="search" data-inline="false" data-theme="b" style="font-weight:600; font-size: large">
                 <ul  data-role="listview" class="ui-nodisc-icon ui-alt-icon ui-listview ui-listview-inset ui-corner-all ui-shadow" data-inset="true">
                 </ul> 
               </form>

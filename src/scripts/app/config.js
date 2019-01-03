@@ -14,8 +14,10 @@
             costCenter: "costCenter",
             employee: "employee",
             manager: "employee",
+            costCenterManager: "employee",
             departmentManager: "employee",
-            department: "department"
+            department: "department",
+            deleagatee: "employee"
         }
     };
 })(window.eim = window.eim || {});
