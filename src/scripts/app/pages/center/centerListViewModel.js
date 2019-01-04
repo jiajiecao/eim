@@ -15,6 +15,10 @@
                         root.criteria[i] = ko.observable();
                     }
                     root.criteria[i](root.defaultCreteria[i]);
+                    var clearBtn = $("#search" + i[0].toUpperCase() + i.substring(1)).parent().find("a.ui-input-clear").not(".ui-input-clear-hidden");
+                    if (clearBtn && clearBtn.length) {
+                        clearBtn.click();
+                    }
                 }
             }
         };
