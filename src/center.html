@@ -202,7 +202,7 @@ $(function () {
               <li style="min-width: 80px;" role="presentation" class="active"><a href="#info" id="info-tab" role="tab" data-toggle="tab" aria-controls="info" aria-expanded="true">
                 <p align="center" style="margin: 0px 0px;"><i class="fa fa-2x fa-info"></i></p>
                 </a></li>
-              <li style="min-width: 80px;" role="presentation"><a href="#history" role="tab" id="history-tab" data-toggle="tab" aria-controls="history">
+              <li data-bind="visible:false" style="min-width: 80px;" role="presentation"><a href="#history" role="tab" id="history-tab" data-toggle="tab" aria-controls="history">
                 <p align="center" style="margin: 0px 0px;"><i class="fa fa-2x fa-history"></i></p>
                 </a></li>
             </ul>
@@ -261,29 +261,16 @@ $(function () {
       <div role="tabpanel" class="tab-pane" id="search" aria-labelledBy="search-tab">
         <div class="ui-body ui-body-b ui-content" style=" background-image: url(images/works-bg.jpg); border-width:0px; border-top-width:1px; border-bottom-right-radius: 0.31em; border-bottom-left-radius:0.31em; margin: 0px 2px; padding: 0px 0px; padding-bottom:6px;  min-height:640px; margin-bottom:120px;">
           <div class="row">
-            <p align="right"><a href="#" style="font-weight:300;  margin-left:20px; color:#0288d1"><i class="material-icons">refresh</i></a> <a href="#" style="font-weight:300;  margin-left:20px; color:#0288d1"><i class="material-icons">search</i></a></p>
+            <p align="right">
+              <a href="javascript:void(0);" data-bind="click:criteria.reset;" style="font-weight:300;  margin-left:20px; color:#0288d1"><i class="material-icons">refresh</i></a>&nbsp;
+              <a href="javascript:void(0);" data-bind="click: function(){$root.getData();}"  style="font-weight:300;  margin-left:20px; color:#0288d1"><i class="material-icons">search</i></a></p>
             <div class=" col-lg-3 col-sm-12 col-xs-12 col-md-6" style="padding:3px 3px; ">
-              <label for="amount"><font color="#9e9e9e" size="-1">成本中心ID</font></label>
-              <input type="text" data-clear-btn="true" name="amount1" id="amount1" data-inline="false" data-theme="b" style="font-weight:600; height:39px;">
-            </div>
-            <div class=" col-lg-3 col-sm-12 col-xs-12 col-md-6" style="padding:3px 3px; ">
-              <label for="amount"><font color="#9e9e9e" size="-1">成本中心级别</font></label>
-              <input type="text" data-clear-btn="true" name="amount2" id="amount2" data-inline="false" data-theme="b" style="font-weight:600; height:39px;">
+              <label for="searchCode"><font color="#9e9e9e" size="-1">成本中心ID</font></label>
+              <input type="text" data-clear-btn="true" data-bind="value:criteria.code" name="searchCode" id="searchCode" data-inline="false" data-theme="b" style="font-weight:600; height:39px;">
             </div>
             <div class=" col-lg-6 col-sm-12 col-xs-12 col-md-6" style="padding:3px 3px; ">
-              <label for="amount"><font color="#9e9e9e" size="-1">成本中心名称</font></label>
-              <input type="text" data-clear-btn="true" name="amount3" id="amount3" data-inline="false" data-theme="b" style="font-weight:600; height:39px;">
-            </div>
-          </div>
-          <div class="row">
-            <legend style="padding-left: 3px;"><font size="-1" color="#000000"></font></legend>
-            <div class=" col-lg-3 col-sm-6 col-xs-12 col-md-6" style="padding:3px 3px; ">
-              <label for="amount"><font color="#9e9e9e" size="-1">负责人</font></label>
-              <input type="text" data-clear-btn="true" name="amount4" id="amount4" data-inline="false" data-theme="b" style="font-weight:600; height:39px;">
-            </div>
-            <div class=" col-lg-3 col-sm-6 col-xs-12 col-md-6" style="padding:3px 3px; ">
-              <label for="amount"><font color="#9e9e9e" size="-1">默认成本中心</font></label>
-              <input type="text" data-clear-btn="true" name="amount5" id="amount5" data-inline="false" data-theme="b" style="font-family:Arial, FontAwesome; font-weight:300; height:39px;">
+              <label for="searchName"><font color="#9e9e9e" size="-1">成本中心名称</font></label>
+              <input type="text" data-clear-btn="true"  data-bind="value:criteria.name"  name="searchName" id="searchName" data-inline="false" data-theme="b" style="font-weight:600; height:39px;">
             </div>
           </div>
         </div>
@@ -306,10 +293,9 @@ $(function () {
       </div>
       <ul data-role="listview" data-theme="b" class="ui-nodisc-icon ui-alt-icon">
         <li><a href="index.html" rel="external" style=" padding-bottom: 15px; padding-top: 15px; font-weight: 400"><img src="images/clipboard.svg" class="ui-li-icon" style="top: 16px;">我的工作台</a></li>
-        <li><a href="#" rel="external" style=" padding-bottom: 15px; padding-top: 15px; font-weight: 400"><img src="images/clipboard.svg" class="ui-li-icon" style="top: 15px;">我的任务</a></li>
-        <li><a href="#" rel="external" style=" padding-bottom: 15px; padding-top: 15px; font-weight: 400"><img src="images/suppliez/tag-button-with-happy-face.svg" class="ui-li-icon" style="top: 15px;">供应商生命周期</a></li>
-        <li><a href="#" rel="external" style=" padding-bottom: 15px; padding-top: 15px; font-weight: 400"><img src="images/suppliez/direction.svg" class="ui-li-icon" style="top: 15px;">供应链执行</a></li>
-        <li><a href="#" rel="external" style=" padding-bottom: 15px; padding-top: 15px; font-weight: 400"><img src="images/analytics.svg" class="ui-li-icon" style="top: 15px;">数据中心</a></li>
+        <li><a href="organization.html" rel="external" style=" padding-bottom: 15px; padding-top: 15px; font-weight: 400"><img src="images/suppliez/tag-button-with-happy-face.svg" class="ui-li-icon" style="top: 15px;">EIM01-组织</a></li>
+        <li><a href="employee.html" rel="external" style=" padding-bottom: 15px; padding-top: 15px; font-weight: 400"><img src="images/suppliez/direction.svg" class="ui-li-icon" style="top: 15px;">EIM02-员工</a></li>
+        <li><a href="center.html" rel="external" style=" padding-bottom: 15px; padding-top: 15px; font-weight: 400"><img src="images/analytics.svg" class="ui-li-icon" style="top: 15px;">EIM03-成本中心</a></li>
       </ul>
       <p align="center" style="margin-top: 30px;"><img src="images/suppliez.png" height="28px"></p>
     </div>

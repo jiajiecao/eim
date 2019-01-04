@@ -11,9 +11,10 @@
         var root = this;
         var request = this.constructor.prototype.getData.apply(this, arguments);
         request.then(function () {
-            if (typeof (root.detail.id()) !== "number" && root.all.items().length) {
-                root.selectItem(root.all.items()[0]);
-            }
+            var itemToSelect = root.all.items().filter(function (item) {
+                return item.id === root.detail.id();
+            })[0];
+            root.selectItem(itemToSelect || root.all.items()[0] || {});
         });
     };
 

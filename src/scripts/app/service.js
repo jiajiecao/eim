@@ -100,8 +100,7 @@
         getSuggestion: function (type, text) {
             return eim.util.requestWithBearer(eim.config.hrUrl + type + "/autoComplete/" + text);
         },
-        getMasterDataList: function (type, page, size) {
-            var param = { page: page, size: size };
+        getMasterDataList: function (type, param) {
             var url = eim.config.hrUrl + type;
             return eim.util.requestWithBearer(url, param);
         },

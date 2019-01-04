@@ -4,7 +4,22 @@
     eim.ViewModels.CenterListViewModel = function () {
         var root = this;
         root.all = new eim.util.CreateTypeData(this.pageSize);
-       
+        root.defaultCreteria = {
+            code: "",
+            name: ""
+        };
+        root.criteria = {
+            reset: function () {
+                for (var i in root.defaultCreteria) {
+                    if (!root.criteria[i]) {
+                        root.criteria[i] = ko.observable();
+                    }
+                    root.criteria[i](root.defaultCreteria[i]);
+                }
+            }
+        };
+        root.criteria.reset();
+
         root.getPrev = function () {
             var root = this;
             var index = root.all.pageIndex();
@@ -35,11 +50,18 @@
         var root = this;
         root.loading();
         index = index || root.all.pageIndex();
-        return eim.service.getMasterDataList("costCenter", index - 1, root.pageSize).then(function (result) {
+        var param = { page: (index - 1), size: root.pageSize };
+        if (root.criteria.code()) {
+            param.code = root.criteria.code();
+        }
+        if (root.criteria.name()) {
+            param.name = root.criteria.name();
+        }
+        return eim.service.getMasterDataList("costCenter", param).then(function (result) {
             root.all.items(result.content);
             var pageCount = Math.floor((result.totalElements - 1) / root.pageSize) + 1;
             root.all.pageCount(pageCount);
-
+            root.tab("all");
             root.loading(false);
         }, function (result) {
             root.pop("error", {
@@ -50,9 +72,11 @@
             root.loading(false);
         });
     };
+
     eim.ViewModels.CenterListViewModel.prototype.init = function () {
         var root = this;
         root.tab("all");
         root.getData();
+        root.criteria.reset();
     };
 })(window.eim = window.eim || {}, jQuery, ko, moment);

@@ -35,7 +35,7 @@
         var root = this;
         root.loading();
         index = index || root.all.pageIndex();
-        return eim.service.getMasterDataList("department", index - 1, root.pageSize).then(function (result) {
+        return eim.service.getMasterDataList("department", { page: (index - 1), size: root.pageSize }).then(function (result) {
             root.all.items(result.content);
             var pageCount = Math.floor((result.totalElements - 1) / root.pageSize) + 1;
             root.all.pageCount(pageCount);
