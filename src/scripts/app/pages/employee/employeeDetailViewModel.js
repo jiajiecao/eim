@@ -25,7 +25,7 @@
             workType: "",
             hireStatus: "",
             hireFrom: null,
-            hireto: null,
+            hireTo: null,
             expenseType: "",
             wagesCard: "",
             workAddress: "",
