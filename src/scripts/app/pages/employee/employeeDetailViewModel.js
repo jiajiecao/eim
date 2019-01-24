@@ -19,6 +19,8 @@
             homeAddress: "",
             mobilePhone: "",
             homePhone: "",
+            accountName: "",
+            accountNo: "",
             mail: "",
             otherMail: "",
             roles: [],
@@ -28,6 +30,9 @@
             hireTo: null,
             expenseType: "",
             wagesCard: "",
+            bankProvince: "",
+            bankCity: "",
+            openingBank: "",
             workAddress: "",
             salaryComponents: [],
             belongToDepartment: null,
@@ -124,7 +129,12 @@
                 "editRoles",
                 "workType",
                 "hireStatus",
-                "expenseType"
+                "expenseType",
+                "bankProvince",
+                "bankCity",
+                "openingBank",
+                "accountName",
+                "accountNo"
             ].map(function (fieldName) {
                 var field = {
                     id: fieldName,
@@ -306,6 +316,20 @@
             if (this.mode().id === "add") {
                 return;
             }
+            self.bankProvince.subscribe(function (value) {
+                var cities = [];
+                if (value) {
+                    cities = eim.util.provinceCities[value];
+                }
+                var options = cities.map(function (city) {
+                    return "<option value=\"" + city + "\">" + city + "</option>";
+                }).join("");
+                $("#bankCity").html(options).selectmenu("refresh");
+                if (cities.indexOf(self.bankCity()) < 0) {
+                    self.bankCity(null);
+                }
+
+            });
             eim.util.resetFields(self.costCenterTable.headers());
             self.loading();
             return eim.service.getMasterDataDetail("employee", self.id()).then(function (result) {

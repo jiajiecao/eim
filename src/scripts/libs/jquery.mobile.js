@@ -11619,8 +11619,8 @@ $.widget( "mobile.selectmenu", $.mobile.selectmenu, {
 			btnOffset = self.button.offset().top,
 			screenHeight = $window.height();
 
-		if ( menuHeight > screenHeight - 80 || !$.support.scrollTop ) {
-
+	//	if ( menuHeight > screenHeight - 80 || !$.support.scrollTop ) {
+	if (false ) {
 			self.menuPage.appendTo( $.mobile.pageContainer ).page();
 			self.menuPageContent = self.menuPage.find( ".ui-content" );
 			self.menuPageClose = self.menuPage.find( ".ui-header a" );

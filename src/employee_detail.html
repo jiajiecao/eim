@@ -329,32 +329,118 @@ textarea.ui-input-text {
           <div class="row">
             <div class=" col-lg-4 col-sm-12 col-xs-12 col-md-4" style="padding:3px 3px; ">
               <label for="editRoles" style="color: #78909c; font-size: small">职位 <font color="#d32f2f"><i class="fa fa-fw fa-asterisk"></i></font></label>
-              <input type="text" data-clear-btn="true" data-bind="value:editRoles" name="editRoles" id="editRoles" data-inline="false" data-theme="b" style="font-weight:600; font-size: large">
+              <input style="height:38px;"  type="text" data-clear-btn="true" data-bind="value:editRoles" name="editRoles" id="editRoles" data-inline="false" data-theme="b" style="font-weight:600; font-size: large">
             </div>
             <div class=" col-lg-4 col-sm-12 col-xs-12 col-md-4" style="padding:3px 3px; ">
               <label for="workType" style="color: #78909c; font-size: small">工作类别 <font color="#d32f2f"><i class="fa fa-fw fa-asterisk"></i></font></label>
-              <input type="text" data-clear-btn="true" data-bind="value:workType" name="workType" id="workType" data-inline="false" data-theme="b" style="font-weight:600; font-size: large">
-            </div>
+              <select data-overlay-theme="a" name="workType" data-bind="selected:workType"
+              data-native-menu="false" 
+              id="workType" required="required" controlType="sbs" 
+              data-theme="b" tabindex="-1">
+                <option value="全职">全职</option>
+                <option value="兼职">兼职</option>
+              </select>
+  
+              </div>
+           
             <div class=" col-lg-4 col-sm-12 col-xs-12 col-md-4" style="padding:3px 3px; ">
               <label for="hireStatus" style="color: #78909c; font-size: small">雇佣状态 <font color="#d32f2f"><i class="fa fa-fw fa-asterisk"></i></font></label>
-              <input type="text" data-clear-btn="true" data-bind="value:hireStatus" name="hireStatus" id="hireStatus" data-inline="false" data-theme="b" style="font-weight:600; font-size: large">
+              <select data-overlay-theme="a" name="hireStatus" data-bind="selected:hireStatus"
+              data-native-menu="false" 
+              id="hireStatus" required="required" controlType="sbs" 
+              data-theme="b" tabindex="-1">
+                <option value="在职">在职</option>
+                <option value="离职">离职</option>
+              </select> 
             </div>
             <div class=" col-lg-4 col-sm-12 col-xs-12 col-md-4" style="padding:3px 3px; ">
               <label for="hireFrom" style="color: #78909c; font-size: small">雇佣开始日期</label>
-              <input type="text" control-type="t3" data-bind="datetime:hireFrom" data-clear-btn="true" name="hireFrom" id="hireFrom" data-inline="false" data-theme="b" style="font-weight:600; font-size: large">
+              <input style="height:38px;" type="text" control-type="t3" data-bind="datetime:hireFrom" data-clear-btn="true" name="hireFrom" id="hireFrom" data-inline="false" data-theme="b" style="font-weight:600; font-size: large">
             </div>
             <div class=" col-lg-4 col-sm-12 col-xs-12 col-md-4" style="padding:3px 3px; ">
               <label for="hireTo" style="color: #78909c; font-size: small">雇佣结束日期</label>
-              <input type="text"  control-type="t3" data-bind="datetime:hireTo" data-clear-btn="true" name="hireTo" id="hireTo" data-inline="false" data-theme="b" style="font-weight:600; font-size: large">
+              <input style="height:38px;" type="text"  control-type="t3" data-bind="datetime:hireTo" data-clear-btn="true" name="hireTo" id="hireTo" data-inline="false" data-theme="b" style="font-weight:600; font-size: large">
             </div>
-			<div class=" col-lg-4 col-sm-12 col-xs-12 col-md-4" style="padding:3px 3px; ">
+			      <div class=" col-lg-4 col-sm-12 col-xs-12 col-md-4" style="padding:3px 3px; ">
               <label for="expenseType" style="color: #78909c; font-size: small">报销级别<font color="#d32f2f"><i class="fa fa-fw fa-asterisk"></i></font></label>
-              <input type="text"  data-bind="value:expenseType" data-clear-btn="true" name="expenseType" id="expenseType" data-inline="false" data-theme="b" style="font-weight:600; font-size: large">
+              <input style="height:38px;" type="text"  data-bind="value:expenseType" data-clear-btn="true" name="expenseType" id="expenseType" data-inline="false" data-theme="b" style="font-weight:600; font-size: large">
             </div>
-			<div class=" col-lg-4 col-sm-12 col-xs-12 col-md-4" style="padding:3px 3px; ">
+
+          </div>
+          <div class="row">
+              <legend style="padding-left: 3px;"><font size="-1" color="#000000"></font></legend>
+			      <div class=" col-lg-4 col-sm-12 col-xs-12 col-md-4" style="padding:3px 3px; ">
               <label for="wagesCard" style="color: #78909c; font-size: small">工资卡号<font color="#d32f2f"><i class="fa fa-fw fa-asterisk"></i></font></label>
-              <input type="text" control-type="t10" data-bind="tel:wagesCard" data-clear-btn="true" name="wagesCard" id="wagesCard" data-inline="false" data-theme="b" style="font-weight:600; font-size: large">
-            </div>			
+              <input style="height:38px;" type="text" control-type="t10" data-bind="tel:wagesCard" data-clear-btn="true" name="wagesCard" id="wagesCard" data-inline="false" data-theme="b" style="font-weight:600; font-size: large">
+            </div>	
+            <div class=" col-lg-4 col-sm-12 col-xs-12 col-md-4" style="padding:3px 3px; ">
+              <label for="bankProvince" style="color: #78909c; font-size: small">开户省<font color="#d32f2f"><i class="fa fa-fw fa-asterisk"></i></font></label>
+              <select  name="bankProvince" id="bankProvince"  controlType="sbft"  data-bind="selected:bankProvince"
+              data-native-menu="false" 
+              data-overlay-theme="a"
+              data-theme="b" 
+              tabindex="-1">
+              <option value="北京">北京</option>
+              <option value="上海">上海</option>
+              <option value="广东">广东</option>
+              <option value="江苏">江苏</option>
+              <option value="浙江">浙江</option>
+              <option value="重庆">重庆</option>
+              <option value="安徽">安徽</option>
+              <option value="福建">福建</option>
+              <option value="甘肃">甘肃</option>
+              <option value="广西">广西</option>
+              <option value="贵州">贵州</option>
+              <option value="海南">海南</option>
+              <option value="河北">河北</option>
+              <option value="黑龙江">黑龙江</option>
+              <option value="河南">河南</option>
+              <option value="湖北">湖北</option>
+              <option value="湖南">湖南</option>
+              <option value="江西">江西</option>
+              <option value="吉林">吉林</option>
+              <option value="辽宁">辽宁</option>
+              <option value="内蒙古">内蒙古</option>
+              <option value="宁夏">宁夏</option>
+              <option value="青海">青海</option>
+              <option value="山东">山东</option>
+              <option value="山西">山西</option>
+              <option value="陕西">陕西</option>
+              <option value="四川">四川</option>
+              <option value="天津">天津</option>
+              <option value="新疆">新疆</option>
+              <option value="西藏">西藏</option>
+              <option value="云南">云南</option>
+              <option value="香港">香港</option>
+              <option value="澳门">澳门</option>
+              <option value="台湾">台湾</option>
+              </select>
+            </div>	
+            <div class=" col-lg-4 col-sm-12 col-xs-12 col-md-4" style="padding:3px 3px; ">
+              <label for="bankCity" style="color: #78909c; font-size: small">开户市<font color="#d32f2f"><i class="fa fa-fw fa-asterisk"></i></font></label>
+              <select  name="bankCity" id="bankCity"  controlType="sbft"  data-bind="selected:bankCity"
+              data-native-menu="false" 
+              data-overlay-theme="a"
+              data-theme="b" 
+              tabindex="-1">
+            
+              </select>
+            
+            </div>	
+            <div class=" col-lg-4 col-sm-12 col-xs-12 col-md-4" style="padding:3px 3px; ">
+              <label for="openingBank" style="color: #78909c; font-size: small">开户银行<font color="#d32f2f"><i class="fa fa-fw fa-asterisk"></i></font></label>
+              <input  style="height:38px;" type="text"  data-bind="value:openingBank" data-clear-btn="true" name="openingBank" id="openingBank" data-inline="false" data-theme="b" style="font-weight:600; font-size: large">
+            </div>	
+            
+            <div class=" col-lg-4 col-sm-12 col-xs-12 col-md-4" style="padding:3px 3px; ">
+              <label for="accountName" style="color: #78909c; font-size: small">银行账户名<font color="#d32f2f"><i class="fa fa-fw fa-asterisk"></i></font></label>
+              <input  style="height:38px;" type="text"  data-bind="value:accountName" data-clear-btn="true" name="accountName" id="accountName" data-inline="false" data-theme="b" style="font-weight:600; font-size: large">
+            </div>	
+
+            <div class=" col-lg-4 col-sm-12 col-xs-12 col-md-4" style="padding:3px 3px; ">
+              <label for="accountNo" style="color: #78909c; font-size: small">银行账号<font color="#d32f2f"><i class="fa fa-fw fa-asterisk"></i></font></label>
+              <input  style="height:38px;" type="text"  data-bind="value:accountNo" data-clear-btn="true" name="accountNo" id="accountNo" data-inline="false" data-theme="b" style="font-weight:600; font-size: large">
+            </div>	
           </div>
           <div class="row">
             <legend style="padding-left: 3px;"><font size="-1" color="#000000"></font></legend>
