@@ -24,23 +24,32 @@
         root.defaultCreteria = {
             sn: "",
             name: "",
-            identityCard: ""
+            identityCard: "",
+            otherIdentify: "",
+            nationality: "",
+            workType: null,
+            hireStatus: null,
+            depSn: "",
+            corpSn: ""
         };
+
         root.criteria = {
-            reset: function () {
-                for (var i in root.defaultCreteria) {
-                    if (!root.criteria[i]) {
-                        root.criteria[i] = ko.observable();
-                    }
-                    root.criteria[i](root.defaultCreteria[i]);
-                    var clearBtn = $("#search" + i[0].toUpperCase() + i.substring(1)).parent().find("a.ui-input-clear").not(".ui-input-clear-hidden");
-                    if (clearBtn && clearBtn.length) {
-                        clearBtn.click();
-                    }
+        };
+
+        root.resetCriteria = function () {
+            for (var i in root.defaultCreteria) {
+                if (!root.criteria[i]) {
+                    root.criteria[i] = ko.observable();
+                }
+                root.criteria[i](root.defaultCreteria[i]);
+                var clearBtn = $("#search" + i[0].toUpperCase() + i.substring(1)).parent().find("a.ui-input-clear").not(".ui-input-clear-hidden");
+                if (clearBtn && clearBtn.length) {
+                    clearBtn.click();
                 }
             }
         };
-        root.criteria.reset();
+
+        root.resetCriteria();
     };
 
     eim.ViewModels.EmployeeListViewModel.extend(eim.ViewModels.BaseViewModel);
@@ -52,21 +61,19 @@
         });
     };
     eim.ViewModels.EmployeeListViewModel.prototype.getData = function (index) {
-
         var root = this;
         root.loading();
         index = index || root.all.pageIndex();
         var param = { page: (index - 1), size: root.pageSize };
-        if (root.criteria.sn()) {
-            param.sn = root.criteria.sn();
+
+        for (var prop in root.criteria) {
+            var value = root.criteria[prop]();
+            if (value) {
+
+                param[prop] = value.sn ? value.sn : value;
+            }
         }
-        if (root.criteria.name()) {
-            param.name = root.criteria.name();
-        }
-        if (root.criteria.identityCard()) {
-            param.identityCard = root.criteria.identityCard();
-        }
-        return eim.service.getMasterDataList("employee",param).then(function (result) {
+        return eim.service.getMasterDataList("employee", param).then(function (result) {
             root.all.items(result.content);
             var pageCount = Math.floor((result.totalElements - 1) / root.pageSize) + 1;
             root.all.pageCount(pageCount);
@@ -88,6 +95,6 @@
         var root = this;
         root.tab("all");
         root.getData();
-        root.criteria.reset();
+        root.resetCriteria();
     };
 })(window.eim = window.eim || {}, jQuery, ko, moment);

@@ -1,7 +1,10 @@
 {
   "name": "eim",
   "version": "1.0.0",
-  "dependencies": {},
+  "dependencies": {
+    "express": "^4.16.4",
+    "jsonwebtoken": "^8.4.0"
+  },
   "devDependencies": {
     "gulp": "^3.9.1",
     "gulp-connect": "^5.6.1",

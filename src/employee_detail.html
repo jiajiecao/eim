@@ -445,7 +445,7 @@ textarea.ui-input-text {
           <div class="row">
             <legend style="padding-left: 3px;"><font size="-1" color="#000000"></font></legend>
             <div class=" col-lg-4 col-sm-12 col-xs-12 col-md-4" style="padding:3px 3px; ">
-              <label for="belongToDepartment" style="color: #78909c; font-size: small">负责人 <font color="#d32f2f"></font></label>
+              <label for="belongToDepartment" style="color: #78909c; font-size: small">所属部门 <font color="#d32f2f"></font></label>
               <form  autocomplete="off" onsubmit="return false;">
                   <input  controlType="auto" data-bind="auto:belongToDepartment" name="belongToDepartment" id="belongToDepartment" data-type="search" data-inline="false" data-theme="b" style="font-weight:600; font-size: large">
                   <ul  data-role="listview" class="ui-nodisc-icon ui-alt-icon ui-listview ui-listview-inset ui-corner-all ui-shadow" data-inset="true">
@@ -477,7 +477,10 @@ textarea.ui-input-text {
             <legend style="padding-left: 3px;"><font size="-1" color="#000000"></font></legend>
             <div class=" col-lg-4 col-sm-12 col-xs-12 col-md-4" style="padding:3px 3px; ">
               <label for="workAddress" style="color: #78909c; font-size: small">工作地点 </label>
-              <input type="text" data-clear-btn="true" data-bind="value:workAddress"  name="workAddress" id="workAddress" data-inline="false" data-theme="b" style="font-weight:600; font-size: large">
+              <!-- <input type="text" data-clear-btn="true" data-bind="value:workAddress"  name="workAddress" id="workAddress" data-inline="false" data-theme="b" style="font-weight:600; font-size: large">
+           -->
+              <textarea name="workAddress" control-type="t2" id="workAddress" data-bind="value:workAddress" data-inline="false" data-theme="b" style="font-weight:600; font-size: large"></textarea>
+         
             </div>
             </div>
         </div>

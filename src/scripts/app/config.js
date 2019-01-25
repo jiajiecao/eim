@@ -17,7 +17,11 @@
             costCenterManager: "employee",
             departmentManager: "employee",
             department: "department",
-            deleagatee: "employee"
-        }
+            deleagatee: "employee",
+            searchDepSn: "department",
+            searchCorpSn: "department"
+        },
+        metabaseSite: "https://metabase.eorionsolution.com/",
+        metabaseKey: "652af32880df5748cbf37bd6273d8bfe444e76e551012ca323afa69e1f1b41ab"
     };
 })(window.eim = window.eim || {});
