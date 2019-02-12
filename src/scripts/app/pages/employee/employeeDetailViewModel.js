@@ -336,6 +336,7 @@
                 self.loading(false);
             }
             self.fnDeleagateeItem(null);
+            self.manager(null);
             eim.util.mapFields(defaultData, self);
 
             self.editRoles(null);
