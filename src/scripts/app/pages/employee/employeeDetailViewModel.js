@@ -3,6 +3,7 @@
     eim.ViewModels.EmployeeDetailViewModel = function () {
         var self = this;
         window.detail = this;
+
         var defaultData = {
             id: "",
             name: "",
@@ -55,7 +56,7 @@
             var value = defaultData[i];
             self[i] = $.isArray(value) ? ko.observableArray(value) : ko.observable(value);
         }
-
+        self.manager = ko.observable();
         self.editRoles = ko.observable();
         self.fnDeleagateeItem = ko.observable();
         self.editRoles.subscribe(function (value) {
@@ -134,7 +135,9 @@
                 "bankCity",
                 "openingBank",
                 "accountName",
-                "accountNo"
+                "accountNo",
+                "hireFrom",
+                "hireTo"
             ].map(function (fieldName) {
                 var field = {
                     id: fieldName,
@@ -143,6 +146,15 @@
                 if (fieldName === "sex" ||
                     fieldName === "maritalStatus") {
                     field.controlType = "rbv";
+                }
+                if (fieldName === "bankProvince" ||
+                    fieldName === "bankCity") {
+                    field.controlType = "sbft";
+                }
+                if (fieldName === "hireFrom" ||
+                    fieldName === "hireTo" ||
+                    fieldName === "birth") {
+                    field.controlType = "t3";
                 }
                 if (fieldName === "homeAddress") {
                     field.controlType = "t2";
@@ -156,7 +168,6 @@
                     "title": "输入错误",
                     "description": "您的输入有误，请重新输入。"
                 });
-
                 return;
             }
             valid = self.costCenterTable.rows().length > 0;
@@ -169,8 +180,6 @@
                 return;
             }
             var data = $.extend({}, defaultData);
-
-
             eim.util.unmapFields(data, self);
             var costCenters = self.costCenterTable.rows().map(function (row) {
                 return {
@@ -233,12 +242,29 @@
                     id: staff.id
                 };
             });
-
-            data.managers = data.managers.map(function (manager) {
+            var manager = self.manager();
+            var managers = [];
+            if (manager) {
+                managers.push(manager);
+            }
+            data.managers = managers.map(function (m) {
                 return {
-                    id: manager.id
+                    manager: {
+                        sn: m.sn
+                    }
                 };
             });
+            var delegatee = self.fnDeleagateeItem();
+            var delegatees = [];
+            if (delegatee) {
+                delegatees.push(delegatee);
+            }
+            data.fnDeleagatees = delegatees.map(function (m) {
+                return {
+                    sn: m.sn
+                };
+            });
+
             //data.staffs = [];
             //data.managers = [];
             data.chargeToCostCenter = costCenters;
@@ -311,6 +337,7 @@
             }
             self.fnDeleagateeItem(null);
             eim.util.mapFields(defaultData, self);
+
             self.editRoles(null);
             //self.costCenterTable.rows.removeAll();
             if (this.mode().id === "add") {
@@ -328,7 +355,6 @@
                 if (cities.indexOf(self.bankCity()) < 0) {
                     self.bankCity(null);
                 }
-
             });
             eim.util.resetFields(self.costCenterTable.headers());
             self.loading();
@@ -342,6 +368,12 @@
                     }
                 }
                 self.editRoles(self.roles().toString());
+                if (self.managers().length) {
+                    self.manager(self.managers()[0].manager);
+                }
+                if (self.fnDeleagatees().length) {
+                    self.fnDeleagateeItem(self.fnDeleagatees()[0]);
+                }
                 //self.costCenterTable.rows(self.chargeToCostCenter());
                 self.loading(false);
             }, showError);
