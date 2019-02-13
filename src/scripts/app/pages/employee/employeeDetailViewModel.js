@@ -10,6 +10,7 @@
             sn: "",
             identityCard: "",
             otherIdentify: "",
+            ncCode: "",
             lastName: "",
             middleName: "",
             firstName: "",
@@ -120,6 +121,7 @@
             var self = this;
             var fields = [
                 "identityCard",
+                "ncCode",
                 "lastName",
                 "firstName",
                 "sex",
@@ -260,6 +262,12 @@
                 delegatees.push(delegatee);
             }
             data.fnDeleagatees = delegatees.map(function (m) {
+                return {
+                    sn: m.sn
+                };
+            });
+
+            data.fnDelegators =  data.fnDelegators.map(function (m) {
                 return {
                     sn: m.sn
                 };
