@@ -102,6 +102,7 @@ ko.bindingHandlers[getBindingName("selected")] = (function () {
             //      $("#strings option[value='" + e + "']").prop("selected", true);
             //  });
             $element.selectmenu("refresh");
+            //$element.selectmenu().selectmenu("refresh");
         }
     };
 })();

@@ -4,26 +4,25 @@
     //登录页面viewmodel
     eim.ViewModels.LoginViewModel = function () {
         var self = this;
-        self.userName = ko.observable("");
-        self.password = ko.observable("");
+        window.vm = self;
+        self.userName = ko.observable();
+        self.password = ko.observable();
         self.message = ko.observable("");
         self.errorCode = ko.observable("");
 
-        var uid = eim.util.getUrlParam(window.location.href, "uid");
-        self.uid = uid && uid.trim();
-        if (self.uid) {
-            self.userName(self.uid);
-        }
         self.keyDownHandler = function (e) {
             var ev = document.all ? window.event : e;
             var element = $(document.activeElement);
             if (ev.keyCode === 13 && element.attr("name") === "password") {
-                self.userName($("#userName").val());
+                // self.userName($("#userName").val());
                 self.password(element.val());
                 element.closest(".jqm-block-content").find("button[type='submit']").first().click();
             }
         };
-
+        self.init=function(){
+            self.userName(null);
+            self.password(null);
+        };
         self.login = function () {
             var userName = self.userName();
             var password = self.password();
@@ -32,7 +31,7 @@
                 function (key) {
                     var text = self[key]();
                     var invalid = !text;
-                    var $e = $("input[name='" + key + "']").parent();
+                    var $e = $("[name='" + key + "']").parent();
                     if (invalid) {
                         $e.addClass("ui-invalid");
                     }
@@ -49,7 +48,6 @@
             }
             var loader = $.mobile.loading();
             loader.show();
-            var hasError = false;
             var userNameType = eim.config.userNameType || 1;
             if (userNameType === 2) {
                 userName = userName.toLowerCase();
@@ -69,19 +67,9 @@
                         self.errorCode("错误代码：" + err.status + " " + err.statusText);
                     }
                     $("#popupMessage").popup("open");
-                    hasError = true;
                     loader.hide();
 
                 });
-        };
-
-        self.startWechatLogin = function () {
-            var url = "login_bridge.html";
-            var target = eim.util.getUrlParam(window.location.href, "target");
-            if (target) {
-                url += "?target=" + target;
-            }
-            window.location.href = url;
         };
     };
 
