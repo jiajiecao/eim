@@ -12,7 +12,7 @@
         activeTime: 15,
         loginUsers: [{
             userId: "100000",
-            entities: ["11", "22"]
+            entities: ["DB003", "DB004"]
         }, {
             userId: "100010",
             entities: ["DB003", "DB004"]
