@@ -10,7 +10,13 @@
         pageSize: 15,
         //登陆有效期，默认30分钟
         activeTime: 15,
-        loginUsers:["100000","100010","gaojie","tanyanfeng","liufei","zhujingjing","gujunlan"],
+        loginUsers: [{
+            userId: "100000",
+            entities: ["11", "22"]
+        }, {
+            userId: "100010",
+            entities: ["DB003", "DB004"]
+        }],
         autoDataSource: {
             costCenter: "costCenter",
             employee: "employee",

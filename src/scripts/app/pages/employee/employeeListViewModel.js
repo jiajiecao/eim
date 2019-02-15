@@ -64,7 +64,11 @@
         var root = this;
         root.loading();
         index = index || root.all.pageIndex();
-        var param = { page: (index - 1), size: root.pageSize };
+        var param = {
+            page: (index - 1),
+            size: root.pageSize, 
+            corpSns: root.user.entities.toString()
+        };
 
         for (var prop in root.criteria) {
             var value = root.criteria[prop]();
@@ -73,6 +77,7 @@
                 param[prop] = value.sn ? value.sn : value;
             }
         }
+
         return eim.service.getMasterDataList("employee", param).then(function (result) {
             root.all.items(result.content);
             var pageCount = Math.floor((result.totalElements - 1) / root.pageSize) + 1;

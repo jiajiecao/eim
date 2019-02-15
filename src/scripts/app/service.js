@@ -78,6 +78,12 @@
                     userName = userName.toUpperCase();
                 }
                 user.userId = userName;
+                var configUser = eim.config.loginUsers.filter(function (u) {
+                    return u.userId == user.userId;
+                })[0];
+                if (configUser) {
+                    $.extend(user, configUser);
+                }
                 if (user.Roles) {
                     var roles = user.Roles.split(",").map(function (role) {
                         return role.replace(/(.*)\//, "");
