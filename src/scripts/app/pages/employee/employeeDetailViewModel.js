@@ -71,6 +71,17 @@
                 self.roles(items);
             });
         });
+            self.bankProvince.subscribe(function (value) {
+                var cities = [];
+                if (value) {
+                    cities = eim.util.provinceCities[value];
+                }
+                var options = cities.map(function (city) {
+                    return "<option value=\"" + city + "\">" + city + "</option>";
+                }).join("");
+                $("#bankCity").html(options).selectmenu("refresh");
+		self.bankCity(null);
+            });
 
         var chargeToCostCenterFields = [
             {
