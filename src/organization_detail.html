@@ -260,7 +260,7 @@ textarea.ui-input-text {
 				  
 
 			  
-			  <div class=" col-lg-4 col-sm-12 col-xs-12 col-md-4" style="padding:3px 3px; ">
+			  <div class=" col-lg-4 col-sm-12 col-xs-12 col-md-4" style="padding:3px 3px;" data-bind="visible:level()!=='部门'">
               <label for="superiorDepartment" style="color: #78909c; font-size: small">上层组织</label>
               <form  autocomplete="off" onsubmit="return false;">
                 <input  controlType="auto" data-bind="auto:superiorDepartment" name="superiorDepartment" id="superiorDepartment" data-type="search" data-inline="false" data-theme="b" style="font-weight:600; font-size: large">

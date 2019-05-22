@@ -104,26 +104,39 @@
             return dfd.promise();
         },
         getSuggestion: function (type, text) {
-            return eim.util.requestWithBearer(eim.config.hrUrl + type + "/autoComplete/" + text);
+            var version = "v1";
+            if (type === "department") {
+                version = "v2";
+            }
+
+            return eim.util.requestWithBearer(eim.config.hrUrl + version + "/" + type + "/autoComplete/" + text);
         },
         getMasterDataList: function (type, param) {
-            var url = eim.config.hrUrl + type;
+            var url = eim.config.hrUrl + "v1/" + type;
             return eim.util.requestWithBearer(url, param);
         },
         getMasterDataDetail: function (type, id) {
-            var url = eim.config.hrUrl + type + "/id/" + id;
+            var url = eim.config.hrUrl + "v1/" + type + "/id/" + id;
             return eim.util.requestWithBearer(url);
         },
         postMasterDataDetail: function (type, o) {
-            var url = eim.config.hrUrl + type;
+            var version = "v1";
+            if (type === "department") {
+                version = "v2";
+            }
+            var url = eim.config.hrUrl + version + "/" + type;
             return eim.util.requestWithBearer(url, o, { type: "POST" });
         },
         putMasterDataDetail: function (type, o) {
-            var url = eim.config.hrUrl + type;
+            var url = eim.config.hrUrl + "v1/" + type;
             return eim.util.requestWithBearer(url, o, { type: "PUT" });
         },
         deleteMasterDataDetail: function (type, id) {
-            var url = eim.config.hrUrl + type + "/delete" + type.substring(0, 1).toUpperCase() + type.substring(1) + "/" + id;
+            var version = "v1";
+            if (type === "department") {
+                version = "v2";
+            }
+            var url = eim.config.hrUrl + version + "/" + type + "/delete" + type.substring(0, 1).toUpperCase() + type.substring(1) + "/" + id;
             return eim.util.requestWithBearer(url, {}, { type: "DELETE" });
         },
 
