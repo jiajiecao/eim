@@ -121,7 +121,7 @@
         },
         postMasterDataDetail: function (type, o) {
             var version = "v1";
-            if (type === "department") {
+            if (type === "department" || type ==="employee") {
                 version = "v2";
             }
             var url = eim.config.hrUrl + version + "/" + type;

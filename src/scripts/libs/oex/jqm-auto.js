@@ -101,9 +101,17 @@ ko.bindingHandlers[getBindingName("auto")] = (function () {
                 modelValue(null);
                 //var me = eim.util.getUser().userId;
                 if (text) {
+                    var queryText = text;
+                    if (id === "corpSn") {
+                        queryText = "corp/" + text;
+                    }
+                    if (id === "depSn") {
+                        queryText = "dep/" + text;
+                    }
 
 
-                    eim.service.getSuggestion(dataSource, text).then(function (result) {
+
+                    eim.service.getSuggestion(dataSource, queryText).then(function (result) {
                         // items = result.filter(function(person) {
                         //     return person.sn !== me;
                         // });

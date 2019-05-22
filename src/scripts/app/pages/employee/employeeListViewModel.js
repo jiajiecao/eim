@@ -64,10 +64,11 @@
         var root = this;
         root.loading();
         index = index || root.all.pageIndex();
+        // todo 
         var param = {
             page: (index - 1),
-            size: root.pageSize, 
-            corpSns: root.user.entities.toString()
+            size: root.pageSize,
+            corpSns: root.user.entities.toString() + ",EORION"
         };
 
         for (var prop in root.criteria) {

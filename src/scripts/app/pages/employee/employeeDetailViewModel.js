@@ -5,26 +5,48 @@
         window.detail = this;
 
         var defaultData = {
-            id: "",
-            name: "",
-            sn: "",
-            identityCard: "",
+            //remove
             otherIdentify: "",
-            ncCode: "",
             lastName: "",
             middleName: "",
             firstName: "",
-            sex: "",
+            homePhone: "",
+            otherMail: "",
+            belongToDepartment: null,
+
+            //add 
+            birthCondition: null,
+            identityCardFrom: null,
+            identityCardTo: null,
+            politicsStatus: null,
+            censusRegister: null,
+            diploma: null,
+            degree: null,
+            major: null,
+            studyAbroad: null,
+            securityPayment: null,
+            placeOfLegalDocuments: null,
+            entryGroupTime: null,
+            entryTime: null,
+            dimissionTime: null,
+            corpSn: null,
+            depSn: null,
+
+
+            id: "",
+            name: "",
             maritalStatus: "",
+            sn: "",
+            identityCard: "",
+            ncCode: "",
+            sex: "",
             nationality: "",
             birth: null,
             homeAddress: "",
             mobilePhone: "",
-            homePhone: "",
             accountName: "",
             accountNo: "",
             mail: "",
-            otherMail: "",
             roles: [],
             workType: "",
             hireStatus: "",
@@ -37,7 +59,6 @@
             openingBank: "",
             workAddress: "",
             salaryComponents: [],
-            belongToDepartment: null,
             inChargeOfCostCenter: null,
             manageToDepartment: null,
             fnDeleagatees: [],
@@ -71,17 +92,17 @@
                 self.roles(items);
             });
         });
-            self.bankProvince.subscribe(function (value) {
-                var cities = [];
-                if (value) {
-                    cities = eim.util.provinceCities[value];
-                }
-                var options = cities.map(function (city) {
-                    return "<option value=\"" + city + "\">" + city + "</option>";
-                }).join("");
-                $("#bankCity").html(options).selectmenu("refresh");
-		self.bankCity(null);
-            });
+        self.bankProvince.subscribe(function (value) {
+            var cities = [];
+            if (value) {
+                cities = eim.util.provinceCities[value] || [];
+            }
+            var options = cities.map(function (city) {
+                return "<option value=\"" + city + "\">" + city + "</option>";
+            }).join("");
+            $("#bankCity").html(options).selectmenu("refresh");
+            self.bankCity(null);
+        });
 
         var chargeToCostCenterFields = [
             {
@@ -131,12 +152,15 @@
         this.save = function () {
             var self = this;
             var fields = [
+                "sn",
                 "identityCard",
                 "ncCode",
-                "lastName",
-                "firstName",
                 "sex",
+                "mobilePhone",
+                "mail",
+                "birthCondition",
                 "maritalStatus",
+                "name",
                 "nationality",
                 "birth",
                 "homeAddress",
@@ -150,15 +174,30 @@
                 "accountName",
                 "accountNo",
                 "hireFrom",
-                "hireTo"
+                "hireTo",
+                "politicsStatus",
+                "censusRegister",
+                "diploma",
+                "degree",
+                "major",
+                "studyAbroad",
+                "securityPayment",
+                "placeOfLegalDocuments",
+                "entryGroupTime",
+                "entryTime",
+                "wagesCard",
+                "corpSn"
             ].map(function (fieldName) {
                 var field = {
                     id: fieldName,
                     value: self[fieldName]
                 };
+
                 if (fieldName === "sex" ||
-                    fieldName === "maritalStatus") {
-                    field.controlType = "rbv";
+                    fieldName === "studyAbroad" ||
+                    fieldName === "maritalStatus" ||
+                    fieldName === "birthCondition") {
+                    field.controlType = "sbs";
                 }
                 if (fieldName === "bankProvince" ||
                     fieldName === "bankCity") {
@@ -166,10 +205,16 @@
                 }
                 if (fieldName === "hireFrom" ||
                     fieldName === "hireTo" ||
-                    fieldName === "birth") {
+                    fieldName === "birth" ||
+                    fieldName === "entryGroupTime" ||
+                    fieldName === "entryTime" ||
+                    fieldName === "dimissionTime") {
                     field.controlType = "t3";
                 }
-                if (fieldName === "homeAddress") {
+                if (fieldName === "homeAddress" ||
+                    fieldName === "securityPayment" ||
+                    fieldName === "placeOfLegalDocuments"
+                ) {
                     field.controlType = "t2";
                 }
                 return field;
@@ -202,13 +247,13 @@
                     "rate": row[1]
                 }
             });
-            var isChinese = eim.util.isChinese(data.firstName, data.lastName);
-            if (isChinese) {
-                data.name = data.lastName + data.firstName;
-            }
-            else {
-                data.name = data.firstName + " " + data.lastName;
-            }
+            // var isChinese = eim.util.isChinese(data.firstName, data.lastName);
+            // if (isChinese) {
+            //     data.name = data.lastName + data.firstName;
+            // }
+            // else {
+            //     data.name = data.firstName + " " + data.lastName;
+            // }
 
             var showError = function (result) {
                 self.pop("error", {
@@ -220,7 +265,7 @@
             }
 
             var cleanStructure = function (obj) {
-                ["manageToDepartment", "belongToDepartment", "inChargeOfCostCenter"].forEach(function (field) {
+                ["manageToDepartment", "belongToDepartment", "inChargeOfCostCenter", "corpSn", "depSn"].forEach(function (field) {
                     if (obj[field]) {
                         var newObj = {};
                         if (obj[field].sn) {
@@ -278,7 +323,7 @@
                 };
             });
 
-            data.fnDelegators =  data.fnDelegators.map(function (m) {
+            data.fnDelegators = data.fnDelegators.map(function (m) {
                 return {
                     sn: m.sn
                 };
@@ -345,6 +390,7 @@
         };
         self.init = function () {
             var self = this;
+
             self.tab("home");
             var showError = function (result) {
                 self.pop("error", {
@@ -366,7 +412,7 @@
             self.bankProvince.subscribe(function (value) {
                 var cities = [];
                 if (value) {
-                    cities = eim.util.provinceCities[value];
+                    cities = eim.util.provinceCities[value] || [];
                 }
                 var options = cities.map(function (city) {
                     return "<option value=\"" + city + "\">" + city + "</option>";

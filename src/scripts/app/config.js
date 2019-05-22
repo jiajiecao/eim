@@ -18,6 +18,8 @@
             entities: ["DB003", "DB004"]
         }],
         autoDataSource: {
+            corpSn: "department",
+            depSn: "department",
             costCenter: "costCenter",
             employee: "employee",
             manager: "employee",
