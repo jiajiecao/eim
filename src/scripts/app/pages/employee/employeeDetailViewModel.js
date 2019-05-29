@@ -120,12 +120,93 @@
             {
                 controlType: "percent",
                 fieldType: "string",
-                id: "tbhdcostcenter_百分比_costCenterPercentage_2_string_percent",
+                id: "tbhdcostcenter_百分比_percentage_2_string_percent",
                 name: "百分比",
                 readable: true,
                 writable: true,
                 required: true,
                 seq: 2,
+                type: "string"
+            },
+            {
+                controlType: "auto",
+                fieldType: "string",
+                id: "tbhdcostcenter_项目_projectId_3_string_auto_$$V",
+                name: "项目",
+                readable: true,
+                writable: true,
+                required: true,
+                seq: 3,
+                type: "string"
+            },
+            {
+                controlType: "sbs",
+                fieldType: "string",
+                id: "tbhdcostcenter_职能_function_4_string_sbs",
+                name: "职能",
+                readable: true,
+                writable: true,
+                required: true,
+                seq: 4,
+                type: "string",
+                enumValues: [
+                    {
+                        "id": "双语教师/中教",
+                        "name": "双语教师/中教"
+                    },
+                    {
+                        "id": "外教",
+                        "name": "外教"
+                    }, {
+                        "id": "管理层/校长",
+                        "name": "管理层/校长"
+                    }, {
+                        "id": "咨询顾问/升学指导",
+                        "name": "咨询顾问/升学指导"
+                    }, {
+                        "id": "服务人员",
+                        "name": "服务人员"
+                    }, {
+                        "id": "市场人员",
+                        "name": "市场人员"
+                    }, {
+                        "id": "研发人员",
+                        "name": "研发人员"
+                    }, {
+                        "id": "后勤运营人员",
+                        "name": "后勤运营人员"
+                    }, {
+                        "id": "销售人员",
+                        "name": "销售人员"
+                    }, {
+                        "id": "保育员",
+                        "name": "保育员"
+                    }, {
+                        "id": "助教/教辅",
+                        "name": "助教/教辅"
+                    }, {
+                        "id": "教务",
+                        "name": "教务"
+                    }]
+            }, {
+                controlType: "t3",
+                fieldType: "string",
+                id: "tbhdcostcenter_开始日期_from_5_string_t3",
+                name: "开始日期",
+                readable: true,
+                writable: true,
+                required: true,
+                seq: 5,
+                type: "string"
+            }, {
+                controlType: "t3",
+                fieldType: "string",
+                id: "tbhdcostcenter_结束日期_to_6_string_t3",
+                name: "结束日期",
+                readable: true,
+                writable: true,
+                required: true,
+                seq: 6,
                 type: "string"
             }
         ];
@@ -136,7 +217,7 @@
                     id: value.costCenter.id,
                     code: value.costCenter.code,
                     name: value.costCenter.name,
-                }, value.rate];
+                }, value.rate, null, null, null, null];
 
             });
             self.costCenterTable.rows(newValues);
