@@ -8,7 +8,7 @@ ko.bindingHandlers[getBindingName("auto")] = (function () {
                     "<li data-icon=\"check\" class=\"ui-li-has-count ui-first-child ui-last-child\">" +
                     "<a href=\"javascript:void(0)\" " +
                     "class=\"ui-btn ui-btn-icon-right ui-icon-check\">" +
-                    "<span data-bind=\"text:$data[$parent.nameField]\"></span>" +
+                    "<span data-bind=\"text:$data.name || $data.NAME\"></span>" +
                     "<span class=\"ui-li-count ui-body-inherit\" data-bind=\"text:$parent.formatKeyField($data)\"></span>" +
                     "</a>" +
                     "</li>" +
@@ -33,9 +33,9 @@ ko.bindingHandlers[getBindingName("auto")] = (function () {
             }
 
             viewModel.formatKeyField = function (data) {
-                return data.code || data.sn || data.id;
+                return data.code || data.sn || data.id || data.CODE;
             };
-            viewModel.nameField = "name";
+            //viewModel.nameField = "name";
 
 
             var fnInvalid = allBindings() && allBindings().invalid;
@@ -153,8 +153,10 @@ ko.bindingHandlers[getBindingName("auto")] = (function () {
         update: function (element, valueAccessor, allBindings) {
             var modelValue = valueAccessor();
             var fnInvalid = allBindings() && allBindings().invalid;
-            var newValue = modelValue() && modelValue().name || "";
-            // allBindings().value(newValue);
+            var newValue = "";
+            if (modelValue()) {
+                newValue = modelValue().name || modelValue().NAME;
+            }
 
             $(element).val(newValue);
 

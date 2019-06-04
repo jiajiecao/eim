@@ -18,6 +18,7 @@
             entities: ["DB003", "DB004"]
         }],
         autoDataSource: {
+            project: "project",
             corpSn: "department",
             depSn: "department",
             costCenter: "costCenter",

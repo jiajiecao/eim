@@ -121,14 +121,19 @@
         },
         postMasterDataDetail: function (type, o) {
             var version = "v1";
-            if (type === "department" || type ==="employee") {
+            if (type === "department" || type === "employee") {
                 version = "v2";
             }
             var url = eim.config.hrUrl + version + "/" + type;
             return eim.util.requestWithBearer(url, o, { type: "POST" });
         },
         putMasterDataDetail: function (type, o) {
-            var url = eim.config.hrUrl + "v1/" + type;
+            var version = "v1";
+            if (type === "employee") {
+                version = "v2";
+            }
+
+            var url = eim.config.hrUrl + version + "/" + type;
             return eim.util.requestWithBearer(url, o, { type: "PUT" });
         },
         deleteMasterDataDetail: function (type, id) {

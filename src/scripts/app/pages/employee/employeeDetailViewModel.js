@@ -108,7 +108,7 @@
             {
                 controlType: "auto",
                 fieldType: "string",
-                id: "tbhdcostcenter_成本中心_costCenterId_1_string_auto_$$V",
+                id: "tbhdcc_成本中心_costCenterId_1_string_auto_$$V",
                 name: "成本中心",
                 readable: true,
                 writable: true,
@@ -120,7 +120,7 @@
             {
                 controlType: "percent",
                 fieldType: "string",
-                id: "tbhdcostcenter_百分比_percentage_2_string_percent",
+                id: "tbhdcc_百分比_percentage_2_string_percent",
                 name: "百分比",
                 readable: true,
                 writable: true,
@@ -131,7 +131,7 @@
             {
                 controlType: "auto",
                 fieldType: "string",
-                id: "tbhdcostcenter_项目_projectId_3_string_auto_$$V",
+                id: "tbhdcc_项目_projectId_3_string_auto_$$V",
                 name: "项目",
                 readable: true,
                 writable: true,
@@ -142,7 +142,7 @@
             {
                 controlType: "sbs",
                 fieldType: "string",
-                id: "tbhdcostcenter_职能_function_4_string_sbs",
+                id: "tbhdcc_职能_function_4_string_sbs",
                 name: "职能",
                 readable: true,
                 writable: true,
@@ -191,7 +191,7 @@
             }, {
                 controlType: "t3",
                 fieldType: "string",
-                id: "tbhdcostcenter_开始日期_from_5_string_t3",
+                id: "tbhdcc_开始日期_from_5_string_t3",
                 name: "开始日期",
                 readable: true,
                 writable: true,
@@ -201,7 +201,7 @@
             }, {
                 controlType: "t3",
                 fieldType: "string",
-                id: "tbhdcostcenter_结束日期_to_6_string_t3",
+                id: "tbhdcc_结束日期_to_6_string_t3",
                 name: "结束日期",
                 readable: true,
                 writable: true,
@@ -217,8 +217,10 @@
                     id: value.costCenter.id,
                     code: value.costCenter.code,
                     name: value.costCenter.name,
-                }, value.rate, null, null, null, null];
-
+                }, value.rate, {
+                    CODE: value.projectCode,
+                    NAME: value.projectName,
+                }, value.function, value.from, value.to];
             });
             self.costCenterTable.rows(newValues);
         });
@@ -313,8 +315,8 @@
             if (!valid) {
                 self.tab("costcenter");
                 self.pop("error", {
-                    "title": "输入错误",
-                    "description": "您的输入有误，请重新输入。"
+                    title: "输入错误",
+                    description: "您的输入有误，请重新输入。"
                 });
                 return;
             }
@@ -322,10 +324,15 @@
             eim.util.unmapFields(data, self);
             var costCenters = self.costCenterTable.rows().map(function (row) {
                 return {
-                    "costCenter": {
-                        "code": row[0].code
+                    costCenter: {
+                        code: row[0].code
                     },
-                    "rate": row[1]
+                    rate: row[1],
+                    projectName: row[2].NAME,
+                    projectCode: row[2].CODE,
+                    function: row[3],
+                    from: row[4],
+                    to: row[5]
                 }
             });
             // var isChinese = eim.util.isChinese(data.firstName, data.lastName);
@@ -346,7 +353,8 @@
             }
 
             var cleanStructure = function (obj) {
-                ["manageToDepartment", "belongToDepartment", "inChargeOfCostCenter", "corpSn", "depSn"].forEach(function (field) {
+
+                ["manageToDepartment", "inChargeOfCostCenter"].forEach(function (field) {
                     if (obj[field]) {
                         var newObj = {};
                         if (obj[field].sn) {
@@ -359,6 +367,16 @@
                             newObj.id = obj[field].id;
                         }
                         obj[field] = newObj;
+                    }
+                });
+
+                ["corpSn", "depSn"].forEach(function (field) {
+                    if (obj[field]) {
+                        var newValue = "";
+                        if (obj[field].sn) {
+                            newValue = obj[field].sn;
+                        }
+                        obj[field] = newValue;
                     }
                 });
 
@@ -418,6 +436,7 @@
 
             delete data.createdAt;
             delete data.createdBy;
+            delete data.belongToDepartment;
             if (this.mode().id === "add") {
                 delete data.id;
                 eim.service.postMasterDataDetail("employee", data).then(function (result) {
@@ -507,7 +526,6 @@
             self.loading();
             return eim.service.getMasterDataDetail("employee", self.id()).then(function (result) {
                 var item = JSOG.decode(result);
-                console.log(item)
                 for (var i in item) {
                     var field = self[i];
                     if (field) {
