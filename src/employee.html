@@ -193,7 +193,7 @@
                 <p align="right" style="padding:3px 3px; margin-bottom:0px;">
                   <a href="#popaction" data-rel="popup" data-position-to="window"  style="font-weight:300;  margin-left:20px; color:#0288d1"><i class="material-icons">content_copy</i></a>
                   <a data-bind="attr:{href:'employee_detail.html?id='+detail.id()}" rel="external" style="font-weight:300; margin-left: 20px;   color:#0288d1"><i class="material-icons">edit</i></a>
-                  <a href="javascript:void(0);" data-bind="click:$root.delete" style="font-weight:300;  margin-left:20px; color:#0288d1"><i class="material-icons">block</i></a></p>
+                  <a href="javascript:void(0);" data-bind="click:$root.delete,css: { 'ui-disabled': true }" style="font-weight:300;  margin-left:20px; color:#0288d1"><i class="material-icons">block</i></a></p>
               </div>
             </div>
             <ul class="nav nav-tabs" id="tskTabs" role="tablist" style="margin-left: 2px; margin-right: 2px; margin-top: 4px; border-bottom-width: 0px;">

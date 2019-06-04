@@ -68,7 +68,7 @@
                     var id = value.code || value.sn || value.id || value.CODE;
                     var name = value.name || value.NAME;
                     value = id + " (" + name + ")";
-                    return value;
+                    return id ? value : "";
                 }
             }
             if (type == "t11") {
