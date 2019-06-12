@@ -31,8 +31,8 @@
             dimissionTime: null,
             corpSn: null,
             depSn: "",
-			depName: null,
-			corpName: null,
+            depName: null,
+            corpName: null,
 
 
             id: "",
@@ -133,7 +133,7 @@
             {
                 controlType: "auto",
                 fieldType: "string",
-                id: "tbhdcc_项目_projectId_3_string_auto_$$V",
+                id: "tbhdcc_项目_projectId_3_string_auto",
                 name: "项目",
                 readable: true,
                 writable: true,
@@ -237,8 +237,8 @@
         this.save = function () {
             var self = this;
             var fields = [
-                "sn",
-                "identityCard",
+                // "sn",
+                // "identityCard",
                 "ncCode",
                 "sex",
                 "mobilePhone",
@@ -355,7 +355,6 @@
             }
 
             var cleanStructure = function (obj) {
-
                 ["manageToDepartment", "inChargeOfCostCenter"].forEach(function (field) {
                     if (obj[field]) {
                         var newObj = {};
@@ -373,13 +372,11 @@
                 });
 
                 ["corpSn", "depSn"].forEach(function (field) {
-                    if (obj[field]) {
-                        var newValue = "";
-                        if (obj[field].sn) {
-                            newValue = obj[field].sn;
-                        }
-                        obj[field] = newValue;
+                    var newValue = "";
+                    if (obj[field] && obj[field].sn) {
+                        newValue = obj[field].sn;
                     }
+                    obj[field] = newValue;
                 });
 
             };
@@ -528,12 +525,29 @@
             self.loading();
             return eim.service.getMasterDataDetail("employee", self.id()).then(function (result) {
                 var item = JSOG.decode(result);
+                var corp = null;
+                var dep = null;
+                if (item.corpSn) {
+                    corp = {
+                        sn: item.corpSn,
+                        name: item.corpName
+                    };
+                }
+                if (item.depSn) {
+                    dep = {
+                        sn: item.depSn,
+                        name: item.depName
+                    };
+                }
+                item.corpSn = corp;
+                item.depSn = dep;
                 for (var i in item) {
                     var field = self[i];
                     if (field) {
                         field(item[i]);
                     }
                 }
+
                 self.editRoles(self.roles().toString());
                 if (self.managers().length) {
                     self.manager(self.managers()[0].manager);
