@@ -237,8 +237,8 @@
         this.save = function () {
             var self = this;
             var fields = [
-                // "sn",
-                // "identityCard",
+                "sn",
+                "identityCard",
                 "ncCode",
                 "sex",
                 "mobilePhone",
