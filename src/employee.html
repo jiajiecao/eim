@@ -224,41 +224,71 @@
                   <div class="row" style="margin:0px 0px; padding:6px 6px;">
                     <legend style="margin-bottom: 16px;"><font size="-1" color="#bdbdbd" style="font-weight:600"><i class="fa fa-fw fa-info-circle"></i> 基本信息</font></legend>
                     <div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
-                      <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">员工ID</font></label>
+                      <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">员工ID（域账号）</font></label>
                       <b data-bind="text:detail.sn"></b><b>&nbsp;</b></div>
+					  
                     <div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
-                      <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">身份证编号</font></label>
+                      <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">人员档案编号（员工工号）</font></label>
+                      <b data-bind="text:detail.ncCode"></b><b>&nbsp;</b></div>
+					  
+                    <div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
+                      <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">身份证件号</font></label>
                       <b data-bind="text:detail.identityCard"></b><b>&nbsp;</b></div>
-                    <div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
-                      <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">其他识别号</font></label>
-                      <b data-bind="text:detail.otherIdentify"></b><b>&nbsp;</b></div>
-                      <div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
-                        <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">人员档案编号</font></label>
-                        <b data-bind="text:detail.ncCode"></b><b>&nbsp;</b></div>
+					  
+					<div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
+                      <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">身份证件有效期从</font></label>
+                      <b data-bind="text:eim.util.formatDateTime(detail.identityCardFrom(),'t3')"></b><b>&nbsp;</b></div>
+
+					<div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
+                      <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">身份证件有效期至</font></label>
+                      <b data-bind="text:eim.util.formatDateTime(detail.identityCardTo(),'t3')"></b><b>&nbsp;</b></div>
+					  
+
                   </div>
                   <div class="row" style="margin:0px 0px; padding:6px 6px;">
 					          <hr>
                     <div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
-                      <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">姓</font></label>
-                      <b data-bind="text:detail.lastName"></b><b>&nbsp;</b></div>
-					          <div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
+                      <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">姓名</font></label>
+                      <b data-bind="text:detail.name"></b><b>&nbsp;</b></div>
+					         <!--  <div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
                       <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">中间名</font></label>
                       <b data-bind="text:detail.middleName"></b><b>&nbsp;</b></div>
                     <div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
                       <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">名</font></label>
-                      <b data-bind="text:detail.firstName"></b><b>&nbsp;</b></div>
-					          <div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
+                      <b data-bind="text:detail.firstName"></b><b>&nbsp;</b></div> -->
+					<div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
                       <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">性别</font></label>
                       <b data-bind="text:detail.sex"></b><b>&nbsp;</b></div>
-					          <div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
+					<div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
+                      <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">婚姻状况</font></label>
+                      <b data-bind="text:detail.maritalStatus"></b><b>&nbsp;</b></div>					  
+					<div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
                       <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">国籍</font></label>
                       <b data-bind="text:detail.nationality"></b><b>&nbsp;</b></div>
-					          <div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
+					<div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
                       <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">出生年月</font></label>
                       <b data-bind="text:eim.util.formatDateTime(detail.birth(),'t3')"></b><b>&nbsp;</b></div>
-					          <div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
-                      <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">婚姻状况</font></label>
-                      <b data-bind="text:detail.maritalStatus">未婚</b><b>&nbsp;</b></div>
+					<div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
+                      <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">生育情况</font></label>
+                      <b data-bind="text:detail.birthCondition"></b><b>&nbsp;</b></div>
+					<div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
+                      <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">政治面貌</font></label>
+                      <b data-bind="text:detail.politicsStatus"></b><b>&nbsp;</b></div>
+					<div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
+                      <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">户籍</font></label>
+                      <b data-bind="text:detail.censusRegister"></b><b>&nbsp;</b></div>
+					<div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
+                      <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">最高学历</font></label>
+                      <b data-bind="text:detail.diploma"></b><b>&nbsp;</b></div>
+					<div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
+                      <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">最高学位</font></label>
+                      <b data-bind="text:detail.degree"></b><b>&nbsp;</b></div>	
+					<div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
+                      <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">专业</font></label>
+                      <b data-bind="text:detail.major"></b><b>&nbsp;</b></div>
+					<div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
+                      <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">是否有留学背景</font></label>
+                      <b data-bind="text:detail.studyAbroad"></b><b>&nbsp;</b></div>					  
                   </div>
                   <div class="row" style="margin:0px 0px; padding:6px 6px;">
 					          <hr>
@@ -271,12 +301,12 @@
                       <b></b><b>&nbsp;</b>
                     </div> -->
 					          <div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
-                      <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">国家</font></label>
-                      <b data-bind="text:detail.nationality"></b><b>&nbsp;</b>
+                      <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">社保缴纳地</font></label>
+                      <b data-bind="text:detail.securityPayment"></b><b>&nbsp;</b>
                     </div>
 					          <div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
-                      <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">家庭电话</font></label>
-                      <b data-bind="text:detail.homePhone"></b><b>&nbsp;</b>
+                      <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">法律文书送达地</font></label>
+                      <b data-bind="text:detail.placeOfLegalDocuments"></b><b>&nbsp;</b>
                     </div>
 					          <div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
                       <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">手机号码</font></label>
@@ -286,10 +316,7 @@
                       <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">工作邮箱</font></label>
                       <b style="color: #03a9f4" data-bind="text:detail.mail"></b><b>&nbsp;</b>
                     </div>
-					          <div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
-                      <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">其它邮箱</font></label>
-                      <b style="color: #03a9f4" data-bind="text:detail.otherMail"></b><b>&nbsp;</b>
-                    </div>
+
                   </div>
                 </div>
               </div>
@@ -301,22 +328,37 @@
                     <div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
                       <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">职位</font></label>
                       <b data-bind="text:detail.roles"></b><b>&nbsp;</b></div>
-                    <div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
-                      <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">雇佣状态</font></label>
-                      <b data-bind="text:detail.hireStatus"></b><b>&nbsp;</b></div>
+
                     <div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
                       <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">工作类别</font></label>
                       <b data-bind="text:detail.workType"></b><b>&nbsp;</b>
                     </div>
-					          <div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
-                      <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">雇佣开始日期</font></label>
+                    <div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
+                      <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">雇佣状态</font></label>
+                      <b data-bind="text:detail.hireStatus"></b><b>&nbsp;</b></div>
+					<div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
+                      <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">进入集团日期</font></label>
+                      <b data-bind="text:eim.util.formatDateTime(detail.entryGroupTime(),'t3')"></b><b>&nbsp;</b>
+                    </div>
+
+					  
+					<div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
+                      <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">合同开始日期</font></label>
                       <b data-bind="text:eim.util.formatDateTime(detail.hireFrom(),'t3')"></b><b>&nbsp;</b>
                     </div>
-					          <div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
-                      <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">雇佣结束日期</font></label>
+					<div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
+                      <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">合同结束日期</font></label>
                       <b data-bind="text:eim.util.formatDateTime(detail.hireTo(),'t3')"></b><b>&nbsp;</b>
                     </div>
-					          <div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
+					<div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
+                      <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">入职日期</font></label>
+                      <b data-bind="text:eim.util.formatDateTime(detail.entryTime(),'t3')"></b><b>&nbsp;</b>
+                    </div>
+					<div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
+                      <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">离职日期</font></label>
+                      <b data-bind="text:eim.util.formatDateTime(detail.dimissionTime(),'t3')"></b><b>&nbsp;</b>
+                    </div>					
+					<div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
                       <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">报销级别</font></label>
                       <b data-bind="text:detail.expenseType"></b><b>&nbsp;</b>
                     </div>
@@ -352,15 +394,31 @@
                   </div>
                   <div class="row" style="margin:0px 0px; padding:6px 6px;">
 					          <hr>
+<!--                     <div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
+                      <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">所属实体</font></label>
+                      <b  data-bind="text:detail.belongToDepartment()&&detail.belongToDepartment().name"></b><b>&nbsp;</b>
+                    </div>							  
                     <div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
                       <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">所属部门</font></label>
                       <b  data-bind="text:detail.belongToDepartment()&&detail.belongToDepartment().name"></b><b>&nbsp;</b>
-                    </div>
-					          <div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
+                    </div> -->
+                    <div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
+                      <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">所属实体</font></label>
+                      <b  data-bind="text:detail.corpName"></b><b>&nbsp;</b>
+                    </div>							  
+                    <div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
+                      <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">所属部门</font></label>
+                      <b  data-bind="text:detail.depName"></b><b>&nbsp;</b>
+                    </div>					
+					<div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
                       <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">汇报给</font></label>
                       <b data-bind="text:detail.managers()"></b><b>&nbsp;</b>
                     </div>
-					          <div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
+					<div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
+                      <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">报销委托人</font></label>
+                      <b data-bind="text:detail.fnDeleagatees()"></b><b>&nbsp;</b>
+                    </div>					
+					<div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
                       <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">工作地点</font></label>
                       <b data-bind="text:detail.workAddress"></b><b>&nbsp;</b>
                     </div>
@@ -402,7 +460,12 @@
                             <th data-priority="2" style="text-align:center">#</th>
                             <th>成本中心编号</th>
                             <th>成本中心名称</th>
-                            <th style="text-align: right">百分比</th>
+							<th>百分比</th>
+							<th>项目</th>
+							<th>职能</th>
+							<th>开始日期</th>
+							<th>结束日期</th>
+                            <!-- <th style="text-align: right">百分比</th> -->
                           </tr>
                         </thead>
                         <tbody data-bind="template: { name: 'costCenterRow', foreach:detail.chargeToCostCenter }">
@@ -477,6 +540,7 @@
                       <option data-placeholder="false" value=" ">&nbsp;</option>
                       <option value="全职">全职</option>
                       <option value="兼职">兼职</option>
+					  <option value="实习">实习</option>
                     </select>
                   </div>
 
@@ -584,24 +648,31 @@
     <a href="javascript:void(0)" style="padding:6px 12px" data-bind="click:$root.selectItem.bind($root)">
       <h2 style=" margin-bottom:0px" data-bind="text:name"></h2>
       <p style="margin-top:6px; color:#90a4ae" data-bind="text:sn"></p>
-      <span class="ui-li-count" style="color: #009688"  data-bind="visible:departmentName,text:departmentName"></span>
+      <span class="ui-li-count" style="color: #009688"  data-bind="visible:corpName,text:corpName"></span>
     </a>
   </li>
 </script>
 <script type="text/html" id="staffRow">
   <tr>
-    <th style="text-align:center">ID 001</th>
-    <td>张三</td>
-    <td>sss@sss.com</td>
-    <td>直接</td>
+    <th style="text-align:center" data-bind="text:$index()+1">ID 001</th>
+	<td data-bind="text:staff.name"></td>
+	<td data-bind="text:staff.mail"></td>
+	<td>直接</td>
   </tr>
  </script>
  <script type="text/html" id="costCenterRow">
   <tr>
     <th style="text-align:center" data-bind="text:$index()+1"></th>
     <td data-bind="text:costCenter.code"></td>
+	    <!-- <td style="font-weight: 700; color: #03a9f4; text-align: right"  data-bind="text:Number(rate*100)+'%'"></td> -->
     <td data-bind="text:costCenter.name"></td>
-    <td style="font-weight: 700; color: #03a9f4; text-align: right"  data-bind="text:Number(rate*100)+'%'"></td>
+	<td data-bind="text:Number(rate*100)+'%'"></td>
+	<td data-bind="text:projectName"></td>
+	<td >function是关键字，我不清楚该如何处理</td>
+	<td data-bind="text:eim.util.formatDateTime(from,'t3')"></td>
+	<td data-bind="text:eim.util.formatDateTime(to,'t3')"></td>
+
+
   </tr>
  </script>
 

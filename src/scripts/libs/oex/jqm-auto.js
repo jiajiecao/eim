@@ -108,8 +108,15 @@ ko.bindingHandlers[getBindingName("auto")] = (function () {
                     if (id === "depSn") {
                         queryText = "dep/" + text;
                     }
-
-
+					if (id === "superiorDepartment") {
+                        queryText = "corp/" + text;
+                    }
+					if (id === "searchCorpSn") {
+                        queryText = "corp/" + text;
+                    }
+					if (id === "searchDepSn") {
+                        queryText = "dep/" + text;
+                    }
 
                     eim.service.getSuggestion(dataSource, queryText).then(function (result) {
                         // items = result.filter(function(person) {

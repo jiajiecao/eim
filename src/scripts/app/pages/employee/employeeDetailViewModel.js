@@ -30,7 +30,9 @@
             entryTime: null,
             dimissionTime: null,
             corpSn: null,
-            depSn: null,
+            depSn: "",
+			depName: null,
+			corpName: null,
 
 
             id: "",
