@@ -6,7 +6,7 @@
         ],
         oAuth2Url: "https://is.eorionsolution.com/oauth2/",
         serviceUrl: "https://bpms.eorionsolution.com/bpms-rest/service/",
-        hrUrl: "https://bpms.eorionsolution.com/neo-hr-api/",
+        hrUrl: "https://commonservices.eorionsolution.com/neo-hr-api/",
         pageSize: 15,
         //登陆有效期，默认30分钟
         activeTime: 15,
