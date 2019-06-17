@@ -349,7 +349,7 @@
                 self.pop("error", {
                     "title": self.mode().text,
                     "detail": self.mode().text + "失败" + " " + (result && result.errorMessage || ""),
-                    "code": "错误代码：" + result.status + " " + result.statusText
+                    "code": "错误代码：" + result.status + " " + result.responseJSON.description
                 });
                 self.loading(false);
             }
