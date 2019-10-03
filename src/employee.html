@@ -56,6 +56,8 @@
 <script src="scripts/app/pages/employee/employeeListViewModel.js"></script>
 <script src="scripts/app/pages/employee/employeeDetailViewModel.js"></script>
 <script src="scripts/app/pages/employee/employee.js"></script>
+<script src="scripts/libs/hmac-sha256.js"></script>
+<script src="scripts/libs/enc-base64-min.js"></script>
 <link rel="shortcut icon" href="favicon.ico">
 <style>
 @media screen and (min-height:768px) {
@@ -191,7 +193,7 @@
               </div>
               <div class="col-sm-6 col-xs-12 col-md-4 col-lg-4" style="padding: 3px 3px; ">
                 <p align="right" style="padding:3px 3px; margin-bottom:0px;">
-                  <a href="#popaction" data-rel="popup" data-position-to="window"  style="font-weight:300;  margin-left:20px; color:#0288d1"><i class="material-icons">content_copy</i></a>
+                  <!--<a href="#popaction" data-rel="popup" data-position-to="window"  style="font-weight:300;  margin-left:20px; color:#0288d1"><i class="material-icons">content_copy</i></a>-->
                   <a data-bind="attr:{href:'employee_detail.html?id='+detail.id()}" rel="external" style="font-weight:300; margin-left: 20px;   color:#0288d1"><i class="material-icons">edit</i></a>
                   <a href="javascript:void(0);" data-bind="click:$root.delete,css: { 'ui-disabled': true }" style="font-weight:300;  margin-left:20px; color:#0288d1"><i class="material-icons">block</i></a></p>
               </div>
@@ -209,11 +211,16 @@
                 <p align="center" style="margin: 0px 0px;"><i class="fa fa-2x fa-crosshairs"></i></p>
                 </a>
               </li>
+              </li>
+				      <li style="min-width: 80px;" role="presentation"><a href="#salarySupervisor" role="tab" id="salarySupervisor-tab" data-toggle="tab" aria-controls="salarySupervisor">
+                <p align="center" style="margin: 0px 0px;"><i class="fa fa-2x fa-address-book"></i></p>
+                </a>
+              </li>
 				      <li  data-bind="css: { 'ui-disabled': true }" style="min-width: 80px;" role="presentation"><a href="#qualification" role="tab" id="qualification-tab" data-toggle="tab" aria-controls="qualification">
                 <p align="center" style="margin: 0px 0px;"><i class="fa fa-2x fa-file-archive"></i></p>
                 </a>
               </li>
-              <li  data-bind="css: { 'ui-disabled': true }" style="min-width: 80px;" role="presentation"><a href="#history" role="tab" id="history-tab" data-toggle="tab" aria-controls="history">
+              <li  style="min-width: 80px;" role="presentation"><a href="#history" role="tab" id="history-tab" data-toggle="tab" aria-controls="history">
                 <p align="center" style="margin: 0px 0px;"><i class="fa fa-2x fa-history"></i></p>
                 </a>
               </li>
@@ -308,6 +315,14 @@
                       <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">法律文书送达地</font></label>
                       <b data-bind="text:detail.placeOfLegalDocuments"></b><b>&nbsp;</b>
                     </div>
+					<div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
+                      <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">社保操作方</font></label>
+                      <b data-bind="text:detail.socialSecurityOperator"></b><b>&nbsp;</b>
+                    </div>
+					<div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
+                      <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">工资发放方</font></label>
+                      <b data-bind="text:detail.payroller"></b><b>&nbsp;</b>
+                    </div>
 					          <div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
                       <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">手机号码</font></label>
                       <b data-bind="text:detail.mobilePhone"></b><b>&nbsp;</b>
@@ -362,7 +377,22 @@
                       <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">报销级别</font></label>
                       <b data-bind="text:detail.expenseType"></b><b>&nbsp;</b>
                     </div>
-					        			  
+					<div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
+                      <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">试用期开始日期</font></label>
+                      <b data-bind="text:eim.util.formatDateTime(detail.probationStart(),'t3')"></b><b>&nbsp;</b>
+                    </div>	
+					<div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
+                      <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">试用期结束日期</font></label>
+                      <b data-bind="text:eim.util.formatDateTime(detail.probationEnd(),'t3')"></b><b>&nbsp;</b>
+                    </div>	
+					<div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
+                      <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">社保缴纳起始年月</font></label>
+                      <b data-bind="text:eim.util.formatDateTime(detail.socialSecurityStartDate(),'t3')"></b><b>&nbsp;</b>
+                    </div>	
+					<div class="col-lg-4 col-sm-4 col-xs-6 col-md-4" style="margin-bottom: 4px; padding: 0px 0px;">
+                      <label style="margin-bottom: 0px"><font color="#9e9e9e" size="-1">公积金缴纳起始年月</font></label>
+                      <b data-bind="text:eim.util.formatDateTime(detail.providentFundStartDate(),'t3')"></b><b>&nbsp;</b>
+                    </div>						
                   </div>
 
                   <div class="row" style="margin:0px 0px; padding:6px 6px;">
@@ -445,11 +475,9 @@
                   </div>
                 </div>
               </div>
-				<div role="tabpanel" class="tab-pane" id="costcenter" aria-labelledBy="costcenter-tab">
+			  
+			  <div role="tabpanel" class="tab-pane" id="costcenter" aria-labelledBy="costcenter-tab">
                 <div class="ui-body ui-body-b ui-content" style=" border-width:1px; border-bottom-right-radius: 0.31em; border-bottom-left-radius:0.31em;  margin: 0 2px; margin-bottom:3px; padding: 6px 6px">
-                  
-                  
-                  
                   <div class="row" style="margin:0px 0px; padding:6px 6px;">
                     <legend style="margin-bottom: 16px;"><font size="-1" color="#bdbdbd" style="font-weight:600"><i class="fa fa-fw fa-bullseye"></i> 成本中心</font></legend>
                     <div data-role="collapsible" data-collapsed="false" data-content-theme="a" data-collapsed-icon="carat-d" data-expanded-icon="carat-u" style="margin-top:18px;" data-iconpos="right">
@@ -476,24 +504,45 @@
                   </div>
                 </div>
               </div>
+			  
+			  
+			  <div role="tabpanel" class="tab-pane" id="salarySupervisor" aria-labelledBy="salarySupervisor-tab">
+                <div class="ui-body ui-body-b ui-content" style=" border-width:1px; border-bottom-right-radius: 0.31em; border-bottom-left-radius:0.31em;  margin: 0 2px; margin-bottom:3px; padding: 6px 6px">
+                  <div class="row" style="margin:0px 0px; padding:6px 6px;">
+                    <legend style="margin-bottom: 16px;"><font size="-1" color="#bdbdbd" style="font-weight:600"><i class="fa fa-fw fa-bullseye"></i> 薪资负责人</font></legend>
+                    <div data-role="collapsible" data-collapsed="false" data-content-theme="a" data-collapsed-icon="carat-d" data-expanded-icon="carat-u" style="margin-top:18px;" data-iconpos="right">
+                      <h4><i class="fa fa-table"></i>&nbsp;<span data-bind="text:detail.payrolls().length"></span></h4>
+                      <table data-role="table" id="table2" class="ui-body-d ui-shadow table-stripe ui-responsive movie-list table-stroke" data-mode="reflow"  style="margin-bottom: 8px; margin-top:8px; padding: 3px 3px">
+                        <thead>
+                          <tr class="ui-bar-d">
+                            <th data-priority="2" style="text-align:center">#</th>
+                            <th>薪资负责人</th>
+
+                            <!-- <th style="text-align: right">百分比</th> -->
+                          </tr>
+                        </thead>
+                        <tbody data-bind="template: { name: 'payrollRow', foreach:detail.payrolls }">
+                         
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>			  
 				
               <div role="tabpanel" class="tab-pane" id="history" aria-labelledBy="history-tab">
                 <div class="ui-body ui-body-b ui-content" style=" border-width:1px; border-bottom-right-radius: 0.31em; border-bottom-left-radius:0.31em; min-height: 400px; margin: 0 2px; margin-bottom:3px; padding: 6px 6px">
                   <div class="row" style="margin:0px 0px; padding:6px 6px">
-                    <legend style="margin-bottom: 16px;" ><font size="-1" color="#bdbdbd"><i class="fa fa-fw fa-clock"></i><b> 流程历史</b></font></legend>
+                    <legend style="margin-bottom: 16px;" ><font size="-1" color="#bdbdbd"><i class="fa fa-fw fa-clock"></i><b> 历史</b></font></legend>
                   </div>
-                  <div class="row" style="margin:0px 0px; padding:6px 6px">
-                    <ul data-role="listview" class="ui-alt-icon ui-nodisc-icon" data-theme="c" data-inset="true" data-iconpos="left" style="margin-top:0px;">
-                      <li data-icon="carat-d"><a href="#pophistory" data-rel="popup" data-position-to="window" data-transition="pop"><font color="#03a9f4"><i class="fa fa-fw fa-clock"></i></font> Task Name
-                        <p style="margin-bottom:0px; color:#9E9E9E">陈骏&nbsp;<b>2015-5-22 13:11PM</b></p>
-                        <span class="ui-li-count">创建</span></a></li>
-                      <li data-icon="carat-d"><a href="#pophistory" data-rel="popup" data-position-to="window" data-transition="pop"><font color="#03a9f4"><i class="fa fa-fw fa-play-circle"></i></font> Task Name
-                        <p style="margin-bottom:0px; color:#9E9E9E">陈骏&nbsp;<b>2015-5-22 13:11PM</b></p>
-                        <span class="ui-li-count">批准</span></a></li>
-                      <li data-icon="power"><a href="#pophistory" data-rel="popup" data-position-to="window" data-transition="pop"><font color="#03a9f4"><i class="fa fa-fw fa-bolt"></i></font> Task Name
-                        <p style="margin-bottom:0px; color:#9E9E9E">陈骏&nbsp;<b>2015-5-22 13:11PM</b></p>
-                        <span class="ui-li-count">批准</span></a></li>
-                    </ul>
+                  <div class="row" style="margin:0px 0px; padding:6px 6px">	  
+<iframe
+    data-bind="attr: {src: detail.changeCorpHiUrl}"
+    frameborder="0"
+    width="100%"
+    height="600"
+    allowtransparency
+></iframe>
                   </div>
                 </div>
               </div>
@@ -660,13 +709,20 @@
 	<td>直接</td>
   </tr>
  </script>
+ 
+ <script type="text/html" id="payrollRow">
+  <tr>
+    <th style="text-align:center" data-bind="text:$index()+1"></th>
+	<td data-bind="text:$data"></td>
+  </tr>
+ </script>
  <script type="text/html" id="costCenterRow">
   <tr>
     <th style="text-align:center" data-bind="text:$index()+1"></th>
     <td data-bind="text:costCenter.code"></td>
 	    <!-- <td style="font-weight: 700; color: #03a9f4; text-align: right"  data-bind="text:Number(rate*100)+'%'"></td> -->
     <td data-bind="text:costCenter.name"></td>
-	<td data-bind="text:Number(rate*100)+'%'"></td>
+	<td data-bind="text:Number(rate*100).toFixed(2)+'%'"></td>
 	<td data-bind="text:projectName"></td>
 	<td data-bind="text:$data['function']"></td>
 	<td data-bind="text:eim.util.formatDateTime(from,'t3')"></td>

@@ -53,6 +53,8 @@
 <script src="scripts/app/util.js"></script>
 <script src="scripts/app/service.js"></script>
 <script src="scripts/app/baseViewModel.js"></script>
+<script src="scripts/libs/hmac-sha256.js"></script>
+<script src="scripts/libs/enc-base64-min.js"></script>
 <script src="scripts/app/pages/salary/salaryViewModel.js"></script>
 <script src="scripts/app/pages/salary/salary.js"></script>
 <link rel="shortcut icon" href="favicon.ico">
@@ -139,7 +141,7 @@
   <div data-role="header" data-theme="b" data-position="fixed"  style="background-color:#FFFFFF; box-shadow:0 2px 3px 0 rgba(0, 0, 0, 0.14)">
     <div class="ui-grid-a">
       <div class="ui-block-a">
-        <h3 style="margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom:8px; text-shadow: 0 0px; color:#cfd8dc; font-weight: 200; text-align:left"><img src="images/bpmslogoxsn1.png" height="26px" style="margin-top:-3px;"><font class="hidden-xs"> | eim02 员工</font></h3>
+        <h3 style="margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom:8px; text-shadow: 0 0px; color:#cfd8dc; font-weight: 200; text-align:left"><img src="images/bpmslogoxsn1.png" height="26px" style="margin-top:-3px;"><font class="hidden-xs"> | eim05 员工工资</font></h3>
       </div>
       <div class="ui-block-b">
         <h3 style="margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom:8px; text-shadow: 0 0px; color:#bdbdbd; text-align:right"><a href="#panelgrid" style="color: #009688"><i class="fas fa-bars"></i></a></h3>
@@ -150,61 +152,82 @@
   </div>
   <div data-role="content" style="padding: 2px 2px; margin-bottom:64px">
     <ul class="nav nav-tabs" id="myTabs" role="tablist" style="margin-left: 2px; margin-right: 2px; margin-top: 4px; border-bottom-width: 0px;">
-      <li style="min-width: 80px;" role="presentation" class="active"><a href="#all" data-bind="click:switchTab" id="all-tab" role="tab" data-toggle="tab" aria-controls="all" aria-expanded="true">
-        <p align="center" style="margin: 0px 0px; font-weight: 200"><i class="fa fa-2x fa-user-circle"></i></p>
+      <li style="min-width: 80px;" role="presentation" class="active"><a href="#download" data-bind="click:switchTab" id="downloadl-tab" role="tab" data-toggle="tab" aria-controls="download" aria-expanded="true">
+        <p align="center" style="margin: 0px 0px; font-weight: 200"><i class="fa fa-2x fa-arrow-circle-down"></i></p>
         </a></li>
+      <li style="min-width: 80px;" role="search"><a href="#upload" role="tab" data-bind="click:switchTab" id="upload-tab" data-toggle="tab" aria-controls="upload">
+        <p align="center" style="margin: 0px 0px;"><i class="fa fa-2x fa-arrow-circle-up"></i></p>
+        </a></li>		
       <li style="min-width: 80px;" role="search"><a href="#search" role="tab" data-bind="click:switchTab" id="search-tab" data-toggle="tab" aria-controls="search">
         <p align="center" style="margin: 0px 0px;"><i class="fa fa-2x fa-search"></i></p>
         </a></li>
     </ul>
     <div id="myTabContent" class="tab-content">
-      <div role="tabpanel" class="tab-pane active" id="all" aria-labelledBy="all-tab">
-        
+      <div role="tabpanel" class="tab-pane active" id="download" aria-labelledBy="download-tab">
+        <iframe
+			data-bind="attr: {src: detail.salaryExportUrl}"
+			frameborder="0"
+			width="100%"
+			height="600"
+			allowtransparency
+		></iframe>
+      </div>
+	  <div role="tabpanel" class="tab-pane" id="upload" aria-labelledBy="upload-tab" align="center" style="margin:150px">
+		<form method="post">
+			<p align="center"  style="width:680px">
+				<input type="file" id="fileUpload" name="fileUpload"/>
+				<a href="javascript:void(0);" data-bind="click: save" ><i class="fa fa-2x fa-upload" style="margin:15px"></i> </a>
+			</p>
+		</form>
       </div>
       <div role="tabpanel" class="tab-pane" id="search" aria-labelledBy="search-tab">
-        <div class="ui-body ui-body-b ui-content" style=" background-image: url(images/works-bg.jpg); border-width:0px; border-top-width:1px; border-bottom-right-radius: 0.31em; border-bottom-left-radius:0.31em; margin: 0px 2px; padding: 0px 0px; padding-bottom:6px;  min-height:640px; margin-bottom:120px;">
-          <div class="row">
-         
-
-                  <div class=" col-lg-3 col-sm-12 col-xs-12 col-md-6" style="padding:3px 3px; ">
-                      <label for="searchHireStatus"><font color="#9e9e9e" size="-1">雇佣状态</font></label>
-                      <select data-overlay-theme="a" name="searchHireStatus" 
-                      data-native-menu="false" 
-                      id="searchHireStatus" controlType="sbs" 
-                      data-theme="b" tabindex="-1">
-                      <option data-placeholder="false" value=" ">&nbsp;</option>
-                        <option value="在职">在职</option>
-                        <option value="离职">离职</option>
-                      </select> 
-                 
-                    </div>
-                    <div class=" col-lg-3 col-sm-12 col-xs-12 col-md-6" style="padding:3px 3px; ">
-                        <label for="searchDepSn"><font color="#9e9e9e" size="-1">部门</font></label>
-                        <form  autocomplete="off" onsubmit="return false;">
-                            <input  controlType="auto" name="searchDepSn" id="searchDepSn" data-type="search" data-inline="false" data-theme="b" style="font-weight:600; font-size: large">
-                            <ul  data-role="listview" class="ui-nodisc-icon ui-alt-icon ui-listview ui-listview-inset ui-corner-all ui-shadow" data-inset="true">
-                            </ul> 
-                          </form>
-                   
-                      </div>
-                      <div class=" col-lg-3 col-sm-12 col-xs-12 col-md-6" style="padding:3px 3px; ">
-                          <label for="searchCorpSn"><font color="#9e9e9e" size="-1">实体</font></label>
-                          <form  autocomplete="off" onsubmit="return false;">
-                              <input  controlType="auto"  name="searchCorpSn" id="searchCorpSn" data-type="search" data-inline="false" data-theme="b" style="font-weight:600; font-size: large">
-                              <ul  data-role="listview" class="ui-nodisc-icon ui-alt-icon ui-listview ui-listview-inset ui-corner-all ui-shadow" data-inset="true">
-                              </ul> 
-                            </form>
-                        </div>
-          </div>
-        
-
-        
-        
-        
-        
-        
-        
-        </div>
+		<div class="ui-body ui-body-b ui-content"  style="background-image: url(images/works-bg.jpg); border-width:1px; border-bottom-right-radius: 0.31em; border-bottom-left-radius:0.31em; min-height: 640px; max-height:640px;  margin: 0 2px; padding: 2px 2px;">
+            <ul class="nav nav-tabs" id="tskTabs" role="tablist" style="margin-left: 2px; margin-right: 2px; margin-top: 4px; border-bottom-width: 0px;">
+              <li style="min-width: 80px;" role="presentation" class="active"><a href="#salary" id="salary-tab" role="tab" data-toggle="tab" aria-controls="salary" aria-expanded="true">
+                <p align="center" style="margin: 0px 0px;">个人薪资</p>
+                </a>
+              </li>
+			  
+			  <li style="min-width: 80px;" role="presentation"><a href="#proportion" role="tab" id="proportion-tab" data-toggle="tab" aria-controls="proportion">
+                <p align="center" style="margin: 0px 0px;">薪资分摊</p>
+                </a>
+              </li>
+			  
+              <li  style="min-width: 80px;" role="presentation"><a href="#collect" role="tab" id="collect-tab" data-toggle="tab" aria-controls="collect">
+                <p align="center" style="margin: 0px 0px;">数据汇总</p>
+                </a>
+              </li>
+            </ul>  
+			<div id="mySubTabContent" class="tab-content">
+				  <div role="tabpanel" class="tab-pane active" id="salary" aria-labelledBy="salary-tab">
+					<iframe
+						data-bind="attr: {src: detail.salaryEnquiryUrl}"
+						frameborder="0"
+						width="100%"
+						height="600"
+						allowtransparency
+					></iframe>
+				  </div>
+				  <div role="tabpanel" class="tab-pane" id="proportion" aria-labelledBy="proportion-tab">
+					<iframe
+						data-bind="attr: {src: detail.salaryAllocationUrl}"
+						frameborder="0"
+						width="100%"
+						height="600"
+						allowtransparency
+					></iframe>
+				  </div>
+				  <div role="tabpanel" class="tab-pane" id="collect" aria-labelledBy="collect-tab">
+					<iframe
+						data-bind="attr: {src: detail.salarySummaryUrl}"
+						frameborder="0"
+						width="100%"
+						height="600"
+						allowtransparency
+					></iframe>
+				  </div>				  
+			</div>
+		</div>
       </div>
     </div>
   </div>
@@ -230,7 +253,7 @@
       </ul>
       <p align="center" style="margin-top: 30px;"><img src="images/suppliez.png" height="28px"></p>
     </div>
-  <div data-role="footer"  data-fullscreen="true" data-position="fixed" style=" border-bottom-width: 0px;">
+  <!--<div data-role="footer"  data-fullscreen="true" data-position="fixed" style=" border-bottom-width: 0px;">
     <div data-role="navbar" >
       <ul>
         <li data-bind="css: { 'ui-disabled': !($root.all.hasPrev()) }"><a href="javascript:void(0)"   data-bind="" class="ui-btn-b" style="font-weight:300"><i class="fa fa-2x fa-chevron-left"></i><br>
@@ -243,7 +266,7 @@
           更多</a></li>
       </ul>
     </div>
-    <!-- /navbar -->
+
     <div data-role="popup" id="popaction" data-theme="b" data-overlay-theme="a" style="border-width: 0px; border-radius: 6px  ">
       <ul data-role="listview" class="ui-nodisc-icon ui-alt-icon" data-inset="true" style="min-width:240px; border-radius: 6px">
         <li data-role="list-divider" style="border-width: 0px; padding-left: 12px;  background-color: #03a9f4; "><i class="fas fa-play-circle"></i></li>
@@ -260,8 +283,8 @@
         <li><a href="#" rel="external" style=" padding-bottom: 15px; padding-top: 15px; font-weight: 400"><img src="images/suppliez/poll-symbol-on-black-square-with-rounded-corners.svg" class="ui-li-icon" style="top: 15px;">报表</a></li>
       </ul>
     </div>
-  </div>
-  <!-- /footer --> 
+  </div>-->
+
 </div>
 
 <script type="text/html" id="item">

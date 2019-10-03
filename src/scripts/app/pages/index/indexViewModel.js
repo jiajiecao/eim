@@ -3,6 +3,9 @@
     eim.ViewModels.IndexViewModel = function () {
         var self = this;
         self.init = function () {
+			if(Array.isArray(self.user.salaryEntities) && self.user.salaryEntities.length === 0){
+				$("#salarydiv").remove();
+			}
 
         };
     };

@@ -1,3 +1,4 @@
+
 (function (eim) {
     eim.config = {
         oAuth2Keys: [
@@ -12,11 +13,22 @@
         activeTime: 15,
         loginUsers: [{
             userId: "100000",
-            entities: ["DB003", "DB004"]
+            entities: ["DB003", "DB004","EORION"],
+			salaryEntities:[]
         }, {
             userId: "100010",
-            entities: ["DB003", "DB004"]
-        }],
+            entities:["EORION","CRS01","CRS02","DB001","DB002","DB003","DB004","DB005","DB006","DB007","DB008","DB009","DB010","DB012","DB013","DB014","DB016","ER001","ER002","ER003","ER004","ER005","ER006","ER008","ER009","ER010","ER011","ER014","ER015","ER016","FR001","ST001","TZ001","TZ00101","TZ00102","TZ002","TZ00201","TZ00202","TZ00203","TZ003","TZ004","TZ005","TZ006","W001","DB0031"],
+			salaryEntities:["EORION","CRS01","CRS02","DB001","DB002","DB003","DB004","DB005","DB006","DB007","DB008","DB009","DB010","DB012","DB013","DB014","DB016","ER001","ER002","ER003","ER004","ER005","ER006","ER008","ER009","ER010","ER011","ER014","ER015","ER016","FR001","ST001","TZ001","TZ00101","TZ00102","TZ002","TZ00201","TZ00202","TZ00203","TZ003","TZ004","TZ005","TZ006","W001","DB0031"]
+	    },{
+            userId: "100011",
+            entities: ["DB003", "DB004","ER002","ER003","EORION","ER010","ER011"],
+			salaryEntities:[]
+        },{
+			userId:"dptest1",
+			entities:["CRS01","CRS02","DB001","DB002","DB003","DB004","DB005","DB006","DB007","DB008","DB009","DB010","DB012","DB013","DB014","DB016","ER001","ER002","ER003","ER004","ER005","ER006","ER008","ER009","ER010","ER011","ER014","ER015","ER016","FR001","ST001","TZ001","TZ00101","TZ00102","TZ002","TZ00201","TZ00202","TZ00203","TZ003","TZ004","TZ005","TZ006","W001","DB0031"],
+			salaryEntities:[]
+		}
+	],
         autoDataSource: {
             project: "project",
             corpSn: "department",
@@ -32,6 +44,11 @@
             searchCorpSn: "department"
         },
         metabaseSite: "https://metabase.eorionsolution.com/",
-        metabaseKey: "652af32880df5748cbf37bd6273d8bfe444e76e551012ca323afa69e1f1b41ab"
+        metabaseKey: "8322aa8500b6ae07df7590b25d1bff56cb5e631dc829704c15cb66e80fed9f50",
+		changeCorpHiQuestionId: 39,//流程历史变更流程
+		salaryExportQuestionId: 50,//薪资基本信息导出
+		salaryEnquiryQuestionId: 51,//个人薪资查询
+		salaryAllocationQuestionId: 47,//薪资分摊查询
+		salarySummaryQuestionId: 48,//薪资汇总查询
     };
 })(window.eim = window.eim || {});

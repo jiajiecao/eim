@@ -60,7 +60,7 @@
                 }
             }
             if (type === "percent") {
-                value = value ? value * 100 + "%" : "";
+                value = value ? (value * 100).toFixed(2) + "%" : "";
                 value = "<span style=\"font-weight: 700; color: #03a9f4; text-align: right\">" + value + "</span>"
             }
             if (type === "auto") {
@@ -149,13 +149,13 @@
                     var cells = otherRows.map(function (tempRow) {
                         return tempRow[i];
                     });
-                    if (!checkUnique(value, cells)) {
-                        $root.pop("error", {
-                            "title": "输入错误",
-                            "description": head.name + "不能重复，请重新输入。"
-                        });
-                        return;
-                    }
+                    //if (!checkUnique(value, cells)) {
+                    //    $root.pop("error", {
+                    //        "title": "输入错误",
+                    //        "description": head.name + "不能重复，请重新输入。"
+                    //    });
+                    //    return;
+                    //}
                 }
                 // var name = head.id.replace(/\$/g, "");
                 // var clearBtn = $("[name='" + name + "']").parent().find("a.ui-input-clear").not(".ui-input-clear-hidden");
@@ -304,6 +304,29 @@
             if (defaultSettings.type == "DELETE") {
                 defaultSettings.dataType = "text";
             }
+
+            return $.ajax(defaultSettings);
+        },
+        uploadWithBearer: function (url, data) {
+            var bearer = sessionStorage.getItem("Bearer");
+            if (!bearer) {
+                location.href = "login.html";
+            }
+            var token = JSON.parse(bearer).access_token;
+            var defaultSettings = {
+                url: url,
+                crossDomain: true,
+				processData: false,
+				contentType: false,
+				mimeType: "multipart/form-data",
+                headers: {
+                    "Authorization": "Bearer " + token
+                }
+            };
+
+            defaultSettings.url = url;
+            defaultSettings.type = "POST";
+            defaultSettings.data = data;
 
             return $.ajax(defaultSettings);
         },

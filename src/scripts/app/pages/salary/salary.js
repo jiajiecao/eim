@@ -5,6 +5,6 @@
         });
         var viewModel = new window.eim.ViewModels.SalaryViewModel();
         ko.applyBindings(viewModel);
-        viewModel.ensureLogin().then(function () { viewModel.init(); });
+        viewModel.ensureLogin().then(function () { });
     });
 })(window.eim = window.eim || {}, jQuery);

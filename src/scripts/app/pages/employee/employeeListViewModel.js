@@ -68,8 +68,7 @@
         var param = {
             page: (index - 1),
             size: root.pageSize,
-            corpSns: root.user.entities.toString() + ",EORION"
-        };
+            corpSns: root.user.entities.toString()         };
 
         for (var prop in root.criteria) {
             var value = root.criteria[prop]();

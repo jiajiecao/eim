@@ -74,12 +74,22 @@
             createdBy: null,
             updatedAt: null,
             updatedBy: null,
+			
+			//20190716 add
+			probationStart: null,
+			probationEnd: null,
+			socialSecurityStartDate: null,
+			providentFundStartDate: null,
+			socialSecurityOperator: "",
+			payroller: "",//薪资发放方
+			payrolls: []//薪资负责人
         };
 
         for (var i in defaultData) {
             var value = defaultData[i];
             self[i] = $.isArray(value) ? ko.observableArray(value) : ko.observable(value);
         }
+		self.changeCorpHiUrl = ko.observable();
         self.manager = ko.observable();
         self.editRoles = ko.observable();
         self.fnDeleagateeItem = ko.observable();
@@ -227,7 +237,37 @@
             self.costCenterTable.rows(newValues);
         });
         //  self.constCenterForm = [consterCenterField, self.costCenterTable.headers()[2]];
-
+		
+        var salarySupervisorFields = [
+            {
+                controlType: "auto",
+                fieldType: "string",
+                id: "tbhdcc_薪资负责人_employee_1_string_auto",
+                name: "薪资负责人",
+                readable: true,
+                writable: true,
+                required: false,
+                unique: true,
+                seq: 1,
+                type: "string"
+            }
+        ];
+        self.salarySupervisorTable = eim.util.buildTable(salarySupervisorFields, []);
+        self.payrolls.subscribe(function(values) {
+            var newValues = values.map(function (value) {
+                return [{
+                    sn: value,
+                    name: value,
+                }];
+            });
+            self.salarySupervisorTable.rows(newValues);			
+		});
+		
+		
+		
+		
+		
+		
         this.mode = ko.pureComputed(function () {
             if (typeof (this.id()) === "number") {
                 return { id: "edit", name: "更新", text: "更新员工" };
@@ -260,14 +300,7 @@
                 "accountNo",
                 "hireFrom",
                 "hireTo",
-                "politicsStatus",
-                "censusRegister",
-                "diploma",
-                "degree",
-                "major",
-                "studyAbroad",
-                "securityPayment",
-                "placeOfLegalDocuments",
+                
                 "entryGroupTime",
                 "entryTime",
                 "wagesCard",
@@ -293,12 +326,19 @@
                     fieldName === "birth" ||
                     fieldName === "entryGroupTime" ||
                     fieldName === "entryTime" ||
-                    fieldName === "dimissionTime") {
+                    fieldName === "dimissionTime" ||
+					fieldName === "probationStart" ||
+					fieldName === "probationEnd" ||
+					fieldName === "socialSecurityStartDate" ||
+					fieldName === "providentFundStartDate"
+					) {
                     field.controlType = "t3";
                 }
                 if (fieldName === "homeAddress" ||
                     fieldName === "securityPayment" ||
-                    fieldName === "placeOfLegalDocuments"
+                    fieldName === "placeOfLegalDocuments" ||
+					fieldName === "socialSecurityOperator" ||
+					fieldName === "payroller"
                 ) {
                     field.controlType = "t2";
                 }
@@ -337,6 +377,7 @@
                     to: row[5]
                 }
             });
+
             // var isChinese = eim.util.isChinese(data.firstName, data.lastName);
             // if (isChinese) {
             //     data.name = data.lastName + data.firstName;
@@ -430,6 +471,13 @@
             //data.staffs = [];
             //data.managers = [];
             data.chargeToCostCenter = costCenters;
+			
+			var payrolls = [];
+			self.salarySupervisorTable.rows().map(function (row) {
+				payrolls.push(row[0].sn)
+            });
+			data.payrolls = payrolls;
+			
             delete data.updatedAt;
             delete data.updatedBy;
 
@@ -503,6 +551,7 @@
             self.manager(null);
             eim.util.mapFields(defaultData, self);
 
+
             self.editRoles(null);
             //self.costCenterTable.rows.removeAll();
             if (this.mode().id === "add") {
@@ -522,6 +571,8 @@
                 }
             });
             eim.util.resetFields(self.costCenterTable.headers());
+            $('#corpSn').attr('disabled', 'true');
+            $('#corpSn').css('background-color' , '#DEDEDE');
             self.loading();
             return eim.service.getMasterDataDetail("employee", self.id()).then(function (result) {
                 var item = JSOG.decode(result);
@@ -555,6 +606,42 @@
                 if (self.fnDeleagatees().length) {
                     self.fnDeleagateeItem(self.fnDeleagatees()[0]);
                 }
+var header = {
+  "alg": "HS256",
+  "typ": "JWT"
+};
+
+var body = {resource: { question: eim.config.changeCorpHiQuestionId },params: {sn:item.sn}};
+console.log(body)
+var METABASE_SITE_URL = eim.config.metabaseSite;
+var secret = eim.config.metabaseKey;
+
+function base64url(source) {
+  // Encode in classical base64
+  encodedSource = CryptoJS.enc.Base64.stringify(source);
+  
+  // Remove padding equal characters
+  encodedSource = encodedSource.replace(/=+$/, '');
+  
+  // Replace characters according to base64url specifications
+  encodedSource = encodedSource.replace(/\+/g, '-');
+  encodedSource = encodedSource.replace(/\//g, '_');
+  
+  return encodedSource;
+}
+
+var stringifiedHeader = CryptoJS.enc.Utf8.parse(JSON.stringify(header));
+var encodedHeader = base64url(stringifiedHeader);
+
+
+var stringifiedData = CryptoJS.enc.Utf8.parse(JSON.stringify(body));
+var encodedData = base64url(stringifiedData);
+
+
+var signature = encodedHeader + "." + encodedData;
+var jwt = signature + "." + base64url(CryptoJS.HmacSHA256(signature , secret))
+var iframeUrl = METABASE_SITE_URL + "embed/question/" + jwt + "#bordered=true&titled=true";
+self.changeCorpHiUrl(iframeUrl);
                 //self.costCenterTable.rows(self.chargeToCostCenter());
                 self.loading(false);
             }, showError);
